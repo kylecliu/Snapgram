@@ -27,11 +27,11 @@ const ProfilePagePhotos = () => {
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
 
     </Grid>) : ( <Grid w={'70%'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={2} my={2}>
-        <ProfilePhoto name='anna' link='img1.png'></ProfilePhoto>
-        <ProfilePhoto name='steve' link='img2.png'></ProfilePhoto>
-        <ProfilePhoto name='dolce' link='img3.png'></ProfilePhoto>
-        <ProfilePhoto name='beach' link='img4.png'></ProfilePhoto>
-        <ProfilePhoto name='dolce' link='microsoft.png'></ProfilePhoto>
+        <ProfilePhoto name='anna' link='img1.png' location={'Paris'}></ProfilePhoto>
+        <ProfilePhoto name='steve' link='img2.png' location={'New York'}></ProfilePhoto>
+        <ProfilePhoto name='dolce' link='img3.png' location={'Tokyo'}></ProfilePhoto>
+        <ProfilePhoto name='beach' link='img4.png' location={'Seoul'}></ProfilePhoto>
+        <ProfilePhoto name='dolce' link='microsoft.png' location={'Taipei'}></ProfilePhoto>
     </Grid>)}
 
 
