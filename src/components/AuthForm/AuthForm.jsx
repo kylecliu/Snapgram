@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
+import Login from './Login';
+import Signup from './Signup';
 
 const AuthForm = () => {
 
