@@ -5,11 +5,13 @@ import { Link as RouterLink} from 'react-router-dom'
 const ProfilePageHeader = () => {
 
       return (
-    <Flex direction={'column'} justify={'center'} w={'70%'} p={10} backgroundColor={'pink'} >
-        <Flex gap={10}>
-            <Avatar src='img3.png' size={'2xl'} name='Jane' ml={3}></Avatar>
+    <Flex direction={'column'} justify={'center'} w={'70%'} p={10} >
+        <Flex gap={10} direction={{base: 'column', md: 'row'}}>
+            <Flex align={'center'} justify={'center'}>
+                <Avatar src='img3.png' size={'2xl'} name='Jane' ml={3}></Avatar>
+            </Flex>
             <Flex direction={'column'}>
-                <Flex py={2} gap={4} align={'center'} display={{sm: 'column', md: 'row'}}>
+                <Flex py={2} gap={2} align={'center'}>
                 <Text 
             as='span' 
             >

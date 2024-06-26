@@ -14,7 +14,7 @@ const ProfilePagePhotos = () => {
   return (
     <>
 
-    {isloading ? (<Grid w={'70%'} gap={2} templateColumns='repeat(3, 1fr)' >
+    {isloading ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>

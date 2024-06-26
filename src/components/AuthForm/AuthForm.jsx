@@ -26,7 +26,7 @@ const AuthForm = () => {
     <Box>
     <Box border='2px solid gray' borderRadius={5} padding={5}>
         <VStack>
-            <Image src="logo.png" alt="logo" />
+            <Image src="snapgram2.png" alt="logo" w={300} h={100} my={5}/>
             <Input 
             type="email" 
             placeholder='Email'

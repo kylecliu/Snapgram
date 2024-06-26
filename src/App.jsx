@@ -8,7 +8,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
   return (
-    <div>
+    <div className='App'>
         <PageLayout>
           <Routes>
             <Route path='/'>

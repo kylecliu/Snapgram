@@ -10,7 +10,7 @@ const Comment = ({img, name, username, comment, time}) => {
     <Flex w={'100%'}>
         <Avatar src={img} name={name} size={'sm'} m={4}></Avatar>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
-            <Flex direction={'column'} my={4}>
+            <Flex direction={'column'} pt={2} pl={2}>
                 <Text>
                     <span><Link href='/profile' fontWeight={'bold'} mr={2}>{username}</Link></span>
                     <span>{comment}</span>
@@ -22,7 +22,6 @@ const Comment = ({img, name, username, comment, time}) => {
                     backgroundColor={'transparent'} 
                     border='none' 
                     fontSize={12} 
-                    h={12} 
                     fontWeight={'bold'}
                     cursor={'pointer'}
                     >Reply</Text>

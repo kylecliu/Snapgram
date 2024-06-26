@@ -5,7 +5,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 import { ColorModeScript } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import "./index.css";
 
 //Passing background settings into config for color mode
 const styles = {

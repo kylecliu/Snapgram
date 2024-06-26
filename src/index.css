@@ -1,0 +1,9 @@
+.comment_scroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+
+.sidebar {
+    overscroll-behavior: none;
+    overflow: auto;
+}

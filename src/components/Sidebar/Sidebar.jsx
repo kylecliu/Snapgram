@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Link, Avatar } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom';
-import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, MessagesLogo, NotificationsLogo, ReelsLogo, SearchLogo, LogoutLogo } from '../../assets/constants';
+import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, MessagesLogo, NotificationsLogo, ReelsLogo, SearchLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
 import SidebarItems from './SidebarItems';
 
 
@@ -54,14 +54,16 @@ const Sidebar = () => {
 
     
   return (
-    <Flex padding={'8px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} outline={'1px solid black'} justify={'left'} flexDirection='column'>
-        <Link to={'/index'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={10} cursor={'pointer'} pl={2}>
-            <InstagramLogo />
-        </Link>
-        <Link to={'/index'} as={RouterLink} display={ {base: 'block', md: 'none'}} my={10} cursor={'pointer'} pl={2}>
-            <InstagramMobileLogo />
-        </Link>
-        <Flex h={'100vh'} justify={{base: 'center', md:'flex-start'}} flexDirection='column'>
+    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column'>
+        <Flex h={100} align={'center'} justify={{base: 'center', md:'flex-start'}}>
+            <Link to={'/index'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={5} cursor={'pointer'}>
+                <SnapgramLogo />
+            </Link>
+            <Link to={'/index'} as={RouterLink} display={ {base: 'block', md: 'none'}}  cursor={'pointer'}>
+                <InstagramMobileLogo />
+            </Link>
+        </Flex>
+        <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' pl={2}>
 
             {sidebarItems.map((item) => {
                 return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route}/>

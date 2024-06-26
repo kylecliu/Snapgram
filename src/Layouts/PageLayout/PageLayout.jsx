@@ -11,7 +11,7 @@ const PageLayout = ({children}) => {
     <Flex>
         {/* {sidebar on the left} */}
         {location.pathname !== '/auth' ?  (<Box w={{base: "70px", md: "240px"}}>
-            <Sidebar />
+            <Sidebar className='sidebar'/>
         </Box>) : null}
 
         {/* page content on the right */}
