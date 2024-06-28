@@ -25,6 +25,8 @@ const Login = () => {
             />
         
         <Button 
+            w={'100%'}  
+            mt={4}
             colorScheme='blue' 
             size='lg'
             onClick={() => {}}
