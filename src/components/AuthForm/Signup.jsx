@@ -8,6 +8,7 @@ import useSignInWithEmailAndPassword from '../../hooks/useSignInWithEmailAndPass
 
 const Signup = () => {
 
+
     const [inputs, setInputs] = useState({
         email: '',
         password:'',

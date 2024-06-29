@@ -27,11 +27,13 @@ const ProfilePhoto = ( {name, link, location}) => {
   return (
     <>
     <GridItem  
-    maxH={300}
-    overflow={'hidden'}
+    // maxH={300}
+    // maxW={300}
+    // overflow={'hidden'}
     cursor={'pointer'}
     position={'relative'}
-    gap={2}
+    // gap={'auto'}
+    
     >
         {/* Overlay */}
         <Flex 
@@ -64,7 +66,7 @@ const ProfilePhoto = ( {name, link, location}) => {
         name={name} 
         src={link}
         aspectRatio={1/1}
-        maxH={'300px'}
+        // maxH={'300px'}
         />
     </GridItem>
 

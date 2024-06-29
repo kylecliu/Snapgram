@@ -1,46 +1,49 @@
 import React from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Link, Avatar } from '@chakra-ui/react'
+import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Link, Avatar, FormHelperText } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom';
 import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, MessagesLogo, NotificationsLogo, ReelsLogo, SearchLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
 import SidebarItems from './SidebarItems';
+import useLogout from '../../hooks/useLogout';
 
 
 const Sidebar = () => {
+
+    const { logOutHandler } = useLogout();
 
     const sidebarItems = [
         {   
             id: 1,
             logo: <SearchLogo />,
             title: "Home",
-            route: "/index"
+            route: "/"
 
         },
         {   
             id: 2,
             logo: <ReelsLogo />,
             title: "Reels",
-            route: "/index"
+            route: "/"
 
         },
         {   
             id: 3,
             logo: <MessagesLogo />,
             title: "Messages",
-            route: "/index"
+            route: "/"
 
         },
         {   
             id: 4,
             logo: <NotificationsLogo />,
             title: "Notifications",
-            route: "/index"
+            route: "/"
 
         },
         {   
             id: 5,
             logo: <CreatePostLogo />,
             title: "Create",
-            route: "/index"
+            route: "/"
 
         },
         {   
@@ -66,11 +69,21 @@ const Sidebar = () => {
         <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' pl={2}>
 
             {sidebarItems.map((item) => {
-                return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route}/>
+                return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route} _hover={{backgroundColor: "#d6dbd5"}}/>
             })}
 
         </Flex>
-        <SidebarItems logo={<LogoutLogo />} title='Log Out' route='/auth' />
+        {/* <SidebarItems logo={<LogoutLogo />} title='Log Out' onClick={() => logOutHandler()} /> */}
+
+        <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} cursor={'pointer'} onClick={() => logOutHandler()}>
+            <HStack py={4} pl={2} pr={2} borderRadius={4} >
+                <Box  px={'2px'} mr={2}>
+                    <LogoutLogo />
+                </Box>
+                <Text display={{base:'none', md:'inline'}}>Log Out</Text>
+            </HStack>
+        </Flex>
+        
     </Flex>
 
   )

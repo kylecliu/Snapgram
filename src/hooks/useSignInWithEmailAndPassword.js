@@ -4,8 +4,13 @@ import { doc, setDoc } from "firebase/firestore";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { firestore } from '../firebase/firebase';
 import useDisplayToast from './useDisplayToast';
+import useAuthStore from '../store/AuthStore';
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 
 const useSignInWithEmailAndPassword = () => {
+
+  const loginUser = useAuthStore((state) => state.login);
 
   const [
     createUserWithEmailAndPassword,
@@ -17,12 +22,27 @@ const useSignInWithEmailAndPassword = () => {
   const toast = useDisplayToast();
 
 
+
   const signup = async (inputs) => {
 
     if(!(inputs.email && inputs.password && inputs.fullName && inputs.username )) {
 
       toast("Error", error.message, 'error')
       return }
+
+        const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
+
+        try {const result = await getDocs(q);
+
+          if(!result) {
+            toast("Error", "Username is not available", 'error')
+
+            return
+          }
+
+        } catch(e) {
+          toast("Error", error.message, 'error')
+        }
 
       try {
 
@@ -54,10 +74,12 @@ const useSignInWithEmailAndPassword = () => {
 
           localStorage.setItem("user-info", JSON.stringify(userDoc))
 
+          loginUser(userDoc);
+
         }
 
       } catch(error) {
-        
+
         toast("Error", error.message, 'error')
       }
     
