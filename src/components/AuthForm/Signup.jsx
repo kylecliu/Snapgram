@@ -3,7 +3,7 @@ import React from 'react'
 import { Input, Button, InputGroup, InputRightElement, Alert, AlertIcon } from '@chakra-ui/react'
 import { GrFormViewHide } from "react-icons/gr";
 import { BiShowAlt } from "react-icons/bi";
-import useSignInWithEmailAndPassword from '../../hooks/useSignInWithEmailAndPassword';
+import useSignUpWithEmailAndPassword from '../../hooks/useSignUpWithEmailAndPassword';
 
 
 const Signup = () => {
@@ -18,7 +18,7 @@ const Signup = () => {
     
     const [hidePassword, setHidePassword] = useState(true);
 
-    const {loading, error, signup} = useSignInWithEmailAndPassword()
+    const {loading, error, signup} = useSignUpWithEmailAndPassword()
 
   return (
     <>
@@ -55,7 +55,7 @@ const Signup = () => {
 
         {error &&  <Alert maxW='300px' status='error'>
         <AlertIcon />
-        There was an error processing your request. 
+        {error.message} 
         </Alert>}
     
         <Button

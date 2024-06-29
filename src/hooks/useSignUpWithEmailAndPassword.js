@@ -8,7 +8,7 @@ import useAuthStore from '../store/AuthStore';
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 
-const useSignInWithEmailAndPassword = () => {
+const useSignUpWithEmailAndPassword = () => {
 
   const loginUser = useAuthStore((state) => state.login);
 
@@ -30,15 +30,24 @@ const useSignInWithEmailAndPassword = () => {
       toast("Error", error.message, 'error')
       return }
 
+      // Checking if username is already taken
+
         const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
 
         try {const result = await getDocs(q);
 
-          if(!result) {
+          // if(!(result.length === 0)) {
+
+          //   toast("length > 0", typeofresult , "success")
+            
+          // }
+
+          if(!result.empty) {
+
             toast("Error", "Username is not available", 'error')
 
             return
-          }
+          } 
 
         } catch(e) {
           toast("Error", error.message, 'error')
@@ -88,5 +97,5 @@ const useSignInWithEmailAndPassword = () => {
   return {user, loading, signup}
 }
 
-export default useSignInWithEmailAndPassword
+export default useSignUpWithEmailAndPassword
 
