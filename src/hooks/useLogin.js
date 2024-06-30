@@ -17,14 +17,19 @@ const useLogin = () => {
 
     const toast = useDisplayToast();
 
-    const userLogIn = useAuthStore((state) => {state.login});
+    const userLogIn = useAuthStore(state => state.login);
 
     const logIn = async(inputs) => {
 
-        if(inputs.email && inputs.password) {
+        console.log(userLogIn)
+
+        console.log(userLogIn instanceof Function)
+
+        if(!(inputs.email && inputs.password)) {
 
             return toast("Error", 'Please fill all fields', 'error')
         }
+
 
         try {
 
@@ -34,10 +39,11 @@ const useLogin = () => {
 
                 const docRef = doc(firestore, "users", userCreds.user.uid);
                 const docSnap = await getDoc(docRef);
+
                 localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
 
-                console.log(docSnap)
-
+                console.log(userLogIn instanceof Function)
+                
                 userLogIn(docSnap.data());
 
             }

@@ -27,8 +27,9 @@ const useSignUpWithEmailAndPassword = () => {
 
     if(!(inputs.email && inputs.password && inputs.fullName && inputs.username )) {
 
-      toast("Error", error.message, 'error')
-      return }
+      return toast("Error", "Please fill all fields", 'error')
+      
+       }
 
       // Checking if username is already taken
 
@@ -49,7 +50,7 @@ const useSignUpWithEmailAndPassword = () => {
             return
           } 
 
-        } catch(e) {
+        } catch(error) {
           toast("Error", error.message, 'error')
         }
 

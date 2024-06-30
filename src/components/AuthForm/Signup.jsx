@@ -64,7 +64,7 @@ const Signup = () => {
             mt={4}
             colorScheme='blue' 
             size='lg'
-            onClick={() => {signup(inputs)}}
+            onClick={() => signup(inputs)}
             >Sign Up</Button>
     </>
   )

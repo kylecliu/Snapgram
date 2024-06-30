@@ -10,7 +10,7 @@ const Login = () => {
         password:''
        });
 
-    const { logIn, loading, error} = useLogin();
+    const { logIn, loading, error } = useLogin();
 
   return (
     <>
@@ -39,7 +39,7 @@ const Login = () => {
             colorScheme='blue' 
             size='lg'
             isLoading={loading}
-            onClick={() => {logIn(inputs.email, inputs.password)}} 
+            onClick={() => logIn(inputs)} 
             >Log In</Button>
     </>
   )

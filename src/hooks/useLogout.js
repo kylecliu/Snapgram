@@ -10,7 +10,7 @@ const useLogout = () => {
 
     const [signOut, loading, error] = useSignOut(auth);
 
-    const userLogout = useAuthStore((state) => {state.logout});
+    const userLogout = useAuthStore((state) => state.logout);
 
     const toast = useDisplayToast();
 
