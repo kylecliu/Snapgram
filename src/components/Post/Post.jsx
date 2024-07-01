@@ -3,6 +3,7 @@ import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avata
 import { Link as RouterLink } from 'react-router-dom';
 import { ThreeDots, UnlikeLogo, CommentLogo, SendLogo, SaveLogo, NotificationsLogo } from '../../assets/constants';
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import useAuthStore from '../../store/AuthStore';
 
 
 const Post = (props) => {
@@ -10,7 +11,7 @@ const Post = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const user = useAuthStore(state => state.user)
 
 
   const likeHandler = () => {
@@ -39,7 +40,7 @@ const Post = (props) => {
        <Avatar src={props.avatar} mr={2} />
        <Flex direction={'column'}>
            <Flex justify='flex-start' align={'center'}>
-               <Link as={RouterLink} to={'/index'} fontWeight='bold' style={{textDecoration: 'none'}} > {props.username} </Link >
+               <Link as={RouterLink} to={'/index'} fontWeight='bold' style={{textDecoration: 'none'}} > {user.username} </Link >
                <Text fontSize='sm'> •10h </Text>
            </Flex>
            <Flex justify='flex-start' align={'center'}>

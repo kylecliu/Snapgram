@@ -2,6 +2,7 @@ import { Flex, Text, Link, Grid, GridItem, Image, Skeleton } from '@chakra-ui/re
 import {Link as RouterLink} from 'react-router-dom'
 import React, {useState, useEffect} from 'react'
 import ProfilePhoto from './ProfilePhoto'
+import useAuthStore from '../../store/AuthStore'
 
 const ProfilePagePhotos = () => {
 
@@ -10,6 +11,8 @@ const ProfilePagePhotos = () => {
   useEffect(() => {
       setTimeout(setIsLoading(false), 2000)
   }, [])
+
+  const user = useAuthStore(state => state.user)
 
   return (
     <>

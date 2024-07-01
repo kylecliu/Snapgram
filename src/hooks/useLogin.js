@@ -41,8 +41,6 @@ const useLogin = () => {
                 const docSnap = await getDoc(docRef);
 
                 localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
-
-                console.log(userLogIn instanceof Function)
                 
                 userLogIn(docSnap.data());
 

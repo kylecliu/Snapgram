@@ -59,10 +59,10 @@ const Sidebar = () => {
   return (
     <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column'>
         <Flex h={100} align={'center'} justify={{base: 'center', md:'flex-start'}}>
-            <Link to={'/index'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={5} cursor={'pointer'}>
+            <Link to={'/'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={5} cursor={'pointer'}>
                 <SnapgramLogo />
             </Link>
-            <Link to={'/index'} as={RouterLink} display={ {base: 'block', md: 'none'}}  cursor={'pointer'}>
+            <Link to={'/'} as={RouterLink} display={ {base: 'block', md: 'none'}}  cursor={'pointer'}>
                 <InstagramMobileLogo />
             </Link>
         </Flex>

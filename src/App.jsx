@@ -18,7 +18,7 @@ const App = () => {
           <Routes>
             <Route path='/' element= {authUser ? <HomePage /> : <Navigate to={'/auth'}/>} />
             <Route path='/auth' element= {authUser ? <Navigate to={'/'}/> : <AuthPage /> } />
-            <Route path='/profile' element= {<ProfilePage />} />
+            <Route path='/:username' element= {<ProfilePage />} />
           </Routes>
         </PageLayout>
     </div>

@@ -3,6 +3,7 @@ import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack } from
 import Login from './Login';
 import Signup from './Signup';
 import GoogleAuth from './GoogleAuth';
+import FacebookAuth from './FacebookAuth';
 
 const AuthForm = () => {
 
