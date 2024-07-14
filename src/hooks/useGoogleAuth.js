@@ -26,6 +26,8 @@ const useGoogleSignIn = () => {
 
                 console.log(docSnap)
 
+                //If user doesn't exist in database, create a user info entry
+
                 if (!docSnap.exists()) {
 
                     const userDoc = {
@@ -44,6 +46,8 @@ const useGoogleSignIn = () => {
                     await setDoc(doc(firebase, "users", user.user.uid), userDoc);
 
                 } 
+
+                //Store user info in local storage and upadate user status in store
 
                 localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
                 userLogIn(docSnap.data());

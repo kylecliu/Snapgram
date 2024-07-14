@@ -4,11 +4,18 @@ import { Link as RouterLink } from 'react-router-dom';
 import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, MessagesLogo, NotificationsLogo, ReelsLogo, SearchLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
 import SidebarItems from './SidebarItems';
 import useLogout from '../../hooks/useLogout';
+import useAuthStore from '../../store/AuthStore';
+
 
 
 const Sidebar = () => {
 
     const { logOutHandler } = useLogout();
+
+    const user = useAuthStore(state => state.user) 
+
+    console.log(user);
+
 
     const sidebarItems = [
         {   
@@ -50,7 +57,7 @@ const Sidebar = () => {
             id: 6,
             logo: <Avatar size='xs' name='person' src='public/img1.png' />,
             title: "Profile",
-            route: "/profile"
+            route: `/${user.username}`//to prevent accessing username when user is null before login
 
         }
     ]
@@ -66,7 +73,7 @@ const Sidebar = () => {
                 <InstagramMobileLogo />
             </Link>
         </Flex>
-        <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' pl={2}>
+        <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' >
 
             {sidebarItems.map((item) => {
                 return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route} _hover={{backgroundColor: "#d6dbd5"}}/>
@@ -78,7 +85,7 @@ const Sidebar = () => {
         <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} cursor={'pointer'} onClick={() => logOutHandler()}>
             <HStack py={4} pl={2} pr={2} borderRadius={4} >
                 <Box  px={'2px'} mr={2}>
-                    <LogoutLogo />
+                    <LogoutLogo />  
                 </Box>
                 <Text display={{base:'none', md:'inline'}}>Log Out</Text>
             </HStack>

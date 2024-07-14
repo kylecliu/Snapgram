@@ -21,9 +21,6 @@ const useLogin = () => {
 
     const logIn = async(inputs) => {
 
-        console.log(userLogIn)
-
-        console.log(userLogIn instanceof Function)
 
         if(!(inputs.email && inputs.password)) {
 

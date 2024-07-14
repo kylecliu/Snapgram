@@ -20,7 +20,7 @@ const Profile = () => {
         <Flex direction={'column'} flex={1} mr={'70px'}>
             <Link 
             as={RouterLink} 
-            to={'/'} 
+            to={`${user.username}`} 
             fontWeight={'bold'}
             style={{textDecoration: 'none'}}
             >{user.username}</Link>

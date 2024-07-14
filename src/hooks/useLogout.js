@@ -21,8 +21,6 @@ const useLogout = () => {
             await signOut();
             localStorage.removeItem('user-info');
             userLogout();
-            alert("Logged Out!")
-            console.log("Logged Out!")
 
         } catch(error) {
 

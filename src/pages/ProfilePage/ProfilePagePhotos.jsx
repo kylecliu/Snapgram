@@ -1,23 +1,30 @@
 import { Flex, Text, Link, Grid, GridItem, Image, Skeleton } from '@chakra-ui/react'
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink, useParams} from 'react-router-dom'
 import React, {useState, useEffect} from 'react'
 import ProfilePhoto from './ProfilePhoto'
 import useAuthStore from '../../store/AuthStore'
+import useGetUserProfile from '../../hooks/useGetUserProfile'
+
 
 const ProfilePagePhotos = () => {
 
-  const [isloading, setIsLoading] = useState(true);
+  // const [isloading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-      setTimeout(setIsLoading(false), 2000)
-  }, [])
+  const { username } = useParams();
 
-  const user = useAuthStore(state => state.user)
+  // useEffect(() => {
+  //     setTimeout(setIsLoading(false), 2000)
+  // }, [])
+
+  // const user = useAuthStore(state => state.user)
+
+  const { userProfile, isLoading } = useGetUserProfile(username);
+
 
   return (
     <>
 
-    {isloading ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
+    {isLoading ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
@@ -35,6 +42,9 @@ const ProfilePagePhotos = () => {
         <ProfilePhoto name='dolce' link='img3.png' location={'Tokyo'}></ProfilePhoto>
         <ProfilePhoto name='beach' link='img4.png' location={'Seoul'}></ProfilePhoto>
         <ProfilePhoto name='dolce' link='microsoft.png' location={'Taipei'}></ProfilePhoto>
+        { userProfile.posts.map((post) => {
+          <ProfilePhoto name={post.name} link={post.image} location={post.location}></ProfilePhoto>
+        })}
     </Grid>)}
 
 

@@ -4,6 +4,7 @@ import { Box, Image, Flex, HStack, VStack, Spinner } from '@chakra-ui/react'
 import { useLocation } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
+import SignupPrompt from '../../components/SignupPrompt/SignupPrompt';
 
 
 
@@ -13,7 +14,9 @@ const PageLayout = ({children}) => {
 
   const location = useLocation();
 
-  const CanShowSidebar = location.pathname !== '/auth' && user;
+  const canShowSidebar = location.pathname !== '/auth' && user;
+
+  const canShowSignupPrompt = location.pathname !== '/auth' && !user
 
   const isAuthenticating = !user && loading
 
@@ -27,8 +30,11 @@ const PageLayout = ({children}) => {
 
   return (
     <Flex>
+        
+        {canShowSignupPrompt ? <SignupPrompt /> : null }
+
         {/* {sidebar on the left} */}
-        {CanShowSidebar ?  (<Box w={{base: "70px", md: "240px"}}>
+        {canShowSidebar ?  (<Box w={{base: "70px", md: "240px"}}>
             <Sidebar className='sidebar'/>
         </Box>) : null}
 
