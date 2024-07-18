@@ -14,7 +14,7 @@ const Sidebar = () => {
 
     const user = useAuthStore(state => state.user) 
 
-    console.log(user);
+    // const user = JSON.parse(localStorage.getItem('user-info'))
 
 
     const sidebarItems = [
@@ -55,10 +55,10 @@ const Sidebar = () => {
         },
         {   
             id: 6,
-            logo: <Avatar size='xs' name='person' src='public/img1.png' />,
+            logo: <Avatar size='xs' name='photo' src={user?.profileURL || ""} />,
             title: "Profile",
-            route: `/${user.username}`//to prevent accessing username when user is null before login
-
+            route: `/${user?.username}`//to prevent accessing username when user is null before login
+            
         }
     ]
 
@@ -73,18 +73,20 @@ const Sidebar = () => {
                 <InstagramMobileLogo />
             </Link>
         </Flex>
-        <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' >
+        <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' w={"100%"}>
 
-            {sidebarItems.map((item) => {
+            {/* {sidebarItems.map((item) => {
                 return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route} _hover={{backgroundColor: "#d6dbd5"}}/>
-            })}
+            })} */}
+            <SidebarItems/>
+
 
         </Flex>
         {/* <SidebarItems logo={<LogoutLogo />} title='Log Out' onClick={() => logOutHandler()} /> */}
 
         <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} cursor={'pointer'} onClick={() => logOutHandler()}>
-            <HStack py={4} pl={2} pr={2} borderRadius={4} >
-                <Box  px={'2px'} mr={2}>
+            <HStack p={2} borderRadius={4} >
+                <Box>
                     <LogoutLogo />  
                 </Box>
                 <Text display={{base:'none', md:'inline'}}>Log Out</Text>

@@ -27,7 +27,6 @@ const PageLayout = ({children}) => {
   }
     
 
-
   return (
     <Flex>
         
@@ -35,7 +34,7 @@ const PageLayout = ({children}) => {
 
         {/* {sidebar on the left} */}
         {canShowSidebar ?  (<Box w={{base: "70px", md: "240px"}}>
-            <Sidebar className='sidebar'/>
+            <Sidebar />
         </Box>) : null}
 
         {/* page content on the right */}

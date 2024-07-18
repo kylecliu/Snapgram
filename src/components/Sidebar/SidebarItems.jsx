@@ -1,19 +1,19 @@
 import React from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Link } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom';
+import Home from './Home';
+import Search from './Search';
+import Messages from './Messages';
+import Create from './Create';
+import ToProfile from './ToProfile';
 
-const SidebarItems = (props) => {
+const SidebarItems = () => {
   return (
-    <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5}>
-        <Link to={props.route} as={RouterLink} style={{textDecoration: 'none'}}>
-            <HStack py={4} pl={2} pr={2} borderRadius={4} >
-                <Box  px={'2px'} mr={2}>
-                    {props.logo}
-                </Box>
-                <Text display={{base:'none', md:'inline'}}>{props.title}</Text>
-            </HStack>
-        </Link>
-    </Flex>
+    <>
+      <Home />
+      <Search />
+      <Messages />
+      <Create />    
+      <ToProfile />
+    </>
   )
 }
 

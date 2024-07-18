@@ -4,11 +4,14 @@ import { Link as RouterLink} from 'react-router-dom'
 import useUserProfileStore from '../../store/ProfileStore'
 import useAuthStore from '../../store/AuthStore'
 import EditPage from '../EditPage/EditPage'
+import useFollowUser from '../../hooks/useFollowUser'
+
 
 const ProfilePageHeader = () => {
 
         const userProfile = useUserProfileStore(state => state.userProfile);
         const authUser = useAuthStore(state => state.user);
+        const { isUpdating, isFollowing, followOrUnfollowUser } = useFollowUser(userProfile.uid);
 
         const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -26,14 +29,23 @@ const ProfilePageHeader = () => {
                 <Text 
             as='span' 
             >
-                <Link as={RouterLink} to={'/profile'} style={{textDecoration:'none'}} fontWeight={'bold'} fontSize={20} mr={4}>{userProfile.username}</Link>
+                <Link 
+                    as={RouterLink} 
+                    to={'/profile'} 
+                    style={{textDecoration:'none'}} 
+                    fontWeight={'bold'} 
+                    fontSize={20} 
+                    mr={4}>
+                
+                {userProfile.username}
+                </Link>
                 </Text>
 
                 {isOwnProfile && <Button backgroundColor={'lightgray'} fontSize={12} h='25px' onClick={onOpen}>Edit Profile</Button>}
 
                 {isOpen && <EditPage isOpen={isOpen} onClose={onClose}/> }
 
-                {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h='25px' _hover={'blue.600'}>Follow</Button>}
+                {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h='25px' _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? Unfollow: Follow }</Button>}
                 
                 </Flex>
                 <Flex direction={'flex-start'} gap={8} mt={4} mb={4} display={{base: 'none', md: 'none', lg:'flex'}} fontWeight={'bold'} fontSize={15}>

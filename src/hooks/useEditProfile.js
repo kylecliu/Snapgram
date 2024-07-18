@@ -17,7 +17,7 @@ const useEditProfile = () => {
     const setUserProfile = useUserProfileStore(state => state.setUserProfile)
 
 
-    const editProfileHandler = async(inputs, selectedFile) => {
+    const editProfile = async(inputs, selectedFile) => {
 
         if(isUpdating || !authUser) {
             //prevent repeated quick clicks
@@ -39,7 +39,7 @@ const useEditProfile = () => {
 
             } catch(error) {
 
-                toast("error", error.message, "Error")
+                toast("Error", error.message, "error")
             }
 
         }
@@ -59,10 +59,11 @@ const useEditProfile = () => {
         localStorage.setItem('user-info', JSON.stringify(newUserDoc))
         setAuthUser(newUserDoc)
         setUserProfile(newUserDoc)
+        toast('Success', "Profile updated successfullly", "success")
 
     }
 
-    return {isUpdating, editProfileHandler}
+    return {isUpdating, editProfile}
 }
 
 export default useEditProfile
