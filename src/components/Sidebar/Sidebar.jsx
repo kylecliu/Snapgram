@@ -17,52 +17,6 @@ const Sidebar = () => {
     // const user = JSON.parse(localStorage.getItem('user-info'))
 
 
-    const sidebarItems = [
-        {   
-            id: 1,
-            logo: <SearchLogo />,
-            title: "Home",
-            route: "/"
-
-        },
-        {   
-            id: 2,
-            logo: <ReelsLogo />,
-            title: "Reels",
-            route: "/"
-
-        },
-        {   
-            id: 3,
-            logo: <MessagesLogo />,
-            title: "Messages",
-            route: "/"
-
-        },
-        {   
-            id: 4,
-            logo: <NotificationsLogo />,
-            title: "Notifications",
-            route: "/"
-
-        },
-        {   
-            id: 5,
-            logo: <CreatePostLogo />,
-            title: "Create",
-            route: "/"
-
-        },
-        {   
-            id: 6,
-            logo: <Avatar size='xs' name='photo' src={user?.profileURL || ""} />,
-            title: "Profile",
-            route: `/${user?.username}`//to prevent accessing username when user is null before login
-            
-        }
-    ]
-
-    
   return (
     <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column'>
         <Flex h={100} align={'center'} justify={{base: 'center', md:'flex-start'}}>
@@ -75,11 +29,7 @@ const Sidebar = () => {
         </Flex>
         <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' w={"100%"}>
 
-            {/* {sidebarItems.map((item) => {
-                return <SidebarItems key={item.id} logo={item.logo} title={item.title} route={item.route} _hover={{backgroundColor: "#d6dbd5"}}/>
-            })} */}
             <SidebarItems/>
-
 
         </Flex>
         {/* <SidebarItems logo={<LogoutLogo />} title='Log Out' onClick={() => logOutHandler()} /> */}

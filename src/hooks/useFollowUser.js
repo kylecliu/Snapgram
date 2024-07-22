@@ -12,13 +12,15 @@ const useFollowUser = (userId) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [isFollowing, setIsFollowing] = useState(false)
     const authUser = useAuthStore(state => state.user)
-    const setAuthUser = useAuthStore(state => state.setAuthUser)
+    const setAuthUser = useAuthStore(state => state.setUser)
     const userProfile = useUserProfileStore(state => state.userProfile)
     const setUserProfile = useUserProfileStore(state => state.setUserProfile)
     const toast = useDisplayToast();
 
     
     useEffect(() => {
+
+        console.log(authUser.following, typeof authUser, authUser.following instanceof Array)
 
         if(authUser.following.includes(userId)) {
 
@@ -58,14 +60,20 @@ const useFollowUser = (userId) => {
                 //Unfollow target user
                 //Remove target user and update user store, userProfile store and local storage
                 const updatedAuthUser = {
-                    ...user,
+                    ...authUser,
                     following: authUser.following.filter((item) => item !== userId)
                 }
 
                 setAuthUser(updatedAuthUser)
                 localStorage.setItem('user-info', JSON.stringify(updatedAuthUser));
 
-                setUserProfile(...userProfile, userProfile.follows.filter((item) => item !== authUser.uid))
+                if (userProfile) {
+
+                    setUserProfile({...userProfile, followers: userProfile.followers.filter((item) => item !== authUser.uid)})
+
+                }
+               
+                
 
                 setIsFollowing(false)
 
@@ -73,14 +81,20 @@ const useFollowUser = (userId) => {
                 //Follow target user
                 //Add target user and update user store, userProfile store and local storage
                 const updatedAuthUser = {
-                    ...user,
-                    following: authUser.following.push(userId)
+                    ...authUser,
+                    following: [...authUser.following, userId]
                 }
 
                 setAuthUser(updatedAuthUser)
                 localStorage.setItem('user-info', JSON.stringify(updatedAuthUser));
 
-                setUserProfile(...userProfile, userProfile.follows.push(authUser.uid))
+                if (userProfile) {
+                    
+                    setUserProfile({...userProfile, followers: [...userProfile.followers, authUser.uid]})
+
+                }
+
+               
 
                 setIsFollowing(true)
 

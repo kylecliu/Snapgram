@@ -41,7 +41,7 @@ const ProfilePageHeader = () => {
                 </Link>
                 </Text>
 
-                {isOwnProfile && <Button backgroundColor={'lightgray'} fontSize={12} h='25px' onClick={onOpen}>Edit Profile</Button>}
+                {isOwnProfile && <Button backgroundColor={'lightgray'} fontSize={12} h='28px' onClick={onOpen}>Edit Profile</Button>}
 
                 {isOpen && <EditPage isOpen={isOpen} onClose={onClose}/> }
 
