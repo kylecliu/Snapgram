@@ -18,7 +18,6 @@ import User from '../User/User';
 
 
 
-
 const Search = () => {
 
   const {isOpen, onOpen, onClose} = useDisclosure()
