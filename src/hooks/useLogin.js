@@ -37,13 +37,21 @@ const useLogin = () => {
                 const docRef = doc(firestore, "users", userCreds.user.uid);
                 const docSnap = await getDoc(docRef);
 
-                localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
+                if(docSnap.exists) {
+
+                    localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
                 
-                userLogIn(docSnap.data());
+                    userLogIn(docSnap.data());
+
+                } else {
+
+                    toast("Error", "No such user found", 'error')
+
+                }
+
 
             }
 
-            
     
         } catch(error) {
     

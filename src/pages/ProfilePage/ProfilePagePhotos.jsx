@@ -1,25 +1,92 @@
-import { Flex, Text, Link, Grid, GridItem, Image, Skeleton } from '@chakra-ui/react'
+import { Grid, GridItem, Skeleton, Flex, Text } from '@chakra-ui/react'
 import {Link as RouterLink, useParams} from 'react-router-dom'
 import React, {useState, useEffect} from 'react'
 import ProfilePhoto from './ProfilePhoto'
 import useAuthStore from '../../store/AuthStore'
 import useGetUserProfile from '../../hooks/useGetUserProfile'
+import useGetUserPosts from '../../hooks/useGetUserPosts'
+import usePostStore from '../../store/postStore'
+import useDisplayToast from '../../hooks/useDisplayToast'
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { firestore } from '../../firebase/firebase'
+
 
 
 const ProfilePagePhotos = () => {
 
-  // const [isloading, setIsLoading] = useState(false);
-
   const { username } = useParams();
-
-  // useEffect(() => {
-  //     setTimeout(setIsLoading(false), 2000)
-  // }, [])
-
-  // const user = useAuthStore(state => state.user)
-
   const { userProfile, isLoading } = useGetUserProfile(username);
+  const  {isFetching, posts } = useGetUserPosts()
 
+//     const [isFetching, setIsFetching] = useState(false)
+//     const posts = usePostStore(state => state.posts)
+//     const setPosts = usePostStore(state => state.setPosts)
+//     const toast = useDisplayToast()
+
+//   useEffect(() => {
+
+//     const getPosts = async() => {
+
+//         if(!userProfile) return
+
+//         setIsFetching(true)
+//         setPosts([])
+//         console.log("Posts intial")
+//         console.log(posts)
+
+//         try{
+
+//             const q = query(collection(firestore, "posts"), where("createdBy", "==", userProfile.uid));
+//             const querySnapshot = await getDocs(q)
+
+//             const docs = []
+
+//             querySnapshot.forEach((doc) => docs.push({...doc.data(), id: doc.id}))
+//             console.log(docs)
+//             setPosts(docs)
+//             console.log("UseGetUserPosts")
+//             console.log(posts)
+
+
+//         } catch(error) {
+//             toast("Error", error.message, "error")
+//             setPosts([])
+
+//         } finally {
+//             setIsFetching(false)
+//             console.log("final")
+//             console.log(posts)
+//         }
+
+//     }
+
+//     getPosts()
+
+// }, [userProfile, setPosts])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const noPostsFound = !isFetching && posts.length == 0
+  if(noPostsFound) return <NoPostsFound />
+
+
+  console.log("Look here")
+  console.log(userProfile)
+  console.log(posts)
+  
 
   return (
     <>
@@ -37,37 +104,25 @@ const ProfilePagePhotos = () => {
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
 
     </Grid>) : ( <Grid w={'70%'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
-        <ProfilePhoto name='anna' link='img1.png' location={'Paris'}></ProfilePhoto>
-        <ProfilePhoto name='steve' link='img2.png' location={'New York'}></ProfilePhoto>
-        <ProfilePhoto name='dolce' link='img3.png' location={'Tokyo'}></ProfilePhoto>
-        <ProfilePhoto name='beach' link='img4.png' location={'Seoul'}></ProfilePhoto>
-        <ProfilePhoto name='dolce' link='microsoft.png' location={'Taipei'}></ProfilePhoto>
-        { userProfile.posts.map((post) => {
-          <ProfilePhoto name={post.name} link={post.image} location={post.location}></ProfilePhoto>
-        })}
+        
+        {  posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
+
     </Grid>)}
-
-
-
-    {/* <Flex 
-    direction='column' 
-    borderTop={'1px solid black'} 
-    pt={10} 
-    backgroundColor={'blue'} 
-    h={100} 
-    w={'70%'}
-    align={'center'} 
-    >
-        <Flex gap={20}>
-            <Link as={RouterLink} style={{textDecoration: 'none'}}>POSTS</Link>
-            <Link as={RouterLink} style={{textDecoration: 'none'}}>SAVED</Link>
-            <Link as={RouterLink} style={{textDecoration: 'none'}}>TAGGED</Link>
-        </Flex>
-    </Flex> */}
-
 
     </>
   )
 }
 
 export default ProfilePagePhotos
+
+const NoPostsFound = () => {
+
+  return (
+      <Flex  w={'100%'} justify={'center'} align={'center'}>
+        <Text fontSize={'3xl'} my={20}>
+          This account does not yet have posts!
+        </Text>
+      </Flex>
+  )
+
+}

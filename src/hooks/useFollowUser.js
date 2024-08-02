@@ -20,9 +20,9 @@ const useFollowUser = (userId) => {
     
     useEffect(() => {
 
-        console.log(authUser.following, typeof authUser, authUser.following instanceof Array)
+        // console.log(authUser.following, typeof authUser, authUser.following instanceof Array)
 
-        if(authUser.following.includes(userId)) {
+        if(authUser && authUser.following.includes(userId)) {
 
             setIsFollowing(true)
         }

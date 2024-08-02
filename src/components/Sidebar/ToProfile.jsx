@@ -6,6 +6,9 @@ import useAuthStore from '../../store/AuthStore';
 const ToProfile = () => {
 
     const authUser = useAuthStore(state => state.user)
+    console.log("To profile")
+    console.log(localStorage.getItem('user-info'))
+    console.log(authUser)
 
   return (
     <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2}>

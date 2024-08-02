@@ -28,8 +28,12 @@ const Search = () => {
 
     e.preventDefault()
     searchUser(searchRef.current.value)
-    console.log(user)
   
+  }
+
+  const closeHandler = () => {
+    onClose()
+    setUser(null)
   }
  
 
@@ -49,7 +53,7 @@ const Search = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Search Users</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={closeHandler}/>
           <ModalBody>
             <form onSubmit={submitHandler}>
               <FormControl>
@@ -61,7 +65,7 @@ const Search = () => {
               <Button colorScheme='blue' mr={3} isLoading={isFetching} type={'submit'} >
               Search
               </Button>
-              <Button variant='ghost' onClick={onClose}>Close</Button>
+              <Button variant='ghost' onClick={closeHandler}>Close</Button>
               </ButtonGroup>
             </form>
             

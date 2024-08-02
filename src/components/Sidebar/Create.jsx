@@ -11,6 +11,14 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import usePreviewImage from '../../hooks/usePreviewImage'
+import useDisplayToast from '../../hooks/useDisplayToast'
+import useUserProfileStore from '../../store/ProfileStore'
+import usePostStore from '../../store/postStore'
+import { firestore } from '../../firebase/firebase'
+import useAuthStore from '../../store/AuthStore'
+import { doc, updateDoc, arrayUnion, collection, addDoc } from "firebase/firestore";
+import { getStorage, ref, uploadString,  getDownloadURL  } from "firebase/storage";
+
 
 
 const Create = () => {
@@ -18,7 +26,22 @@ const Create = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const imgRef = useRef(null)
   const { selectedFile, handleImageChange, setSelectedFile } = usePreviewImage()
-  const [inputs, setInputs] = useState({})
+  const [inputs, setInputs] = useState({
+    location: "",
+    caption: ""
+  })
+  const { isLoading, createPostHandler }= useCreatePost()
+  const addPostHandler = (inputs, selectedFile) => {
+
+    if(isLoading) return
+
+    createPostHandler(inputs.caption, inputs.location, selectedFile)
+
+    onClose()
+    setInputs({})
+    setSelectedFile(null)
+
+  }
 
   return (
     <>
@@ -44,14 +67,14 @@ const Create = () => {
                 <Input type='file' visibility={'hidden'} accept='image/png, image/gif, image/jpeg' ref={imgRef} onChange={handleImageChange}></Input>
                 {selectedFile ? 
                 <>
-                  <Flex position={'relative'}>
+                  <Flex position={'relative'} mb={2}>
                     <Image src={selectedFile} alt="posting photo" /> 
-                    <CloseButton bg={'white'} textColor={'black'} position={'absolute'} top={2} left={2} onClick={() => setSelectedFile(null)}/>
+                    <CloseButton bg={'white'} textColor={'black'} position={'absolute'} top={2} right={2} onClick={() => setSelectedFile(null)}/>
                   </Flex>
                 </>
                 : null}  
-
-                <Textarea name="caption" placeholder='Write a caption' rows={3} value={inputs.caption} onChange={() => setInputs({...inputs, caption: inputs.caption})}/>
+                <Input placeholder='Location' value={inputs.location} onChange={(e) => setInputs({...inputs, location: e.target.value})} mb={2}></Input>
+                <Textarea name="caption" placeholder='Write a caption' rows={3} value={inputs.caption} onChange={(e) => setInputs({...inputs, caption: e.target.value})}/>
               </FormControl>
 
             </form>
@@ -59,7 +82,7 @@ const Create = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} >
+            <Button colorScheme='blue' mr={3} isLoading={isLoading} onClick={() => addPostHandler(inputs, selectedFile)} >
               Share
             </Button>
             <Button variant='ghost' onClick={onClose}>Close</Button>
@@ -75,3 +98,74 @@ const Create = () => {
 }
 
 export default Create
+
+
+
+const useCreatePost = () => {
+
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useDisplayToast()
+  const addPost = useUserProfileStore(state => state.addPost) 
+  const createPost = usePostStore(state => state.createPost)
+  const authUser = useAuthStore(state => state.user)
+
+  const createPostHandler= async(caption, location, selectedFile) => {
+
+    setIsLoading(true)
+
+    if(!selectedFile) {
+
+      toast('error', "You must select a photo", "Error")
+      return
+    }
+
+    try{
+
+
+    const newPost = {
+
+      photoURL: "",
+      caption: caption,
+      likes: [],
+      comments: [],
+      createdAt: new Date().toLocaleDateString(),
+      location: location,
+      createdBy: authUser.uid
+
+    } 
+
+    const postDocRef = await addDoc(collection(firestore, "posts"), newPost)
+    const userDocRef = doc(firestore, "users", authUser.uid)
+    await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
+
+    const storage = getStorage();
+    const imageRef = ref(storage, `photos/${postDocRef.id}`);
+
+    await uploadString(imageRef, selectedFile, 'data_url')
+
+    const photoURL = await getDownloadURL(imageRef)
+
+    await updateDoc(postDocRef, {photoURL: photoURL})
+
+    newPost.photoURL = photoURL
+
+    addPost({...newPost, id: postDocRef.id})
+    createPost({...newPost, id: postDocRef.id})
+
+    toast("Success", "Post added successfully", "success")
+    
+    } catch(error) {
+
+      toast("Error", error.message, 'error'
+      )
+    } finally {
+
+      setIsLoading(false)
+    }
+
+  }
+
+  return {isLoading, createPostHandler }
+
+
+}
