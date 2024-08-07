@@ -6,7 +6,7 @@ import useAuthStore from '../../store/AuthStore';
 const ToProfile = () => {
 
     const authUser = useAuthStore(state => state.user)
-    console.log("To profile")
+    console.log("Sidebar")
     console.log(localStorage.getItem('user-info'))
     console.log(authUser)
 

@@ -5,7 +5,7 @@ import { firestore } from '../firebase/firebase';
 import useDisplayToast from './useDisplayToast';
 
 
-const useGetUserProfile = (username) => {
+    const useGetUserProfile = (username) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -17,31 +17,36 @@ const useGetUserProfile = (username) => {
 
         const getUserProfile = async() => {
 
+            console.log("getUserProfile starts here")
+
             try {
 
                 const q = query(collection(firestore, "users"), where("username", "==", username)); 
                 const querySnapshot = await getDocs(q);
 
+                console.log("useGetUserProfile")
                 console.log(username)
-
                 console.log(querySnapshot);
                 console.log(querySnapshot.empty)
 
                 if(querySnapshot.empty) {
 
-                    console.log('null')
+                    console.log('querySnapshot empty')
 
-                   return  setUserProfile(null);
+                   return  setUserProfile({});
 
                 } else {
 
                    let userDoc;
 
-                    querySnapshot.docs.forEach((doc) => {userDoc = doc.data()});
+                    querySnapshot.docs.forEach((doc) => userDoc = doc.data());
 
                     setUserProfile(userDoc);
 
+                    console.log("userDoc")
                     console.log(userDoc);
+                    console.log("userProfile")
+                    console.log(userProfile)
 
                 }
 
@@ -60,7 +65,7 @@ const useGetUserProfile = (username) => {
         getUserProfile();
 
 
-    }, [username, setUserProfile])
+    }, [username])
 
 
   return { isLoading, userProfile }

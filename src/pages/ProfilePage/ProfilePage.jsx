@@ -12,8 +12,6 @@ const ProfilePage = () => {
 
   const { userProfile, isLoading } = useGetUserProfile(username);
 
-  console.log(userProfile)
-
   const  userNotFound = !isLoading && !userProfile;
 
   if(userNotFound) { return < UserNotFound/> }
@@ -55,7 +53,7 @@ const UserNotFound =() => {
   )
 }
 
-const LoadingEffect = (props) => {
+const LoadingEffect = () => {
 
   return (
     <Flex w={'70%'} mb={5} >  

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Image, GridItem, Box, Flex, Link, HStack, Text, useDisclosure, Avatar, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, Tooltip } from '@chakra-ui/react'
+import React, { useRef, useState, useEffect } from 'react'
+import { Image, GridItem, Box, Flex, Link, HStack, Text, useDisclosure, Avatar, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, Tooltip, Divider } from '@chakra-ui/react'
 import { Link as RouterLink} from 'react-router-dom'
 import { FaComment, FaRegComment } from "react-icons/fa6";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
@@ -11,29 +11,36 @@ import {
     Modal,
     ModalOverlay,    
     ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
-import useUserProfileStore from '../../store/ProfileStore';
-import usePostStore from '../../store/postStore';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import useAuthStore from '../../store/AuthStore';
 import useDeletePost from '../../hooks/useDeletePost';
+import useAddComment from '../../hooks/useAddComment';
+import { UnlikeLogo } from '../../assets/constants';
+import useLikePost from '../../hooks/useLikePost';
 
 
 
-
-
-
-const ProfilePhoto = ({post}) => {
+const ProfilePhoto = ({post, userProfile}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const authUser = useAuthStore(state => state.user)
-    const userProfile = useUserProfileStore(state => state.userProfile)
+    console.log("authUser")
+    console.log(authUser)
     const sameUser = authUser?.uid === userProfile.uid
     const { isDeleting, deletePostHandler }= useDeletePost()
+    const { isUpdating, addComment } = useAddComment()
+    const [ comment, setComment ] = useState("")
+    const commentRef = useRef()
+    const { isLiked, checkIsLiked, likePost, isLoading }= useLikePost()
+    const addCommentHandler = () => {
+
+        if(isUpdating) return
+
+        addComment(post.id, comment)
+    }
 
     const deleteUserPostHandler = () => {
 
@@ -46,7 +53,18 @@ const ProfilePhoto = ({post}) => {
         } else { return }
 
     }
+    const likePostHandler = () => {
 
+        if(isLoading) return 
+
+        likePost(post)
+    }
+
+    useEffect(() => {//To check isLiked on the first render 
+
+        checkIsLiked(post)
+
+    }, [])
 
 
   return (
@@ -87,7 +105,6 @@ const ProfilePhoto = ({post}) => {
         name={userProfile.username} 
         src={post.photoURL}
         aspectRatio={1/1}
-        // maxH={'300px'}
         />
     </GridItem>
 
@@ -103,7 +120,16 @@ const ProfilePhoto = ({post}) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody backgroundColor='white'>
-            <Flex justify={'center'}>
+            <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'flex', md: 'none'}}>
+                <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
+                <Flex direction={'column'}>
+                    <Box >
+                        <Link as={RouterLink} fontWeight={'bold'} style={{textDecoration: 'none'}}>{userProfile.username}</Link>
+                    </Box>
+                    <Link as={RouterLink} fontSize={14}>{post.location}</Link>
+                </Flex>
+            </Flex>
+            <Flex justify={'center'} align={'center'} flexDirection={'column'}>
                 <Flex direction={{ base: 'column', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
                     <Box flex={1.5}>
                         <Image 
@@ -115,8 +141,8 @@ const ProfilePhoto = ({post}) => {
                         ></Image>
                     </Box>
                     <Flex direction={'column'} w={'1fr'} backgroundColor={'white'} flex={1} >
-                        <Flex p={2} borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'}>
-                            <Avatar src='img1.png' name='anna' size={'sm'} m={4}></Avatar>
+                        <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>
+                            <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
                             <Flex direction={'column'}>
                                 <Box >
                                     <Link as={RouterLink} fontWeight={'bold'} style={{textDecoration: 'none'}}>{userProfile.username}</Link>
@@ -124,9 +150,9 @@ const ProfilePhoto = ({post}) => {
                                 <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                             </Flex>
                         </Flex>
-                        <Flex p={2} display={{base:'none', md:'flex'}}>
+                        <Flex mt={2} display={'flex'}>
                             <Box>
-                                <Avatar src='img1.png' name='anna' size={'sm'} m={4}></Avatar>
+                                <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
                             </Box>
                             <Flex direction={'column'} mt={2} flex={1}>
                                 <Text>
@@ -136,27 +162,31 @@ const ProfilePhoto = ({post}) => {
                                 <Text fontSize={12} color={'gray'}>{post.createdAt}</Text>
                             </Flex>
                         </Flex>
+                        <Divider display={{base: 'block', md: 'none'}}/>
                         <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
-                            <Comment img='img2.png' name='steve' username={'steve'} comment={'great photo!'} time={'2w'}></Comment>
+                           { post.comments.map((comment) => <Comment comment={comment}/>)}
                         </VStack>
                         <Flex direction={'column'} mt={'auto'} >
                         <Flex justify={'space-between'}>
                                 <Flex gap={3} ml={4}>
-                                    <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><FaRegHeart /></Link>
-                                    <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><FaRegComment/></Link>
+
+                                    { authUser && isLiked ?
+                                    <Tooltip label='Like' fontSize='md'>
+                                        <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}><UnlikeLogo /></Box>
+                                    </Tooltip> :   <Tooltip label='Like' fontSize='md'>
+                                        <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}><FaRegHeart /></Box>
+                                    </Tooltip>} 
+
+                                    <Tooltip label='Comment' fontSize='md'>
+                                        <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()}><FaRegComment/></Box>
+                                    </Tooltip>
+                                    
                                     <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link>
                                     {sameUser ?                                    
                                      <Tooltip label='Delete' fontSize='md'>
                                         <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
                                     </Tooltip> : null}
 
-                                    
                                 </Flex>
                                 <Box>
                                     <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
@@ -168,12 +198,15 @@ const ProfilePhoto = ({post}) => {
                             <Box color={'gray'} fontSize={12} ml={4}>
                                 {post.createdAt}
                             </Box>
-                            <InputGroup mb={4}>
+
+                            {authUser &&  <InputGroup mb={4}>
                                 <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><GoSmiley/></InputLeftAddon>
-                                <Input variant={'flushed'} placeholder='Add a comment...'></Input>
-                                <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'}>Post</InputRightAddon>
-                            </InputGroup>
-                        </Flex>
+                                <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
+                                <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
+                            </InputGroup> }
+
+                        </Flex> 
+                           
                     </Flex> 
                 </Flex>
             </Flex>

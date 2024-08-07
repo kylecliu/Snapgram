@@ -1,23 +1,29 @@
 import { Flex, Avatar, Text, Link, Button, Box } from '@chakra-ui/react'
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import React, { useState } from 'react'
+import useUserProfileStore from '../../store/ProfileStore';
+import { timeAgo } from '../../utils/timeAgo';
 
-const Comment = ({img, name, username, comment, time}) => {
+const Comment = ({comment}) => {
 
     const [isLiked, setIsLiked] = useState(false);
+    const userProfile = useUserProfileStore(state => state.userProfile)
+    console.log(userProfile)
 
   return (
     <Flex w={'100%'}>
-        <Avatar src={img} name={name} size={'sm'} m={4}></Avatar>
+        <Link href={`/${userProfile.username}`}>
+        <Avatar src={comment.photo} name={comment.username} size={'sm'} m={4}></Avatar>
+        </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
-            <Flex direction={'column'} pt={2} pl={2}>
+            <Flex direction={'column'} justify={'center'}>
                 <Text>
-                    <span><Link href='/profile' fontWeight={'bold'} mr={2}>{username}</Link></span>
-                    <span>{comment}</span>
+                    <span><Link href={`/${userProfile.username}`} fontWeight={'bold'} mr={2}>{comment.username}</Link></span>
+                    <span>{comment.comment}</span>
                 </Text>
 
                 <Flex>
-                    <Text as={'span'} fontSize='12px' color='gray' mr={2}>{time}</Text>
+                    <Text as={'span'} fontSize='12px' color='gray' mr={2}>{timeAgo(comment.createdAt)}</Text>
                     <Text 
                     backgroundColor={'transparent'} 
                     border='none' 
@@ -39,3 +45,5 @@ const Comment = ({img, name, username, comment, time}) => {
 }
 
 export default Comment
+
+

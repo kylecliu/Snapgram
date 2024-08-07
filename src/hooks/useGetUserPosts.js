@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import usePostStore from '../store/postStore'
 import useDisplayToast from './useDisplayToast'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from '../firebase/firebase';
 import useUserProfileStore from '../store/ProfileStore';
+import useGetUserProfile from './useGetUserProfile';
+
 
 const useGetUserPosts = () => {
 
@@ -13,12 +16,13 @@ const useGetUserPosts = () => {
     const setPosts = usePostStore(state => state.setPosts)
     const toast = useDisplayToast()
 
+
     
     useEffect(() => {
 
         const getPosts = async() => {
 
-            if(!userProfile) return
+            if(!userProfile) return setIsFetching(false)
     
             setIsFetching(true)
             setPosts([])
@@ -38,23 +42,28 @@ const useGetUserPosts = () => {
                 setPosts(docs)
                 console.log("UseGetUserPosts")
                 console.log(posts)
-    
+
     
             } catch(error) {
+
                 toast("Error", error.message, "error")
                 setPosts([])
     
             } finally {
+
                 setIsFetching(false)
                 console.log("final")
-                console.log(posts)
+                console.log(userProfile)
             }
     
         }
     
         getPosts()
 
-    }, [userProfile, setPosts])
+        console.log("useEffect sucks")
+        console.log(userProfile)
+
+    }, [userProfile])
 
     return {isFetching, posts}
 }
