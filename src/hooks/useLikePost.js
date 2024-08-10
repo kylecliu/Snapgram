@@ -11,7 +11,7 @@ const useLikePost = () => {
     const [isLoading, setIsLoading] = useState(false)
     const authUser = useAuthStore(state => state.user)
     const toast = useDisplayToast()
-    const {likePostStore, unlikePostStore} = usePostStore()
+    const {posts, likePostStore, unlikePostStore} = usePostStore()
 
     const checkIsLiked = async(post) => {
 
@@ -61,7 +61,13 @@ const useLikePost = () => {
 
                 setIsLiked(false)
 
+                console.log("Before")
+                console.log(posts)
+
                 unlikePostStore(post.id, authUser.uid)
+
+                console.log("After")
+                console.log(posts)
 
 
             } else {//Add like
@@ -76,7 +82,13 @@ const useLikePost = () => {
 
                 setIsLiked(true)
 
+                console.log("Before")
+                console.log(posts)
+
                 likePostStore(post.id, authUser.uid)
+
+                console.log("After")
+                console.log(posts)
 
             } 
 

@@ -12,13 +12,13 @@ const Comment = ({comment}) => {
 
   return (
     <Flex w={'100%'}>
-        <Link href={`/${userProfile.username}`}>
+        <Link href={`/${userProfile?.username}`}>
         <Avatar src={comment.photo} name={comment.username} size={'sm'} m={4}></Avatar>
         </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
             <Flex direction={'column'} justify={'center'}>
                 <Text>
-                    <span><Link href={`/${userProfile.username}`} fontWeight={'bold'} mr={2}>{comment.username}</Link></span>
+                    <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2}>{comment.username}</Link></span>
                     <span>{comment.comment}</span>
                 </Text>
 

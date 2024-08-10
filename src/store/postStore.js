@@ -15,19 +15,27 @@ const usePostStore = create((set) => ({
         return post
     })})),
 
-    likePostStore: (postId, uid) => (state => ({posts: state.posts.map((post) => {
+    likePostStore: (postId, uid) => set(state => ({posts: state.posts.map((post) => {
         
         if(post.id === postId) {
+
             return {...post, likes: [...post.likes, uid]}
         }
+
+        return post
     })})),
 
-    unlikePostStore: (postId, uid) => (state => ({posts: state.posts.map((post) => {
+    unlikePostStore: (postId, uid) => set(state => ({posts: state.posts.map((post) => {
         
         if(post.id === postId) {
+
             return {...post, likes: post.likes.filter((userId) => userId !== uid)}
         }
-    })}))
+
+        return post
+
+    })})),
+
 }))
     
 

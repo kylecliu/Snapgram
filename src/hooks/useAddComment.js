@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useDisplayToast from './useDisplayToast'
 import useAuthStore from '../store/AuthStore'
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { firestore } from '../firebase/firebase';
-import useGetUserPosts from './useGetUserPosts';
 import usePostStore from '../store/postStore';
 
 const useAddComment = () => {
@@ -25,27 +24,16 @@ const useAddComment = () => {
                 photo: authUser.profileURL,
                 username: authUser.username,
                 comment: comment,
-                createdAt: Date.now(),
-                liked: false
+                createdAt: Date.now()
             }
 
-            console.log("1")
-            console.log(id)
-            console.log(newComment)
-
             const postRef = doc(firestore, "posts", id);
-
-            console.log("2")
 
             await updateDoc(postRef, {
                 comments: arrayUnion(newComment)
               });
 
-            console.log('3')
-
             addCommentToPost(id, newComment)
-
-            console.log('4')
 
             toast("Success", "Comment added!", "success")
 

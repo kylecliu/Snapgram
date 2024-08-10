@@ -116,6 +116,7 @@ const useCreatePost = () => {
     if(!selectedFile) {
 
       toast('error', "You must select a photo", "Error")
+      
       return
     }
 
@@ -128,14 +129,18 @@ const useCreatePost = () => {
       caption: caption,
       likes: [],
       comments: [],
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: Date.now(),
       location: location,
-      createdBy: authUser.uid
+      createdBy: authUser.uid,
+      profileURL: authUser.profileURL,
+      username: authUser.username
 
     } 
 
     const postDocRef = await addDoc(collection(firestore, "posts"), newPost)
     const userDocRef = doc(firestore, "users", authUser.uid)
+
+
     await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
 
     const storage = getStorage();

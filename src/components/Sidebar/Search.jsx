@@ -39,7 +39,7 @@ const Search = () => {
 
   return (
     <>
-    <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} onClick={onOpen}>
+    <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} onClick={onOpen} cursor={'pointer'}>
         <Flex  p={2} borderRadius={4} justify={'center'}>
             <Box >
                 <SearchLogo />

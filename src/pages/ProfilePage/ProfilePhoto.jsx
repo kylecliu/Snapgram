@@ -20,6 +20,7 @@ import useDeletePost from '../../hooks/useDeletePost';
 import useAddComment from '../../hooks/useAddComment';
 import { UnlikeLogo } from '../../assets/constants';
 import useLikePost from '../../hooks/useLikePost';
+import { timeAgo } from '../../utils/timeAgo';
 
 
 
@@ -159,7 +160,6 @@ const ProfilePhoto = ({post, userProfile}) => {
                                 <span><Link as={RouterLink} to={'/profile'} fontWeight={'bold'} style={{textDecoration: 'none'}} mr={2}>{userProfile.username}</Link></span>
                                 <span fontSize={14}> {post.caption} </span>
                                 </Text>
-                                <Text fontSize={12} color={'gray'}>{post.createdAt}</Text>
                             </Flex>
                         </Flex>
                         <Divider display={{base: 'block', md: 'none'}}/>
@@ -167,7 +167,7 @@ const ProfilePhoto = ({post, userProfile}) => {
                            { post.comments.map((comment) => <Comment comment={comment}/>)}
                         </VStack>
                         <Flex direction={'column'} mt={'auto'} >
-                        <Flex justify={'space-between'}>
+                        <Flex justify={'space-between'}>    
                                 <Flex gap={3} ml={4}>
 
                                     { authUser && isLiked ?
@@ -196,7 +196,7 @@ const ProfilePhoto = ({post, userProfile}) => {
                                 {post.likes.length} likes
                             </Box>
                             <Box color={'gray'} fontSize={12} ml={4}>
-                                {post.createdAt}
+                                {timeAgo(post.createdAt)}
                             </Box>
 
                             {authUser &&  <InputGroup mb={4}>
