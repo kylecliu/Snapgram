@@ -3,7 +3,7 @@ import useDisplayToast from './useDisplayToast'
 import useAuthStore from '../store/AuthStore'
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { storage, firestore } from '../firebase/firebase';
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, collection, query, where, getDocs } from "firebase/firestore";
 import useUserProfileStore from '../store/ProfileStore';
 
 
@@ -53,6 +53,16 @@ const useEditProfile = () => {
         }
 
         const userDocRef = doc(firestore, "users", authUser.uid);
+
+        const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
+
+        const querySnapshot = await getDocs(q);
+
+        if(!querySnapshot.empty) {
+
+            toast("Error", "This username is taken", "error")
+            return
+        }
 
         await updateDoc(userDocRef, newUserDoc);
 

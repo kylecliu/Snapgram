@@ -10,7 +10,9 @@ const useFetchPostsHomepage = () => {
     const [isFetching, setIsFetching] = useState(false)
     const authUser = useAuthStore(state => state.user)
     const [postsToDisplay, setPostsToDisplay] = useState([])
+    const [postIds, setPostIds] = useState([])
     const toast = useDisplayToast()
+
     const fetchPosts = async() => {
 
         if(isFetching) return
@@ -24,9 +26,12 @@ const useFetchPostsHomepage = () => {
             const querySnapshot = await getDocs(q);
 
             let posts = []
+            let postIdsCollection = []
             
             querySnapshot.forEach((doc) => {
                 posts.push({...doc.data(), id: doc.id})
+                postIdsCollection.push(doc.id)
+
             });
 
             posts.sort((a, b) => b.createdAt - a.createdAt)
@@ -35,6 +40,7 @@ const useFetchPostsHomepage = () => {
             console.log(posts)
 
             setPostsToDisplay(posts)
+            setPostIds(postIdsCollection)
             
         } catch (error) {
 
@@ -58,7 +64,7 @@ const useFetchPostsHomepage = () => {
     }, [authUser])
 
 
-    return { isFetching, postsToDisplay }
+    return { isFetching, postsToDisplay, postIds }
 }
 
 export default useFetchPostsHomepage

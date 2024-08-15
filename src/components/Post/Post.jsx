@@ -8,15 +8,18 @@ import { timeAgo } from '../../utils/timeAgo';
 import useLikePost from '../../hooks/useLikePost';
 import useAddComment from '../../hooks/useAddComment';
 import Comment from '../Comment/Comment';
+import useGetUserProfilebyId from '../../hooks/useGetUserProfilebyId';
+import useGetComments from '../../hooks/useGetComments';
 
 
-const Post = ({post, isFetching}) => {
+const Post = ({post, postIds}) => {
   
-  const [comment, setComment] = useState();
-  const user = useAuthStore(state => state.user)
+  const [commentInput, setCommentInput] = useState("");
+  const {userProfile, isFetchingProfile} = useGetUserProfilebyId(post.createdBy)
   const {isLiked, checkIsLiked, likePost, isLoading} = useLikePost()
   const {isUpdating, addComment} = useAddComment()
-  const commentRef = useRef()
+  const {comments, isFetchingComments} = useGetComments(postIds)
+  const commentInputRef = useRef()
   const likePostHandler = () => {
 
     if(isLoading) return
@@ -28,7 +31,7 @@ const Post = ({post, isFetching}) => {
 
     if(isUpdating) return 
 
-    addComment(post.id, comment)
+    addComment(post.id, commentInput)
 
   }
 
@@ -36,22 +39,24 @@ const Post = ({post, isFetching}) => {
 
     checkIsLiked(post)
 
-  }, [])
+  }, [isLiked])
 
-
+  console.log(post.caption)
+  console.log(comments)
 
   
-  return (!isFetching ?
+
+  return (!isFetchingProfile ?
 
     <Flex pt={10} w={'468px'} direction={'column'} mx={10}>
        <Flex py={2} justify={"space-between"}>
            <Flex >
-            <Link as={RouterLink} to={`/${post.username}`}>
-                <Avatar src={post.profileURL} mr={2} />
+            <Link as={RouterLink} to={`/${userProfile?.username}`}>
+                <Avatar src={userProfile?.profileURL} mr={2} />
            </Link>
            <Flex direction={'column'}>
                <Flex justify='flex-start' align={'center'}>
-                   <Link as={RouterLink} to={`/${post.username}`} fontWeight='bold' style={{textDecoration: 'none'}} > {post.username} </Link >
+                   <Link as={RouterLink} to={`/${userProfile?.username}`} fontWeight='bold' style={{textDecoration: 'none'}} > {userProfile?.username} </Link >
                </Flex>
                <Flex justify='flex-start' align={'center'}>
                    <Text fontSize='sm' style={{textDecoration: 'none'}}>{post.location}</ Text>
@@ -68,7 +73,7 @@ const Post = ({post, isFetching}) => {
                <Box pr={2} onClick={likePostHandler} cursor={'pointer'}> 
                    {isLiked ? <UnlikeLogo /> : <NotificationsLogo />}
                </Box>
-               <Box pr={2} cursor={'pointer'} onClick={() => commentRef.current.focus()}> 
+               <Box pr={2} cursor={'pointer'} onClick={() => commentInputRef.current.focus()}> 
                    <CommentLogo />
                </Box>
                <Link as={RouterLink } to={'/index'}> 
@@ -83,19 +88,19 @@ const Post = ({post, isFetching}) => {
   
        <Flex direction={'flex-start'} wrap={'wrap'}>
            <Text>
-           <span ><Link as={RouterLink} to={`/${post.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}}> {post.username}</Link></span>
+           <span ><Link as={RouterLink} to={`/${userProfile?.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}}> {userProfile?.username}</Link></span>
            <span> {post.caption} </span>
            </Text>
            
        </Flex>
        <Text fontSize='xs' color={"gray"}> {timeAgo(post.createdAt)}</Text>
        <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-            { post.comments.map((comment) => <Comment comment={comment}/>)}
+            {!isFetchingComments && filterComments(comments, post)}
         </VStack>
 
 
        <InputGroup>
-           <Input placeholder='Add a comment' size={'sm'} variant={'flushed'} value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
+           <Input placeholder='Add a comment' size={'sm'} variant={'flushed'} value={commentInput} onChange={(e) => setCommentInput(e.target.value)} ref={commentInputRef}></Input>
            <InputRightAddon backgroundColor={'transparent'} border={'none'} _hover={{color:'gray'}} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
        </InputGroup>
         
@@ -119,3 +124,14 @@ const Post = ({post, isFetching}) => {
 }
 
 export default Post
+
+const filterComments = (comments, post) => {
+
+    console.log(comments, post)
+
+    const filteredComments = comments.filter((comment) => comment.postId === post.id )
+
+    return filteredComments.map((comment) => <Comment key={comment.commentId} comment={comment} post={post}/> 
+)
+
+}

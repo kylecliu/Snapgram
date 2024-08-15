@@ -6,6 +6,7 @@ import usePostStore from '../store/postStore';
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import useAuthStore from '../store/AuthStore';
 import useUserProfileStore from '../store/ProfileStore';
+import useCommentStore from '../store/CommentStore';
 
 const useDeletePost = () => {
 
@@ -13,9 +14,10 @@ const useDeletePost = () => {
     const toast = useDisplayToast()
     const authUser = useAuthStore(state => state.user)
     const {userProfile, setUserProfile} = useUserProfileStore()
-    const { posts, deletePost} = usePostStore() 
+    const {posts, deletePost} = usePostStore() 
+    const {deletePost: deletePostCommentStore} = useCommentStore()
 
-    const deletePostHandler = async(id) => {
+    const deletePostHandler = async(postId) => {
 
         SetIsDeleting(true)
 
@@ -23,21 +25,27 @@ const useDeletePost = () => {
 
             const storage = getStorage();
 
-            const desertRef = ref(storage, `photos/${id}`);
+            const desertRef = ref(storage, `photos/${postId}`);
 
             await deleteObject(desertRef)
 
-            deletePost(id);
+            deletePost(postId);
+
+            deletePostCommentStore(postId)
 
             setUserProfile({...userProfile, posts: posts})
+
+
 
             const userRef = doc(firestore, "users", authUser.uid);
 
             await updateDoc(userRef, {
-                posts: arrayRemove(id)
+                posts: arrayRemove(postId)
               });
 
-            await deleteDoc(doc(firestore, "posts", id));
+            
+
+            await deleteDoc(doc(firestore, "posts", postId));
 
             toast("Success", "Post deleted!", "success")
 

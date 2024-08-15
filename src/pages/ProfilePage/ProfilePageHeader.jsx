@@ -45,7 +45,7 @@ const ProfilePageHeader = () => {
 
                 {isOpen && <EditPage isOpen={isOpen} onClose={onClose}/> }
 
-                {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h='25px' _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? Unfollow: Follow }</Button>}
+                {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h='25px' _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? "Unfollow": "Follow" }</Button>}
                 
                 </Flex>
                 <Flex direction={'flex-start'} gap={8} mt={4} mb={4} display={{base: 'none', md: 'none', lg:'flex'}} fontWeight={'bold'} fontSize={15}>

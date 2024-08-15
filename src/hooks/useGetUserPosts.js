@@ -63,7 +63,7 @@ const useGetUserPosts = () => {
         console.log("useEffect sucks")
         console.log(userProfile)
 
-    }, [userProfile])
+    }, [userProfile?.uid])
 
     return {isFetching, posts}
 }

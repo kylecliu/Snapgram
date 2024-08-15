@@ -17,21 +17,12 @@ import useDisplayToast from './useDisplayToast';
 
         const getUserProfile = async() => {
 
-            console.log("getUserProfile starts here")
-
             try {
 
                 const q = query(collection(firestore, "users"), where("username", "==", username)); 
                 const querySnapshot = await getDocs(q);
 
-                console.log("useGetUserProfile")
-                console.log(username)
-                console.log(querySnapshot);
-                console.log(querySnapshot.empty)
-
                 if(querySnapshot.empty) {
-
-                    console.log('querySnapshot empty')
 
                    return  setUserProfile({});
 
@@ -42,11 +33,6 @@ import useDisplayToast from './useDisplayToast';
                     querySnapshot.docs.forEach((doc) => userDoc = doc.data());
 
                     setUserProfile(userDoc);
-
-                    console.log("userDoc")
-                    console.log(userDoc);
-                    console.log("userProfile")
-                    console.log(userProfile)
 
                 }
 

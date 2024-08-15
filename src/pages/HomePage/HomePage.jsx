@@ -1,18 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Post from '../../components/Post/Post'
 import Users from '../../components/User/Users'
 import { Flex, Container, Box, Text, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore'
 import useFetchPostsHomepage from '../../hooks/useFetchPostsHomepage'
+import useGetComments from '../../hooks/useGetComments'
 
 
 
 const HomePage = () => {
 
   const authUser = useAuthStore(state => state.user);
-  const {isFetching, postsToDisplay} = useFetchPostsHomepage()
+  const {isFetching, postsToDisplay, postIds} = useFetchPostsHomepage()
+  // const {comments, isFetchingComments} = useGetComments(postIds)
 
-  console.log(postsToDisplay)
 
   return (
 
@@ -29,24 +30,19 @@ const HomePage = () => {
 
       <Box flex='3'  minH='100vh'>
         <Flex direction={'column'} align={'center'}>
-          {/* <Post username='anna' avatar='img1.png' photo='img1.png'   location='Paris'  />
-          <Post username='steve' avatar='img2.png' photo='img2.png' location='London'  />
-          <Post username='yako' avatar='img3.png' photo='img3.png'   location='Tokyo'  />
-          <Post username='bran' avatar='img4.png' photo='img4.png' location='Seoul'  /> */}
-          {postsToDisplay.map((post) => <Post post={post} isFetching={isFetching}/>)}
+          {!isFetching && postsToDisplay.map((post, idx) => <Post key={idx} post={post} postIds={postIds}/>)}
         </Flex>
       </Box> 
 
       
       {/* Right-side pane */}
       <Container flex='2' p={5} display={{base: 'none', md: 'none', lg: 'block'}}>
-
         <Users />
         <Box textAlign={'center'} w={280}>
           <Text color='gray' fontSize='12px'>{new Date().getFullYear()} © Built by Kyle </Text>
         </Box>
       </Container>
-      
+        
 
     </Flex>
   )

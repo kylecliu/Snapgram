@@ -1,36 +1,37 @@
-import { Flex, Avatar, Text, Link, Button, Box } from '@chakra-ui/react'
+import { Flex, Avatar, Text, Link, Box } from '@chakra-ui/react'
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import React, { useState } from 'react'
-import useUserProfileStore from '../../store/ProfileStore';
 import { timeAgo } from '../../utils/timeAgo';
+import useGetUserProfilebyId from '../../hooks/useGetUserProfilebyId';
+import useAuthStore from '../../store/AuthStore';
 
-const Comment = ({comment}) => {
+const Comment = ({comment, post}) => {
 
-    const [isLiked, setIsLiked] = useState(false);
-    const userProfile = useUserProfileStore(state => state.userProfile)
-    console.log(userProfile)
+    const authUser = useAuthStore(state => state.user)
+    const [isLiked, setIsLiked] = useState(comment?.likedBy?.includes(authUser));
+    const {userProfile, isFetchingProfile} = useGetUserProfilebyId(comment.createdBy)
 
   return (
-    <Flex w={'100%'}>
+    !isFetchingProfile && userProfile && post.id === comment.postId ? <Flex w={'100%'}>
         <Link href={`/${userProfile?.username}`}>
-        <Avatar src={comment.photo} name={comment.username} size={'sm'} m={4}></Avatar>
+            <Avatar src={userProfile?.profileURL} name={userProfile?.username} size={'sm'} m={4}></Avatar>
         </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
             <Flex direction={'column'} justify={'center'}>
                 <Text>
-                    <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2}>{comment.username}</Link></span>
+                    <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2}>{userProfile?.username}</Link></span>
                     <span>{comment.comment}</span>
                 </Text>
 
                 <Flex>
                     <Text as={'span'} fontSize='12px' color='gray' mr={2}>{timeAgo(comment.createdAt)}</Text>
-                    <Text 
+                    {/* <Text 
                     backgroundColor={'transparent'} 
                     border='none' 
                     fontSize={12} 
                     fontWeight={'bold'}
                     cursor={'pointer'}
-                    >Reply</Text>
+                    >Reply</Text> */}
                 </Flex>
                 
             </Flex>
@@ -40,7 +41,7 @@ const Comment = ({comment}) => {
                 </Box>
             </Flex>
         </Flex>
-    </Flex>
+    </Flex> : null
   )
 }
 

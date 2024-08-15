@@ -41,6 +41,7 @@ const Sidebar = () => {
                 </Box>
                 <Text display={{base:'none', md:'inline'}}>Log Out</Text>
             </HStack>
+            
         </Flex>
         
     </Flex>

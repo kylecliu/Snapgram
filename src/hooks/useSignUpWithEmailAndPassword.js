@@ -1,4 +1,3 @@
-import React from 'react'
 import { auth } from '../firebase/firebase'
 import { doc, setDoc } from "firebase/firestore"; 
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
@@ -20,8 +19,6 @@ const useSignUpWithEmailAndPassword = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
 
   const toast = useDisplayToast();
-
-
 
   const signup = async (inputs) => {
 

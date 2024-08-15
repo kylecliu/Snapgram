@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import useDisplayToast from './useDisplayToast'
 import useAuthStore from '../store/AuthStore'
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc, collection, addDoc } from "firebase/firestore";
 import { firestore } from '../firebase/firebase';
 import usePostStore from '../store/postStore';
+import useCommentStore from '../store/CommentStore';
 
 const useAddComment = () => {
     
@@ -11,8 +12,11 @@ const useAddComment = () => {
     const toast = useDisplayToast()
     const authUser = useAuthStore(state => state.user)
     const {addCommentToPost} = usePostStore()
+    const {addComment: addCommentStore} = useCommentStore()
 
-    const addComment = async(id, comment) => {
+    const addComment = async(postId, comment) => {
+
+        if(isUpdating) return
 
         setIsUpdating(true)
 
@@ -21,19 +25,30 @@ const useAddComment = () => {
         try {
 
             const newComment = {
-                photo: authUser.profileURL,
-                username: authUser.username,
+
                 comment: comment,
-                createdAt: Date.now()
+                createdBy: authUser.uid,
+                createdAt: Date.now(),
+                likedBy: [],
+                postId: postId
             }
 
-            const postRef = doc(firestore, "posts", id);
+            const docRef = await addDoc(collection(firestore, "comments"), newComment);
+
+            const commentRef = doc(firestore, "comments", docRef.id)
+
+            await updateDoc(commentRef, {
+                commentId: docRef.id
+            })
+
+            const postRef = doc(firestore, "posts", postId);
 
             await updateDoc(postRef, {
-                comments: arrayUnion(newComment)
+                comments: arrayUnion(docRef.id)
               });
 
-            addCommentToPost(id, newComment)
+            addCommentToPost(postId, docRef.id)
+            addCommentStore({...newComment, postId: postId})
 
             toast("Success", "Comment added!", "success")
 
@@ -48,7 +63,7 @@ const useAddComment = () => {
 
     }
 
-    return {isUpdating, addComment}
+    return {addComment}
 
 }
 
