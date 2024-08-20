@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { arrayRemove, arrayUnion, doc, updateDoc, getDoc } from "firebase/firestore";
 import useAuthStore from '../store/AuthStore';
 import useDisplayToast from './useDisplayToast';
 import { firestore } from '../firebase/firebase';
 import usePostStore from '../store/postStore';
 
-const useLikePost = () => {
+const useLikePost = (post) => {
 
     const [isLiked, setIsLiked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -103,7 +103,13 @@ const useLikePost = () => {
 
     }
 
-    return { isLiked, checkIsLiked, likePost, isLoading }
+    useEffect(() => {
+
+        checkIsLiked(post)
+    
+      }, [post])
+
+    return { isLiked, likePost, isLoading }
 
  
 }

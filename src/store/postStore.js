@@ -36,6 +36,21 @@ const usePostStore = create((set) => ({
 
     })})),
 
+    deleteCommentInPost: (commentInput) => set(state => ({ posts: 
+
+         state.posts.map((post) => {
+
+            if (post.id === commentInput.postId) {
+
+               return { ...post, comments: post.comments.filter((comment) => comment.commentId !== commentInput.commentId)}
+            }
+
+            return post 
+ 
+         })       
+
+        })) 
+
 }))
     
 

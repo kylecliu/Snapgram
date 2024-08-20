@@ -33,6 +33,7 @@ const useAddComment = () => {
                 postId: postId
             }
 
+          
             const docRef = await addDoc(collection(firestore, "comments"), newComment);
 
             const commentRef = doc(firestore, "comments", docRef.id)

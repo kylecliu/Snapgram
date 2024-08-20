@@ -11,7 +11,7 @@ import useGetComments from '../../hooks/useGetComments'
 const HomePage = () => {
 
   const authUser = useAuthStore(state => state.user);
-  const {isFetching, postsToDisplay, postIds} = useFetchPostsHomepage()
+  const {isFetching, postsToDisplay} = useFetchPostsHomepage()
   // const {comments, isFetchingComments} = useGetComments(postIds)
 
 
@@ -30,7 +30,7 @@ const HomePage = () => {
 
       <Box flex='3'  minH='100vh'>
         <Flex direction={'column'} align={'center'}>
-          {!isFetching && postsToDisplay.map((post, idx) => <Post key={idx} post={post} postIds={postIds}/>)}
+          {!isFetching && postsToDisplay.map((post, idx) => <Post key={idx} post={post}/>)}
         </Flex>
       </Box> 
 

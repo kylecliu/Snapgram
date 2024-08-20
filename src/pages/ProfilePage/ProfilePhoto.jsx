@@ -19,6 +19,8 @@ import useGetUserProfile from '../../hooks/useGetUserProfile';
 import useGetComments from '../../hooks/useGetComments';
 
 
+
+
 const ProfilePhoto = ({post}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -29,8 +31,9 @@ const ProfilePhoto = ({post}) => {
     const { addComment } = useAddComment()
     const [ comment, setComment ] = useState("")
     const commentRef = useRef()
-    const { isLiked, checkIsLiked, likePost, isLoading }= useLikePost()
-    const {isFetchingComments, comments} = useGetComments(post)
+    const { isLiked, likePost, isLoading }= useLikePost(post)
+    const {isFetchingComments, comments} = useGetComments(post.id)
+
 
     const addCommentHandler = () => {
 
@@ -57,11 +60,11 @@ const ProfilePhoto = ({post}) => {
         likePost(post)
     }
 
-    useEffect(() => {//To check isLiked on the first render 
+    // useEffect(() => {//To check isLiked on the first render 
 
-        checkIsLiked(post)
+    //     checkIsLiked(post)
 
-    }, [isLiked])
+    // }, [isLiked])
 
     console.log(comments)
 
@@ -173,7 +176,7 @@ const ProfilePhoto = ({post}) => {
                             </Flex>
                             <Divider display={{base: 'block', md: 'none'}}/>
                             <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-                               {!isFetchingComments ? comments.map((comment) => <Comment key={comment.commentId} comment={comment} post={post}/>) : null}
+                               {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
                             </VStack>
                             <Flex direction={'column'} mt={'auto'} >
                             <Flex justify={'space-between'}>    
@@ -234,5 +237,4 @@ const ProfilePhoto = ({post}) => {
 }
 
 export default ProfilePhoto
-
 

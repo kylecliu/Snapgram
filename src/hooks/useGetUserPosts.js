@@ -26,8 +26,7 @@ const useGetUserPosts = () => {
     
             setIsFetching(true)
             setPosts([])
-            console.log("Posts intial")
-            console.log(posts)
+
     
             try{
     
@@ -36,24 +35,25 @@ const useGetUserPosts = () => {
     
                 const docs = []
     
-                querySnapshot.forEach((doc) => docs.push({...doc.data(), id: doc.id}))
-                console.log(docs)
+                querySnapshot.forEach((doc) => {
+                    docs.push({...doc.data(), id: doc.id})
+                    
+                })
+                
                 docs.sort((a, b) => a.createdAt - b.createdAt )
                 setPosts(docs)
-                console.log("UseGetUserPosts")
-                console.log(posts)
+
+
 
     
             } catch(error) {
 
                 toast("Error", error.message, "error")
-                setPosts([])
     
             } finally {
 
                 setIsFetching(false)
-                console.log("final")
-                console.log(userProfile)
+
             }
     
         }

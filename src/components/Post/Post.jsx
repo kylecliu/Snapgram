@@ -12,13 +12,13 @@ import useGetUserProfilebyId from '../../hooks/useGetUserProfilebyId';
 import useGetComments from '../../hooks/useGetComments';
 
 
-const Post = ({post, postIds}) => {
+const Post = ({post}) => {
   
   const [commentInput, setCommentInput] = useState("");
   const {userProfile, isFetchingProfile} = useGetUserProfilebyId(post.createdBy)
-  const {isLiked, checkIsLiked, likePost, isLoading} = useLikePost()
-  const {isUpdating, addComment} = useAddComment()
-  const {comments, isFetchingComments} = useGetComments(postIds)
+  const {isLiked, likePost, isLoading} = useLikePost(post)
+  const {addComment} = useAddComment()
+  const {comments, isFetchingComments} = useGetComments(post.id)
   const commentInputRef = useRef()
   const likePostHandler = () => {
 
@@ -29,19 +29,15 @@ const Post = ({post, postIds}) => {
 
   const addCommentHandler = () => {
 
-    if(isUpdating) return 
-
     addComment(post.id, commentInput)
+
+    setCommentInput("")
 
   }
 
-  useEffect(() => {
-
-    checkIsLiked(post)
-
-  }, [isLiked])
 
   console.log(post.caption)
+  console.log(post.id)
   console.log(comments)
 
   
@@ -95,7 +91,8 @@ const Post = ({post, postIds}) => {
        </Flex>
        <Text fontSize='xs' color={"gray"}> {timeAgo(post.createdAt)}</Text>
        <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-            {!isFetchingComments && filterComments(comments, post)}
+        <Text>{comments.length}</Text>
+            {!isFetchingComments && comments.map((comment) => <Comment comment={comment}/>)}
         </VStack>
 
 
@@ -125,13 +122,3 @@ const Post = ({post, postIds}) => {
 
 export default Post
 
-const filterComments = (comments, post) => {
-
-    console.log(comments, post)
-
-    const filteredComments = comments.filter((comment) => comment.postId === post.id )
-
-    return filteredComments.map((comment) => <Comment key={comment.commentId} comment={comment} post={post}/> 
-)
-
-}
