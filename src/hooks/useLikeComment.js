@@ -41,7 +41,9 @@ const useLikeComment = (comment) => {
 
     const likeComment = async(commentInput) => {
 
-        if(isUpdating || !authUser) return 
+        if (!authUser) return toast ("Info", "You need to log in to like a comment!", "info")
+
+        if(isUpdating) return 
 
         setIsUpdating(true)
 

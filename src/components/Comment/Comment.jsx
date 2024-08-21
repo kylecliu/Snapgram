@@ -12,7 +12,7 @@ const Comment = ({comment}) => {
     const authUser = useAuthStore(state => state.user)
     // const [isLiked, setIsLiked] = useState(comment?.likedBy?.includes(authUser));
     const {userProfile, isFetchingProfile} = useGetUserProfilebyId(comment.createdBy)
-    const {deleteComment} = useDeleteComment()
+    const { isDeletingComment ,deleteComment} = useDeleteComment()
     const {isLiked, likeComment} = useLikeComment(comment)
     const sameUser = authUser?.uid === userProfile?.uid
 
@@ -21,6 +21,10 @@ const Comment = ({comment}) => {
         if(window.confirm("Are you sure you want to delete this comment?")) {
             deleteComment(comment)
         }
+
+        !isDeletingComment  && console.log()
+
+
 
     }
 

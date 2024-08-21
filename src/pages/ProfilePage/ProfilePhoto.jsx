@@ -17,6 +17,7 @@ import useLikePost from '../../hooks/useLikePost';
 import { timeAgo } from '../../utils/timeAgo';
 import useGetUserProfile from '../../hooks/useGetUserProfile';
 import useGetComments from '../../hooks/useGetComments';
+import useDisplayToast from '../../hooks/useDisplayToast';
 
 
 
@@ -32,7 +33,8 @@ const ProfilePhoto = ({post}) => {
     const [ comment, setComment ] = useState("")
     const commentRef = useRef()
     const { isLiked, likePost, isLoading }= useLikePost(post)
-    const {isFetchingComments, comments} = useGetComments(post.id)
+    const {isFetchingComments, comments} = useGetComments(post)
+    const toast = useDisplayToast()
 
 
     const addCommentHandler = () => {
@@ -66,7 +68,7 @@ const ProfilePhoto = ({post}) => {
 
     // }, [isLiked])
 
-    console.log(comments)
+    console.log(`ProfilePhoto comments:  ${JSON.stringify(comments)}`)
 
  
 
@@ -189,9 +191,11 @@ const ProfilePhoto = ({post}) => {
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}><FaRegHeart /></Box>
                                         </Tooltip>} 
     
-                                        <Tooltip label='Comment' fontSize='md'>
+                                        { authUser ? <Tooltip label='Comment' fontSize='md'>
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()}><FaRegComment/></Box>
-                                        </Tooltip>
+                                        </Tooltip> : <Tooltip label='Comment' fontSize='md'>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><FaRegComment/></Box>
+                                        </Tooltip>}
                                         
                                         <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link>
                                         {authUser?.uid === userProfile?.uid ?                                    

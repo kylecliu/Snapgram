@@ -59,8 +59,6 @@ const useDeletePost = () => {
             SetIsDeleting(false)
         }
 
-
-
     }
 
     return {isDeleting, deletePostHandler}

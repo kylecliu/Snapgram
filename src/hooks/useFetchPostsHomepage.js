@@ -3,13 +3,15 @@ import useAuthStore from '../store/AuthStore'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from '../firebase/firebase';
 import useDisplayToast from './useDisplayToast';
+import usePostStore from '../store/postStore';
 
 
 const useFetchPostsHomepage = () => {
 
     const [isFetching, setIsFetching] = useState(false)
     const authUser = useAuthStore(state => state.user)
-    const [postsToDisplay, setPostsToDisplay] = useState([])
+    // const [postsToDisplay, setPostsToDisplay] = useState([])
+    const {posts: postsToDisplay, setPosts: setPostsToDisplay}= usePostStore()
     const toast = useDisplayToast()
 
     const fetchPosts = async() => {

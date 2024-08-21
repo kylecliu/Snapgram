@@ -24,7 +24,7 @@ import useDisplayToast from './useDisplayToast';
 
                 if(querySnapshot.empty) {
 
-                   return  setUserProfile({});
+                   return  setUserProfile(null);
 
                 } else {
 

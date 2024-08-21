@@ -12,7 +12,7 @@ const ProfilePagePhotos = () => {
 
   const { username } = useParams();
   const { userProfile, isLoading } = useGetUserProfile(username);
-  const { isFetching, posts, postIds } = useGetUserPosts()
+  const { isFetching, posts } = useGetUserPosts()
 
 
   const noPostsFound = !isFetching && posts.length === 0
@@ -35,7 +35,7 @@ const ProfilePagePhotos = () => {
 
     </Grid>) : ( <Grid w={'70%'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
         
-        {posts.map((post) => <ProfilePhoto key={post.id} post={post} postIds={postIds}></ProfilePhoto> )} 
+        {posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
 
     </Grid>)}
 

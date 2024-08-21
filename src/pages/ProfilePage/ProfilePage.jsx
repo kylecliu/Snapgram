@@ -13,8 +13,9 @@ const ProfilePage = () => {
   const { userProfile, isLoading } = useGetUserProfile(username);
 
   const  userNotFound = !isLoading && !userProfile;
+  
 
-  if(userNotFound) { return < UserNotFound/> }
+  if(userNotFound) return < UserNotFound/>
 
   return (
     
@@ -23,10 +24,12 @@ const ProfilePage = () => {
 
         { isLoading && <LoadingEffect /> }
 
-        { !isLoading && userProfile && <ProfilePageHeader />}
-
+        { !isLoading && userProfile && (
+          <>
+          <ProfilePageHeader />
           <ProfileTabs />
           <ProfilePagePhotos />
+          </>)}
       </Flex>
     </>
  

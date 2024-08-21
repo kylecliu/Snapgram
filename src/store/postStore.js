@@ -40,12 +40,18 @@ const usePostStore = create((set) => ({
 
          state.posts.map((post) => {
 
+            console.log('deleteCommentInPost fired')
+
             if (post.id === commentInput.postId) {
 
-               return { ...post, comments: post.comments.filter((comment) => comment.commentId !== commentInput.commentId)}
+                console.log("Found comment to delete")
+
+                console.log(`post: ${JSON.stringify(post)} comments: ${post.comments}` )
+
+               return { ...post, comments: post.comments.filter((comment) => comment !== commentInput.commentId)}
             }
 
-            return post 
+            return post      
  
          })       
 

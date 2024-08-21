@@ -16,11 +16,11 @@ const useAddComment = () => {
 
     const addComment = async(postId, comment) => {
 
+        if(!authUser) return toast("Info", "You need to log in to comment", "info")
+
         if(isUpdating) return
 
-        setIsUpdating(true)
-
-        if(!authUser) return toast("Error", "You need to log in to comment", "error")
+        setIsUpdating(true)    
 
         try {
 

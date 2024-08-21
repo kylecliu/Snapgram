@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avatar, Heading, Link, InputGroup, InputRightAddon } from '@chakra-ui/react'
+import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avatar, Heading, Link, InputGroup, InputRightAddon, Tooltip } from '@chakra-ui/react'
 import { Router, Link as RouterLink } from 'react-router-dom';
 import { ThreeDots, UnlikeLogo, CommentLogo, SendLogo, SaveLogo, NotificationsLogo } from '../../assets/constants';
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
@@ -10,6 +10,8 @@ import useAddComment from '../../hooks/useAddComment';
 import Comment from '../Comment/Comment';
 import useGetUserProfilebyId from '../../hooks/useGetUserProfilebyId';
 import useGetComments from '../../hooks/useGetComments';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import useDeletePost from '../../hooks/useDeletePost';
 
 
 const Post = ({post}) => {
@@ -18,8 +20,10 @@ const Post = ({post}) => {
   const {userProfile, isFetchingProfile} = useGetUserProfilebyId(post.createdBy)
   const {isLiked, likePost, isLoading} = useLikePost(post)
   const {addComment} = useAddComment()
-  const {comments, isFetchingComments} = useGetComments(post.id)
+  const {comments, isFetchingComments} = useGetComments(post)
   const commentInputRef = useRef()
+  const {isDeleting, deletePostHandler} = useDeletePost()
+  const authUser = useAuthStore(state => state.user)
   const likePostHandler = () => {
 
     if(isLoading) return
@@ -36,10 +40,17 @@ const Post = ({post}) => {
   }
 
 
-  console.log(post.caption)
-  console.log(post.id)
-  console.log(comments)
+  const deleteUserPostHandler = () => {
 
+    if(isDeleting) return 
+
+    if(window.confirm("Are you sure you want to delete this post?")) {
+
+        deletePostHandler(post.id)
+
+    } else { return }
+
+}
   
 
   return (!isFetchingProfile ?
@@ -75,6 +86,10 @@ const Post = ({post}) => {
                <Link as={RouterLink } to={'/index'}> 
                    <SendLogo />
                </Link>
+               {authUser?.uid === userProfile?.uid ?                                    
+                <Tooltip label='Delete' fontSize='md'>
+                    <Box pl={2} fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
+                </Tooltip> : null}
            </Flex>
            <Link as={RouterLink } to={'/index'}> 
                    <SaveLogo />
@@ -91,8 +106,7 @@ const Post = ({post}) => {
        </Flex>
        <Text fontSize='xs' color={"gray"}> {timeAgo(post.createdAt)}</Text>
        <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-        <Text>{comments.length}</Text>
-            {!isFetchingComments && comments.map((comment) => <Comment comment={comment}/>)}
+            {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
         </VStack>
 
 

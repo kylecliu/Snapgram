@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore'
 import { firestore } from '../firebase/firebase'
 import useCommentStore from '../store/CommentStore'
 
-const useGetComments = (postIds) => {
+const useGetComments = (post) => {
 
     const [isFetchingComments, setIsFetchingComments] = useState(false)
     const toast = useDisplayToast()
@@ -13,7 +13,7 @@ const useGetComments = (postIds) => {
     const GetComments = async() => {
 
         // if (postIds.length === 0) return
-        console.log(postIds)
+        console.log(post)
             
 
         setIsFetchingComments(true) 
@@ -22,7 +22,7 @@ const useGetComments = (postIds) => {
 
             console.log("Getcomments start")
 
-            const q = query(collection(firestore, "comments"), where("postId", "in", [postIds]));
+            const q = query(collection(firestore, "comments"), where("postId", "==", post.id));
             const querySnapshot = await getDocs(q);
 
             let docs = [];
@@ -56,11 +56,9 @@ const useGetComments = (postIds) => {
 
         GetComments()
 
-        console.log()
+        console.log('getCimments useEffect fired')
 
-        console.log(comments)
-
-    }, [postIds])
+    }, [post.comments.length])
 
     return {isFetchingComments, comments}
 

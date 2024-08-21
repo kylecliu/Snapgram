@@ -35,6 +35,8 @@ const useDeleteComment = () => {
 
             deleteCommentStore(comment)
 
+            toast("Success", "Comment deleted!", "success")
+
             
         } catch (error) {
 
