@@ -199,7 +199,7 @@ const ProfilePhoto = ({post}) => {
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><CommentLogo/></Box>
                                         </Tooltip>}
 
-                                        <Text fontWeight={'bold'}>{comments?.length}</Text>
+                                        {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
                                         
                                         {/* <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link> */}
 

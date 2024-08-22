@@ -1,15 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { CreatePostLogo } from '../../assets/constants'
-import { Flex, Box, Text, useDisclosure, Button, Input, FormControl, Image, Textarea, CloseButton } from '@chakra-ui/react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
+import { Flex, Box, Text, useDisclosure, Button, Input, FormControl, Image, Textarea, CloseButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import usePreviewImage from '../../hooks/usePreviewImage'
 import useDisplayToast from '../../hooks/useDisplayToast'
 import useUserProfileStore from '../../store/ProfileStore'
@@ -38,7 +29,9 @@ const Create = () => {
     createPostHandler(inputs.caption, inputs.location, selectedFile)
 
     onClose()
-    setInputs({})
+    setInputs({ 
+      location: "",
+      caption: ""})
     setSelectedFile(null)
 
   }

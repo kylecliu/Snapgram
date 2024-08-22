@@ -40,12 +40,10 @@ const useGetUserPosts = () => {
                     
                 })
                 
-                docs.sort((a, b) => a.createdAt - b.createdAt )
+                docs.sort((a, b) => b.createdAt - a.createdAt )
                 setPosts(docs)
 
-
-
-    
+                
             } catch(error) {
 
                 toast("Error", error.message, "error")
