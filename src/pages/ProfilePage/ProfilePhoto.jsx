@@ -18,6 +18,7 @@ import { timeAgo } from '../../utils/timeAgo';
 import useGetUserProfile from '../../hooks/useGetUserProfile';
 import useGetComments from '../../hooks/useGetComments';
 import useDisplayToast from '../../hooks/useDisplayToast';
+import { CommentLogo } from '../../assets/constants';
 
 
 
@@ -62,11 +63,6 @@ const ProfilePhoto = ({post}) => {
         likePost(post)
     }
 
-    // useEffect(() => {//To check isLiked on the first render 
-
-    //     checkIsLiked(post)
-
-    // }, [isLiked])
 
     console.log(`ProfilePhoto comments:  ${JSON.stringify(comments)}`)
 
@@ -124,7 +120,8 @@ const ProfilePhoto = ({post}) => {
             <ModalOverlay/>
             <ModalContent>
               <ModalCloseButton />
-              <ModalBody backgroundColor='white'>
+              {/* Small screen user info display */}
+              <ModalBody backgroundColor='white' py={0} pl={0}>
                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'flex', md: 'none'}}>
                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -136,17 +133,22 @@ const ProfilePhoto = ({post}) => {
                         <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                     </Flex>
                 </Flex>
+                
                 <Flex justify={'center'} align={'center'} flexDirection={'column'}>
+                    {/* Image display */}
                     <Flex direction={{ base: 'column', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
-                        <Box flex={1.5}>
+                        <Flex flex={1.5}>
                             <Image 
                             src={post.photoURL} 
                             name={userProfile.username}
                             objectFit={'cover'}
                             aspectRatio={4/5}
-                            maxH={700} 
+                            // maxH={700} 
+                            w={"100%"}
+                            h={'auto'}
                             ></Image>
-                        </Box>
+                        </Flex>
+                        {/* For medium screen and up user info display */}
                         <Flex direction={'column'} w={'1fr'} backgroundColor={'white'} flex={1} >
                             <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>
                                 <Link as={RouterLink} to={`/${userProfile.username}`}>
@@ -182,35 +184,38 @@ const ProfilePhoto = ({post}) => {
                             </VStack>
                             <Flex direction={'column'} mt={'auto'} >
                             <Flex justify={'space-between'}>    
-                                    <Flex gap={3} ml={4}>
+                                    <Flex gap={3} ml={4} mb={3}>
     
-                                        { authUser && isLiked ?
+                                        
                                         <Tooltip label='Like' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}><UnlikeLogo /></Box>
-                                        </Tooltip> :   <Tooltip label='Like' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}><FaRegHeart /></Box>
-                                        </Tooltip>} 
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}>{isLiked ? <UnlikeLogo /> : <FaRegHeart />}</Box>
+                                        </Tooltip> 
+
+                                        {post?.likes?.length > 0 ? <Text fontWeight={'bold'}>{post?.likes?.length}</Text> : null}
     
                                         { authUser ? <Tooltip label='Comment' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()}><FaRegComment/></Box>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()}><CommentLogo/></Box>
                                         </Tooltip> : <Tooltip label='Comment' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><FaRegComment/></Box>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><CommentLogo/></Box>
                                         </Tooltip>}
+
+                                        <Text fontWeight={'bold'}>{comments?.length}</Text>
                                         
-                                        <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link>
-                                        {authUser?.uid === userProfile?.uid ?                                    
+                                        {/* <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link> */}
+
+    
+                                    </Flex>
+                                    {authUser?.uid === userProfile?.uid ?                                    
                                          <Tooltip label='Delete' fontSize='md'>
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
                                         </Tooltip> : null}
-    
-                                    </Flex>
-                                    <Box>
+                                    {/* <Box>
                                         <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
-                                    </Box>
+                                    </Box> */}
                                 </Flex>
-                                <Box pt={2} fontWeight={'bold'} ml={4}>
+                                {/* <Box pt={2} fontWeight={'bold'} ml={4}>
                                     {post.likes.length} likes
-                                </Box>
+                                </Box> */}
                                 <Box color={'gray'} fontSize={12} ml={4}>
                                     {new Date(post.createdAt).toLocaleDateString("en-US", {
                                         day: "numeric",
