@@ -30,8 +30,8 @@ const ProfilePageHeader = () => {
             as='span' 
             >
                 <Link 
-                    as={RouterLink} 
-                    to={'/profile'} 
+                    // as={RouterLink} 
+                    // to={`/${userProfile.username}`} 
                     style={{textDecoration:'none'}} 
                     fontWeight={'bold'} 
                     fontSize={20} 

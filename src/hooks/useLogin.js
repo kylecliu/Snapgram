@@ -39,7 +39,7 @@ const useLogin = () => {
 
                 if(docSnap.exists) {
 
-                    localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
+                    // localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
                 
                     userLogIn(docSnap.data());
 

@@ -32,6 +32,8 @@ const useFollowUser = (userId) => {
 
     const followOrUnfollowUser = async() => {
 
+        if(isUpdating) return
+
         setIsUpdating(true)
 
 

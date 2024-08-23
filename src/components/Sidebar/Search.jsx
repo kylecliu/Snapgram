@@ -1,16 +1,6 @@
 import React, { useRef } from 'react'
 import { SearchLogo } from '../../assets/constants'
-import { Flex, Box, Text, Link, useDisclosure, Button, ButtonGroup, Input } from '@chakra-ui/react'
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
+import { Flex, Box, Text, useDisclosure, Button, ButtonGroup, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import useSearchUser from '../../hooks/useSearchUser';
 import { FormControl } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore';

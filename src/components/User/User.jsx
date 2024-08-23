@@ -9,10 +9,11 @@ const User = ({user, setUser}) => {
   const { isFollowing, isUpdating, followOrUnfollowUser } = useFollowUser(user.uid)
   const authUser = useAuthStore(state => state.user)
   const isSameUser = authUser.uid === user.uid
-  const followHandler = async() => {
+  const followHandler = () => {
 
     setUser(isFollowing ? {...user, followers: user.followers.filter((uid) => uid !== authUser.uid)} : {...user, followers: [...user.followers, authUser.uid]})
-    await followOrUnfollowUser()
+    
+    followOrUnfollowUser()
 
   }
   

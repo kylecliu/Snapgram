@@ -12,10 +12,6 @@ const Sidebar = () => {
 
     const { logOutHandler } = useLogout();
 
-    const user = useAuthStore(state => state.user) 
-
-    // const user = JSON.parse(localStorage.getItem('user-info'))
-
 
   return (
     <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column'>

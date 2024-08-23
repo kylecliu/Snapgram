@@ -64,11 +64,8 @@ const ProfilePhoto = ({post}) => {
     }
 
 
-    console.log(`ProfilePhoto comments:  ${JSON.stringify(comments)}`)
 
- 
-
-
+    
     return (!isLoadingUser ? <>
         <GridItem  
         cursor={'pointer'}

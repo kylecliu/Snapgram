@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Flex, Container, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Heading, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Divider  } from '@chakra-ui/react'
-import { Router, Link as RouterLink } from 'react-router-dom';
+import React, { useState, useRef } from 'react'
+import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Divider  } from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom';
 import { ThreeDots, UnlikeLogo, CommentLogo, SendLogo, SaveLogo, NotificationsLogo } from '../../assets/constants';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore';
 import { timeAgo } from '../../utils/timeAgo';
 import useLikePost from '../../hooks/useLikePost';
@@ -16,6 +16,7 @@ import { FaRegHeart } from 'react-icons/fa6';
 import { LuSend } from 'react-icons/lu';
 import { useDisclosure } from '@chakra-ui/react';
 import { GoSmiley } from "react-icons/go";
+import useFollowUser from '../../hooks/useFollowUser';
 
 
 
@@ -30,6 +31,8 @@ const Post = ({post}) => {
   const {isDeleting, deletePostHandler} = useDeletePost()
   const authUser = useAuthStore(state => state.user)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {isFollowing, followOrUnfollowUser, isUpdating} = useFollowUser(post.createdBy)
+  const isSameUser = authUser?.uid === post.createdBy
   const likePostHandler = () => {
 
     if(isLoading) return
@@ -79,7 +82,19 @@ const Post = ({post}) => {
            </Flex>
            </Flex>
            <Box>
-               <ThreeDots />
+           {isSameUser ? null :          
+           
+           <Button 
+            variant={'ghost'} 
+            fontSize={'13px'}  
+            color={'#0095F6'} 
+            size={'xs'} 
+            isLoading={isUpdating}
+            onClick={followOrUnfollowUser}  
+            >
+          {isFollowing ? 'Unfollow' : 'Follow'}</Button>}
+
+               {/* <ThreeDots /> */}
            </Box>
        </Flex>
        <Image src={post.photoURL}  borderRadius={4} aspectRatio={3/4} objectFit={'cover'} maxH={600} alt={'feed post image'}></Image>
@@ -287,30 +302,6 @@ const Post = ({post}) => {
                 </ModalContent>
               </Modal>
               </>
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     :
             <Flex p={4} my={4}>
