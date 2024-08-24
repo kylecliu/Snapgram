@@ -98,6 +98,7 @@ const useCreatePost = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const toast = useDisplayToast()
+  const userProfile = useUserProfileStore(state => state.userProfile)
   const addPost = useUserProfileStore(state => state.addPost) 
   const createPost = usePostStore(state => state.createPost)
   const authUser = useAuthStore(state => state.user)
@@ -147,8 +148,11 @@ const useCreatePost = () => {
 
     newPost.photoURL = photoURL
 
-    addPost({...newPost, id: postDocRef.id})
-    createPost({...newPost, id: postDocRef.id})
+    { authUser.uid === userProfile.uid ?  addPost({...newPost, id: postDocRef.id}) : null }
+
+    { authUser.uid === userProfile.uid ?  createPost({...newPost, id: postDocRef.id}) : null }
+
+    
 
     toast("Success", "Post added successfully", "success")
     

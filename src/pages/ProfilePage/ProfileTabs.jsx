@@ -33,7 +33,7 @@ const ProfileTabs = () => {
                 </Link>
             </Flex>
 
-            <Flex  gap={1} align={'center'}>
+            {/* <Flex  gap={1} align={'center'}>
                 <RiBookmarkLine fontSize={11}></RiBookmarkLine>
                 <Link 
                 py={3}
@@ -53,7 +53,7 @@ const ProfileTabs = () => {
                 onClick={(e) => clickHandler(e)}
                 fontSize={15}
                 >TAGGED</Link>
-            </Flex>
+            </Flex> */}
 
         </Flex>
 

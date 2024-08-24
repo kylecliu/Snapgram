@@ -30,9 +30,9 @@ const useFetchPostsHomepage = () => {
             
             
             querySnapshot.forEach((doc) => {
+
                 posts.push({...doc.data(), id: doc.id})
             
-
             });
 
             posts.sort((a, b) => b.createdAt - a.createdAt)
@@ -54,8 +54,7 @@ const useFetchPostsHomepage = () => {
 
     useEffect(() => {
 
-            fetchPosts()
-        
+        fetchPosts()
 
     }, [authUser])
 
