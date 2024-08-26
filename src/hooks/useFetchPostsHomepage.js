@@ -56,7 +56,7 @@ const useFetchPostsHomepage = () => {
 
         fetchPosts()
 
-    }, [authUser])
+    }, [authUser, postsToDisplay.length])
 
 
     return { isFetching, postsToDisplay }
