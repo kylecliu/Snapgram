@@ -5,7 +5,7 @@ const usePreviewImage = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const toast = useDisplayToast();
-    const maxSize = 1024 * 1024 * 2 //2MB
+    const maxSize = 1024 * 1024 * 5 //5MB
 
     const handleImageChange = (e) => {
 

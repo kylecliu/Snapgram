@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Post from '../../components/Post/Post'
 import Users from '../../components/User/Users'
-import { Flex, Container, Box, Text, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
-import useAuthStore from '../../store/AuthStore'
+import { Flex, Container, Text } from '@chakra-ui/react'
 import useFetchPostsHomepage from '../../hooks/useFetchPostsHomepage'
 import useGetComments from '../../hooks/useGetComments'
 
@@ -10,14 +9,13 @@ import useGetComments from '../../hooks/useGetComments'
 
 const HomePage = () => {
 
-  const authUser = useAuthStore(state => state.user);
   const {isFetching, postsToDisplay} = useFetchPostsHomepage()
   // const {comments, isFetchingComments} = useGetComments(postIds)
 
 
   return (
 
-    <Flex width='100' justify={'center'} gap={{ md:'20'}}>
+    <Flex >
       {/* middle display area */}
 
       {!isFetching && postsToDisplay.length === 0 && 
@@ -27,23 +25,17 @@ const HomePage = () => {
         </Text>
       </Flex>}
 
-
-      <Box flex='3'  minH='100vh'>
-        <Flex direction={'column'} align={'center'}>
+        <Flex flex='4.5' direction={'column'} align={'center'}>
           {!isFetching && postsToDisplay.map((post, idx) => <Post key={idx} post={post}/>)}
         </Flex>
-      </Box> 
-
       
       {/* Right-side pane */}
       <Container flex='2' p={5} display={{base: 'none', md: 'none', lg: 'block'}}>
-        <Users />
-        <Box textAlign={'center'} w={280}>
-          <Text color='gray' fontSize='12px'>{new Date().getFullYear()} © Built by Kyle </Text>
-        </Box>
+        <Flex direction={'column'} w={'80%'}>
+          <Users />
+        </Flex>
       </Container>
         
-
     </Flex>
   )
 }

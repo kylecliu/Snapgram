@@ -6,12 +6,10 @@ import useGetUserProfile from '../../hooks/useGetUserProfile'
 import useGetUserPosts from '../../hooks/useGetUserPosts'
 
 
-
-
 const ProfilePagePhotos = () => {
 
   const { username } = useParams();
-  const { userProfile, isLoading } = useGetUserProfile(username);
+  const { isLoading } = useGetUserProfile(username);
   const { isFetching, posts } = useGetUserPosts()
 
 
@@ -21,7 +19,7 @@ const ProfilePagePhotos = () => {
   return (
     <>
 
-    {isLoading ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
+    {isLoading || isFetching ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useUserProfileStore from '../store/ProfileStore'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { firestore } from '../firebase/firebase';
@@ -50,6 +50,8 @@ import useDisplayToast from './useDisplayToast';
         
         getUserProfile();
 
+        console.log("useGetUserProfile")
+        
 
     }, [username])
 

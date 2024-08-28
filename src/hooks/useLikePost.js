@@ -15,6 +15,8 @@ const useLikePost = (post) => {
 
     const checkIsLiked = async(post) => {
 
+        if (!authUser) return
+
         try {
 
             const postRef = doc(firestore, "posts", post.id)
@@ -107,7 +109,7 @@ const useLikePost = (post) => {
 
         checkIsLiked(post)
     
-      }, [post])
+      }, [post, authUser])
 
     return { isLiked, likePost, isLoading }
 

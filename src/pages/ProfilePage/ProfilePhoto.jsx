@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { Image, GridItem, Box, Flex, Link, HStack, Text, useDisclosure, Avatar, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, Tooltip, Divider } from '@chakra-ui/react'
 import { Link as RouterLink, useParams} from 'react-router-dom'
 import { FaComment, FaRegComment } from "react-icons/fa6";
@@ -65,7 +65,7 @@ const ProfilePhoto = ({post}) => {
 
 
 
-    
+
     return (!isLoadingUser ? <>
         <GridItem  
         cursor={'pointer'}
@@ -213,7 +213,7 @@ const ProfilePhoto = ({post}) => {
                                 {/* <Box pt={2} fontWeight={'bold'} ml={4}>
                                     {post.likes.length} likes
                                 </Box> */}
-                                <Box color={'gray'} fontSize={12} ml={4}>
+                                <Box color={'gray'} fontSize={12} ml={4} mb={2}>
                                     {new Date(post.createdAt).toLocaleDateString("en-US", {
                                         day: "numeric",
                                         month: "short",

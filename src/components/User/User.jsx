@@ -19,13 +19,17 @@ const User = ({user, setUser}) => {
   
 
   return (
-    <Flex py={3} pr={5} maxW={300}>
+    <Flex py={3}  w={'100%'}>
+      <Link 
+      as={RouterLink}      
+      to={`/${user.username}`}>
         <Avatar name='user' size='md' src={user.profileURL} mr={3} ></Avatar>
-        <Flex w={"100%"} justify={'space-between'} >
+      </Link>
+      <Flex w={"100%"} justify={'space-between'} >
         <Flex direction={'column'} flex={1} >
             <Link 
             as={RouterLink} 
-            to={'/'} 
+            to={`/${user.username}`} 
             fontWeight={'bold'}
             style={{textDecoration: 'none'}}
             >
@@ -35,17 +39,17 @@ const User = ({user, setUser}) => {
 
         <Flex h={'100%'} align={'center'} >
 
-          {isSameUser ? null :           <Button 
-            variant={'ghost'} 
-            fontSize={'13px'}  
-            color={'#0095F6'} 
-            size={'xs'} 
-            isLoading={isUpdating}
-            onClick={followHandler}
-            >
-          {isFollowing ? 'Unfollow' : 'Follow'}</Button>}
+            {isSameUser ? null :           <Button 
+              variant={'ghost'} 
+              fontSize={'13px'}  
+              color={'#0095F6'} 
+              size={'xs'} 
+              isLoading={isUpdating}
+              onClick={followHandler}
+              >
+            {isFollowing ? 'Unfollow' : 'Follow'}</Button>}
 
-        </Flex>
+          </Flex>
         </Flex>
           
     </Flex>

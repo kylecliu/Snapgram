@@ -37,7 +37,7 @@ const Search = () => {
             <Text display={{base:'none', md:'inline'}} pl={5}>Search</Text>
         </Flex>
     </Flex>
-     <Modal isOpen={isOpen} onClose={onClose}>
+     <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Search Users</ModalHeader>

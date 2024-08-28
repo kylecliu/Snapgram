@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avatar, Link, Heading, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
-import { Link as RouterLink, useParams} from 'react-router-dom'
+import { Box, Button, Flex, Link, Skeleton, SkeletonCircle, Text } from '@chakra-ui/react'
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import useGetUserProfile from '../../hooks/useGetUserProfile'
 import ProfilePageHeader from './ProfilePageHeader'
 import ProfilePagePhotos from './ProfilePagePhotos'
 import ProfileTabs from './ProfileTabs'
-import useGetUserProfile from '../../hooks/useGetUserProfile'
 
 const ProfilePage = () => {
 
@@ -13,6 +13,8 @@ const ProfilePage = () => {
   const { userProfile, isLoading } = useGetUserProfile(username);
 
   const  userNotFound = !isLoading && !userProfile;
+
+  console.log(userProfile)
   
 
   if(userNotFound) return < UserNotFound/>

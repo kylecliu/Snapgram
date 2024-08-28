@@ -1,15 +1,10 @@
 import React from 'react'
-import { Flex, Text, Link, Grid, GridItem, Image } from '@chakra-ui/react'
+import { Flex, Box, Text, Link, Grid, GridItem, Image } from '@chakra-ui/react'
 import {Link as RouterLink} from 'react-router-dom'
 import { BsGrid3X3, BsFilePerson } from "react-icons/bs";
 import { RiBookmarkLine } from "react-icons/ri";
 
 const ProfileTabs = () => {
-
-    const clickHandler = (e) => {
-        e.target.style.borderTop = '1px solid black'
-    }
-
 
 
   return (
@@ -22,15 +17,13 @@ const ProfileTabs = () => {
         borderTop={'1px solid lightgray'}>
             <Flex  gap={1} align={'center'}>
                 <BsGrid3X3 fontSize={10}></BsGrid3X3>
-                <Link 
+                <Box 
                 py={3}
-                as={RouterLink} 
                 style={{textDecoration: 'none'}} 
-                onClick={(e) => clickHandler(e)}
                 fontSize={15}
                 >
                 POSTS
-                </Link>
+                </Box>
             </Flex>
 
             {/* <Flex  gap={1} align={'center'}>

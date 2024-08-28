@@ -20,8 +20,6 @@ const useFollowUser = (userId) => {
     
     useEffect(() => {
 
-        // console.log(authUser.following, typeof authUser, authUser.following instanceof Array)
-
         if(authUser && authUser.following.includes(userId)) {
 
             setIsFollowing(true)
@@ -31,6 +29,8 @@ const useFollowUser = (userId) => {
 
 
     const followOrUnfollowUser = async() => {
+
+        if(!authUser) return toast("Info", "Please log in to proceed", "info")
 
         if(isUpdating) return
 
@@ -95,8 +95,6 @@ const useFollowUser = (userId) => {
                     setUserProfile({...userProfile, followers: [...userProfile.followers, authUser.uid]})
 
                 }
-
-               
 
                 setIsFollowing(true)
 

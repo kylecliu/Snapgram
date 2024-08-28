@@ -15,19 +15,21 @@ const Profile = () => {
   const toast = useDisplayToast();
 
   return (
-    <Flex py={3} w={'280px'}>
-        <Link as={RouterLink} to={`${user.username}`}><Avatar name={user.fullName} size='md' src={user.profileURL} mr={3}></Avatar></Link>
-        <Flex direction={'column'} flex={1} mr={'70px'}>
-            <Link 
-            as={RouterLink} 
-            to={`${user.username}`} 
-            fontWeight={'bold'}
-            style={{textDecoration: 'none'}}
-            >{user.username}</Link>
-            <Text color={'gray'} fontSize={'11px'}>{user.fullName}</Text>
+    <Flex py={3} justify={'space-between'}>
+        <Flex>
+          <Link as={RouterLink} to={`${user.username}`}><Avatar name={user.fullName} size='md' src={user.profileURL} mr={3}></Avatar></Link>
+          <Flex direction={'column'} >
+              <Link 
+              as={RouterLink} 
+              to={`${user.username}`} 
+              fontWeight={'bold'}
+              style={{textDecoration: 'none'}}
+              >{user.username}</Link>
+              <Text color={'gray'} fontSize={'11px'}>{user.fullName}</Text>
+          </Flex>
         </Flex>
         {error && toast("Error", error.message, 'error')}
-        <Flex align={'center'}  >
+        <Flex align={'center'} px={2}>
           <Button 
           size={'xs'}
           variant={'ghost'}
@@ -38,7 +40,7 @@ const Profile = () => {
           fontSize={'13px'} 
           isLoading={loading}
           _hover={{color: '#393e46'}}>Log out</Button>
-          </Flex>
+        </Flex>
 
     </Flex>
   )

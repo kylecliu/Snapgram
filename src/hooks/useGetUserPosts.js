@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import usePostStore from '../store/postStore'
-import useDisplayToast from './useDisplayToast'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 import { firestore } from '../firebase/firebase';
+import usePostStore from '../store/postStore';
 import useUserProfileStore from '../store/ProfileStore';
-import useGetUserProfile from './useGetUserProfile';
+import useDisplayToast from './useDisplayToast';
 
 
 const useGetUserPosts = () => {
@@ -22,7 +20,7 @@ const useGetUserPosts = () => {
 
         const getPosts = async() => {
 
-            if(!userProfile) return setIsFetching(false)
+            if(!userProfile) return 
     
             setIsFetching(true)
             setPosts([])
@@ -41,6 +39,7 @@ const useGetUserPosts = () => {
                 })
                 
                 docs.sort((a, b) => b.createdAt - a.createdAt )
+                console.log(docs)
                 setPosts(docs)
 
 

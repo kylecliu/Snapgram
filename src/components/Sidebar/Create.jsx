@@ -47,7 +47,7 @@ const Create = () => {
         </Flex>
     </Flex>
 
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create new post</ModalHeader>
@@ -78,7 +78,7 @@ const Create = () => {
             <Button colorScheme='blue' mr={3} isLoading={isLoading} onClick={() => addPostHandler(inputs, selectedFile)} >
               Share
             </Button>
-            <Button variant='ghost' onClick={onClose}>Close</Button>
+            <Button variant='ghost' onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -134,9 +134,7 @@ const useCreatePost = () => {
     const postDocRef = await addDoc(collection(firestore, "posts"), newPost)
     const userDocRef = doc(firestore, "users", authUser.uid)
 
-
-    await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
-
+    //Update storage
     const storage = getStorage();
     const imageRef = ref(storage, `photos/${postDocRef.id}`);
 
@@ -144,22 +142,29 @@ const useCreatePost = () => {
 
     const photoURL = await getDownloadURL(imageRef)
 
+    //update posts collection
+
     await updateDoc(postDocRef, {photoURL: photoURL})
 
     newPost.photoURL = photoURL
+
+    //update userProfile
+
+    await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
+
+    //If authUser is on their own profile page, update the store
 
     { authUser.uid === userProfile.uid ?  addPost({...newPost, id: postDocRef.id}) : null }
 
     { authUser.uid === userProfile.uid ?  createPost({...newPost, id: postDocRef.id}) : null }
 
     
-
     toast("Success", "Post added successfully", "success")
     
     } catch(error) {
 
-      toast("Error", error.message, 'error'
-      )
+      toast("Error", error.message, 'error')
+
     } finally {
 
       setIsLoading(false)
