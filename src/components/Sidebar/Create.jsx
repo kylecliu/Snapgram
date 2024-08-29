@@ -102,6 +102,7 @@ const useCreatePost = () => {
   const addPost = useUserProfileStore(state => state.addPost) 
   const createPost = usePostStore(state => state.createPost)
   const authUser = useAuthStore(state => state.user)
+  const setAuthUser = useAuthStore(state => state.setUser)
 
   const createPostHandler= async(caption, location, selectedFile) => {
 
@@ -148,7 +149,7 @@ const useCreatePost = () => {
 
     newPost.photoURL = photoURL
 
-    //update userProfile
+    //update userProfile 
 
     await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
 
@@ -158,6 +159,9 @@ const useCreatePost = () => {
 
     { authUser.uid === userProfile.uid ?  createPost({...newPost, id: postDocRef.id}) : null }
 
+    //Update authUser
+
+    setAuthUser({...authUser, posts: [...authUser.posts, postDocRef.id]})
     
     toast("Success", "Post added successfully", "success")
     

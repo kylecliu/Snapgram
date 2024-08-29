@@ -79,7 +79,7 @@ const ProfilePhoto = ({post}) => {
             position={'absolute'} 
             justify={'center'} 
             align={'center'}
-            gap={10}
+            gap={{base: 2, md: 8}}
             opacity={0}
             _hover={{opacity:'1'}}
             backgroundColor='blackAlpha.500' 

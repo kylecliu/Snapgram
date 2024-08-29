@@ -1,10 +1,10 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar'
-import { Box, Image, Flex, HStack, VStack, Spinner } from '@chakra-ui/react'
-import { useLocation } from 'react-router-dom';
+import { Box, Flex, Spinner } from '@chakra-ui/react';
+import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebase/firebase';
+import { useLocation } from 'react-router-dom';
+import Sidebar from '../../components/Sidebar/Sidebar';
 import SignupPrompt from '../../components/SignupPrompt/SignupPrompt';
+import { auth } from '../../firebase/firebase';
 
 
 
@@ -33,7 +33,7 @@ const PageLayout = ({children}) => {
         {canShowSignupPrompt ? <SignupPrompt /> : null }
 
         {/* {sidebar on the left} */}
-        {canShowSidebar ?  (<Box w={{base: "70px", md: "240px"}}>
+        {canShowSidebar ?  (<Box w={{base: "none", md: "240px"}}>
             <Sidebar />
         </Box>) : null}
 

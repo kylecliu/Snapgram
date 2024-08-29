@@ -5,14 +5,15 @@ import { SnapgramLogo } from '../../assets/constants'
 
 const SignupPrompt = () => {
 
-    const redirect = (route) => {
-        return <Navigate to={route}/>
-    }
-
   return (
-    <Flex h={'60px'} w={'100%'} borderBottom={"1px solid #e7eaf6"} position={'fixed'} backgroundColor={'white'} zIndex={1} justify={'center'}>
-        <Flex w={'35%'} justify={'flex-start'} align={'center'}>
-            <SnapgramLogo />
+    <Flex h={'65px'} w={'100%'} borderBottom={"1px solid #e7eaf6"} position={'fixed'} backgroundColor={'white'} zIndex={1} justify={'center'}>
+        <Flex w={'35%'} justify={'flex-start'} align={'center'} >
+            <Link 
+            as={RouterLink}
+            to={'/auth'}>
+                <SnapgramLogo />
+            </Link>
+            
         </Flex>
         <Flex w={'35%'} gap={4} justify={'flex-end'} align={'center'}>        
             <Button 

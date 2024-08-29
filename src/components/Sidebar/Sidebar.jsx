@@ -14,7 +14,7 @@ const Sidebar = () => {
 
 
   return (
-    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column'>
+    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column' display={{base: 'none', sm: 'flex'}}>
         <Flex h={100} align={'center'} justify={{base: 'center', md:'flex-start'}}>
             <Link to={'/'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={5} cursor={'pointer'}>
                 <SnapgramLogo />
@@ -41,6 +41,8 @@ const Sidebar = () => {
         </Flex>
         
     </Flex>
+
+    
 
   )
 }

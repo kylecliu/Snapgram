@@ -1,16 +1,14 @@
+import { Container, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import Post from '../../components/Post/Post'
 import Users from '../../components/User/Users'
-import { Flex, Container, Text } from '@chakra-ui/react'
 import useFetchPostsHomepage from '../../hooks/useFetchPostsHomepage'
-import useGetComments from '../../hooks/useGetComments'
 
 
 
 const HomePage = () => {
 
   const {isFetching, postsToDisplay} = useFetchPostsHomepage()
-  // const {comments, isFetchingComments} = useGetComments(postIds)
 
 
   return (
@@ -30,7 +28,7 @@ const HomePage = () => {
         </Flex>
       
       {/* Right-side pane */}
-      <Container flex='2' p={5} display={{base: 'none', md: 'none', lg: 'block'}}>
+      <Container flex='2' p={5} display={{base:'none', md: 'none', lg: 'block'}}>
         <Flex direction={'column'} w={'80%'}>
           <Users />
         </Flex>

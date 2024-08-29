@@ -49,12 +49,7 @@ const ProfilePageHeader = () => {
                 {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h='30px' _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? "Unfollow": "Follow" }</Button>}
                 
                 </Flex>
-                {/* <Flex direction={'flex-start'} gap={8} mt={4} mb={4} display={{base: 'none', md: 'none', lg:'flex'}} fontWeight={'bold'} fontSize={15}>
-                    <Box>{userProfile.posts.length} posts</Box>
-                    <Box>{userProfile.followers.length} followers</Box>
-                    <Box>{userProfile.following.length} following</Box>
-                </Flex> */}
-                    <ProfileStatistics userProfile={userProfile}/>
+                <ProfileStatistics userProfile={userProfile}/>
                 <Heading as='h6' size={'xs'}>{userProfile.fullName}</Heading>
                 <Text fontSize={15} style={{wordWrap: 'break-word'}}>{userProfile.bio} </Text>
             </Flex>

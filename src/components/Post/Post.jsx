@@ -66,8 +66,8 @@ const Post = ({post}) => {
 
     <>
 
-    <Flex pt={10} w={'468px'} direction={'column'} mx={10} mb={5}>
-       <Flex py={2} justify={"space-between"}>
+    <Flex pt={10} direction={'column'} mx={10} mb={5} w={{base: '100%', sm: 'auto'}}>
+       <Flex py={2} justify={"space-between"} px={{base: 2, sm: 0}}>
            <Flex >
             <Link as={RouterLink} to={`/${userProfile?.username}`}>
                 <Avatar src={userProfile?.profileURL} mr={2} />
@@ -97,10 +97,10 @@ const Post = ({post}) => {
                {/* <ThreeDots /> */}
            </Box>
        </Flex>
-       <Image src={post.photoURL}  borderRadius={4} aspectRatio={3/4} objectFit={'cover'} maxH={600} alt={'feed post image'}></Image>
+       <Image src={post.photoURL}  borderRadius={{base: 0, sm: 4}} aspectRatio={3/4} objectFit={'cover'} maxH={600} alt={'feed post image'}></Image>
        <Flex my={2} direction={'row'} justify='space-between'>
 
-        <Flex gap={3} mb={1} mt={1}>
+        <Flex gap={3} mb={1} mt={1} px={{base: 2, sm: 0}}>
             
                 <Tooltip label='Like' fontSize='md'>
                     <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}>{isLiked ? <UnlikeLogo /> : <FaRegHeart />}</Box>
@@ -122,7 +122,7 @@ const Post = ({post}) => {
          </Flex>
         {authUser?.uid === userProfile?.uid ?                                    
             <Tooltip label='Delete' fontSize='md'>
-                <Box fontSize={24} mb={1} mt={1} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
+                <Box fontSize={24} mb={1} mt={1} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} px={{base: 2, sm: 0}}><RiDeleteBin6Line /></Box>
             </Tooltip> : null}
 
 
@@ -151,14 +151,14 @@ const Post = ({post}) => {
        </Flex>
        {/* <Heading as='h6' size='sm' mb={1}> {post.likes.length} likes</Heading> */}
   
-       <Flex direction={'flex-start'} wrap={'wrap'}>
+       <Flex direction={'flex-start'} wrap={'wrap'} px={{base: 2, sm: 0}}>
            <Text>
            <span ><Link as={RouterLink} to={`/${userProfile?.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}}> {userProfile?.username}</Link></span>
            <span> {post.caption} </span>
            </Text>
            
        </Flex>
-       <Text fontSize='xs' color={"gray"}> {timeAgo(post.createdAt)}</Text>
+       <Text fontSize='xs' color={"gray"} px={{base: 2, sm: 0}}> {timeAgo(post.createdAt)}</Text>
        {/* <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
             {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
         </VStack> */}
@@ -197,18 +197,18 @@ const Post = ({post}) => {
                     
                     <Flex justify={'center'} align={'center'} flexDirection={'column'}>
                         {/* Image display */}
-                        <Flex direction={{ base: 'column', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
-                            <Flex flex={1.5}>
+                        <Flex direction={{ base: 'columnn', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
+                            
+                            {/* <Flex flex={1.5}>
                                 <Image 
                                 src={post.photoURL} 
                                 name={userProfile.username}
                                 objectFit={'cover'}
                                 aspectRatio={4/5}
-                                // maxH={700} 
                                 w={"100%"}
                                 h={'auto'}
                                 ></Image>
-                            </Flex>
+                            </Flex> */}
                             {/* For medium screen and up user info display */}
                             <Flex direction={'column'} w={'1fr'} backgroundColor={'white'} flex={1} >
                                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>

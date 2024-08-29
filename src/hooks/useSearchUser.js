@@ -23,7 +23,7 @@ const searchUser = async(username) => {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-        toast("Error", "No Such User Found", "error")
+        toast("Info", "No such user found, try another one 🔎", "info")
         return
 
     } else {

@@ -5,6 +5,8 @@ import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { storage, firestore } from '../firebase/firebase';
 import { doc, updateDoc, collection, query, where, getDocs } from "firebase/firestore";
 import useUserProfileStore from '../store/ProfileStore';
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -15,6 +17,7 @@ const useEditProfile = () => {
     const authUser = useAuthStore(state => state.user)  
     const setAuthUser = useAuthStore(state => state.setUser)
     const setUserProfile = useUserProfileStore(state => state.setUserProfile)
+    const navigate = useNavigate()
 
 
     const editProfile = async(inputs, selectedFile) => {
@@ -25,7 +28,9 @@ const useEditProfile = () => {
         }
 
         setIsUpdating(true);
-        
+
+        try {
+
         const storageRef = ref(storage, `profilePics/${authUser.uid}`);
 
         let URL = '';
@@ -44,15 +49,10 @@ const useEditProfile = () => {
 
         }
 
-        const newUserDoc = {
-            ...authUser, 
-            username: inputs.username || authUser.username,
-            fullName: inputs.fullName || authUser.fullName,
-            bio: inputs.bio || authUser.bio,
-            profileURL: URL || authUser.profileURL
-        }
 
         const userDocRef = doc(firestore, "users", authUser.uid);
+
+        //Prevent repeated usernames
 
         const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
 
@@ -64,12 +64,41 @@ const useEditProfile = () => {
             return
         }
 
-        await updateDoc(userDocRef, newUserDoc);
+        const newUserDoc = {
+            ...authUser, 
+            username: inputs.username || authUser.username,
+            fullName: inputs.fullName || authUser.fullName,
+            bio: inputs.bio || authUser.bio,
+            profileURL: URL || authUser.profileURL
+        }
 
-        localStorage.setItem('user-info', JSON.stringify(newUserDoc))
+        await updateDoc(userDocRef, {
+            username: inputs.username || authUser.username,
+            fullName: inputs.fullName || authUser.fullName,
+            bio: inputs.bio || authUser.bio,
+            profileURL: URL || authUser.profileURL
+        });
+
+        console.log(`new UserDoc: ${newUserDoc}`)
+
+
         setAuthUser(newUserDoc)
         setUserProfile(newUserDoc)
+
+        navigate(`/${inputs.username}`)
         toast('Success', "Profile updated successfullly", "success")
+
+        
+        } catch (error) {
+
+            toast("Error", error.message, "error")
+
+        } finally {
+
+            setIsUpdating(false)
+
+        }
+
 
     }
 

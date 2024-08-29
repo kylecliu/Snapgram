@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import useDisplayToast from './useDisplayToast'
-import useAuthStore from '../store/AuthStore'
-import { collection, query, where, getDocs, orderBy, limit } from "firebase/firestore";
+import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 import { firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useDisplayToast from './useDisplayToast';
 
 const useSuggestedUsers = () => {
 
@@ -18,7 +18,7 @@ const useSuggestedUsers = () => {
         try {
 
             const userRef = collection(firestore, "users");
-            const q = query(userRef, where("uid", "not-in", [...authUser.following, authUser.uid]), orderBy('uid'), limit(3))
+            const q = query(userRef, where("uid", "not-in", [...authUser.following, authUser.uid]), orderBy('uid'), limit(10))
 
             const querySnapshot = await getDocs(q);
             let users = []

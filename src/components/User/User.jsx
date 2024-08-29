@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avatar, Heading, Link } from '@chakra-ui/react'
+import { Avatar, Button, Flex, Link, Text } from '@chakra-ui/react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import useFollowUser from '../../hooks/useFollowUser';
 import useAuthStore from '../../store/AuthStore';
@@ -8,7 +8,7 @@ const User = ({user, setUser}) => {
 
   const { isFollowing, isUpdating, followOrUnfollowUser } = useFollowUser(user.uid)
   const authUser = useAuthStore(state => state.user)
-  const isSameUser = authUser.uid === user.uid
+  const isSameUser = authUser?.uid === user.uid
   const followHandler = () => {
 
     setUser(isFollowing ? {...user, followers: user.followers.filter((uid) => uid !== authUser.uid)} : {...user, followers: [...user.followers, authUser.uid]})

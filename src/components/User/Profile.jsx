@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Avatar, Link } from '@chakra-ui/react'
+import { Avatar, Button, Flex, Link, Text } from '@chakra-ui/react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import useLogout from '../../hooks/useLogout';
 import useDisplayToast from '../../hooks/useDisplayToast';
+import useLogout from '../../hooks/useLogout';
 import useAuthStore from '../../store/AuthStore';
 
 
