@@ -65,7 +65,7 @@ const Post = ({post}) => {
   return (!isFetchingProfile ?
 
     <>
-
+    {/* Author info */}
     <Flex pt={10} direction={'column'} mx={10} mb={5} w={{base: '100%', sm: 'auto'}}>
        <Flex py={2} justify={"space-between"} px={{base: 2, sm: 0}}>
            <Flex >
@@ -97,8 +97,12 @@ const Post = ({post}) => {
                {/* <ThreeDots /> */}
            </Box>
        </Flex>
+
+       {/* Photo */}
        <Image src={post.photoURL}  borderRadius={{base: 0, sm: 4}} aspectRatio={3/4} objectFit={'cover'} maxH={600} alt={'feed post image'}></Image>
-       <Flex my={2} direction={'row'} justify='space-between'>
+       
+       {/* Interactive tool bar */}
+       <Flex my={2} justify='space-between'>
 
         <Flex gap={3} mb={1} mt={1} px={{base: 2, sm: 0}}>
             
@@ -108,11 +112,9 @@ const Post = ({post}) => {
 
                 {post?.likes?.length > 0 ? <Text fontWeight={'bold'}>{post?.likes?.length}</Text> : null}
 
-                { authUser ? <Tooltip label='Comment' fontSize='md'>
+               <Tooltip label='Comment' fontSize='md'>
                     <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={onOpen}><CommentLogo /></Box>
-                </Tooltip> : <Tooltip label='Comment' fontSize='md'>
-                    <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={onOpen}><CommentLogo /></Box>
-                </Tooltip>}
+                </Tooltip> 
 
                 {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
                 
@@ -150,7 +152,8 @@ const Post = ({post}) => {
            </Link> */}
        </Flex>
        {/* <Heading as='h6' size='sm' mb={1}> {post.likes.length} likes</Heading> */}
-  
+        
+        {/* Post caption */}
        <Flex direction={'flex-start'} wrap={'wrap'} px={{base: 2, sm: 0}}>
            <Text>
            <span ><Link as={RouterLink} to={`/${userProfile?.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}}> {userProfile?.username}</Link></span>
@@ -179,11 +182,11 @@ const Post = ({post}) => {
             size={{base: '3xl', md: '5xl'}}
             >
                 <ModalOverlay/>
-                <ModalContent>
+                <ModalContent >
                   <ModalCloseButton />
-                  {/* Small screen user info display */}
-                  <ModalBody backgroundColor='white' py={0} pl={0}>
-                    <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'flex', md: 'none'}}>
+                  <ModalBody backgroundColor='white' py={0} pl={0} minH={{base: '100vh', sm: 'auto'}}>
+                    {/* Small screen user info display, but won't show on the smallest screen as it would be a different layout */}
+                    <Flex borderBottom={'1px solid lightgray'} justify={'flex-start'} align={'center'} display={{base: 'none', sm: 'flex', md:'none'}}>
                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
                         </Link>
@@ -196,10 +199,9 @@ const Post = ({post}) => {
                     </Flex>
                     
                     <Flex justify={'center'} align={'center'} flexDirection={'column'}>
-                        {/* Image display */}
-                        <Flex direction={{ base: 'columnn', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
-                            
-                            {/* <Flex flex={1.5}>
+                        <Flex>
+                            {/* Image display */}
+                            <Flex flex={1.5} display={{base: 'none', sm: 'flex'}} >
                                 <Image 
                                 src={post.photoURL} 
                                 name={userProfile.username}
@@ -207,10 +209,11 @@ const Post = ({post}) => {
                                 aspectRatio={4/5}
                                 w={"100%"}
                                 h={'auto'}
+                                
                                 ></Image>
-                            </Flex> */}
+                            </Flex>
                             {/* For medium screen and up user info display */}
-                            <Flex direction={'column'} w={'1fr'} backgroundColor={'white'} flex={1} >
+                            <Flex direction={'column'} backgroundColor={'white'} flex={1} >
                                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>
                                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -239,14 +242,17 @@ const Post = ({post}) => {
                                     </Flex>
                                     
                                 </Flex>
-                                <Divider display={{base: 'block', md: 'none'}}/>
+
+                                {/* comments */}
                                 <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
                                    {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
+
                                 </VStack>
-                                <Flex direction={'column'} mt={'auto'} >
-                                <Flex justify={'space-between'}>    
+
+                                {/* bottom interactivity tool bar */}
+                                <Flex direction={'column'} mt={{base: 0, sm:'auto'}} position={{base: 'fixed', sm:'relative'}} bottom={0} w={{base: '90%', sm: 'auto'}}>
+                                    <Flex justify={'space-between'}>    
                                         <Flex gap={3} ml={4} mb={3}>
-        
                                             
                                             <Tooltip label='Like' fontSize='md'>
                                                 <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={likePostHandler}>{isLiked ? <UnlikeLogo /> : <FaRegHeart />}</Box>
@@ -287,7 +293,8 @@ const Post = ({post}) => {
         
         
                                     {authUser &&  <InputGroup mb={4}>
-                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><GoSmiley/></InputLeftAddon>
+                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base: 'none', sm: 'flex'}}><GoSmiley/></InputLeftAddon>
+                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} display={{base:'flex', sm:'none'}}></Avatar></InputLeftAddon>
                                         <Input variant={'flushed'} placeholder='Add a comment...' value={commentInput} onChange={(e) => setCommentInput(e.target.value)} ref={commentInputRef}></Input>
                                         <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
                                     </InputGroup> }

@@ -19,6 +19,7 @@ import useGetUserProfile from '../../hooks/useGetUserProfile';
 import useGetComments from '../../hooks/useGetComments';
 import useDisplayToast from '../../hooks/useDisplayToast';
 import { CommentLogo } from '../../assets/constants';
+import ProfilePhotoCommentModal from './ProfilePhotoCommentModal';
 
 
 
@@ -26,6 +27,7 @@ import { CommentLogo } from '../../assets/constants';
 const ProfilePhoto = ({post}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isCommentOpen, onCommentOpen, onCommentClose} = useDisclosure()
     const { username } = useParams();
     const { userProfile, isLoading: isLoadingUser } = useGetUserProfile(username);
     const authUser = useAuthStore(state => state.user)
@@ -117,8 +119,9 @@ const ProfilePhoto = ({post}) => {
             <ModalOverlay/>
             <ModalContent>
               <ModalCloseButton />
-              {/* Small screen user info display */}
-              <ModalBody backgroundColor='white' py={0} pl={0}>
+              
+              <ModalBody backgroundColor='white' py={0} p={0}>
+                {/* Small screen user info display */}
                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'flex', md: 'none'}}>
                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -133,14 +136,13 @@ const ProfilePhoto = ({post}) => {
                 
                 <Flex justify={'center'} align={'center'} flexDirection={'column'}>
                     {/* Image display */}
-                    <Flex direction={{ base: 'column', md:'row'}} w={{base: '90%', sm: '70%', md:'full'}}>
+                    <Flex direction={{ base: 'column', md:'row'}}>
                         <Flex flex={1.5}>
                             <Image 
                             src={post.photoURL} 
                             name={userProfile.username}
                             objectFit={'cover'}
                             aspectRatio={4/5}
-                            // maxH={700} 
                             w={"100%"}
                             h={'auto'}
                             ></Image>
@@ -175,8 +177,7 @@ const ProfilePhoto = ({post}) => {
                                 </Flex>
                                 
                             </Flex>
-                            <Divider display={{base: 'block', md: 'none'}}/>
-                            <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
+                            <VStack maxH={350} overflowY={'auto'} className='comment_scroll' display={{base: 'none', sm: 'block'}}>
                                {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
                             </VStack>
                             <Flex direction={'column'} mt={'auto'} >
@@ -190,11 +191,16 @@ const ProfilePhoto = ({post}) => {
 
                                         {post?.likes?.length > 0 ? <Text fontWeight={'bold'}>{post?.likes?.length}</Text> : null}
     
-                                        { authUser ? <Tooltip label='Comment' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()}><CommentLogo/></Box>
-                                        </Tooltip> : <Tooltip label='Comment' fontSize='md'>
+                                        { authUser ? <>
+                                        <Tooltip label='Comment' fontSize='md'>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={onCommentOpen} display={{base: 'block', sm: 'none'}}><CommentLogo/></Box></Tooltip>
+                                        <Tooltip label='Comment' fontSize='md'>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentRef.current.focus()} display={{base: 'none', sm: 'block'}}><CommentLogo/></Box>
+                                        </Tooltip> </> : <Tooltip label='Comment' fontSize='md'>
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><CommentLogo/></Box>
                                         </Tooltip>}
+
+                                        <ProfilePhotoCommentModal isCommentOpen={isCommentOpen} onCommentClose={onCommentClose} />
 
                                         {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
                                         
@@ -204,7 +210,7 @@ const ProfilePhoto = ({post}) => {
                                     </Flex>
                                     {authUser?.uid === userProfile?.uid ?                                    
                                          <Tooltip label='Delete' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} mr={2}><RiDeleteBin6Line /></Box>
                                         </Tooltip> : null}
                                     {/* <Box>
                                         <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
@@ -227,6 +233,8 @@ const ProfilePhoto = ({post}) => {
                                     <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
                                     <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
                                 </InputGroup> }
+
+
     
                             </Flex> 
                                

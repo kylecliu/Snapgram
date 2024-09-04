@@ -28,7 +28,7 @@ const HomePage = () => {
         </Flex>
       
       {/* Right-side pane */}
-      <Container flex='2' p={5} display={{base:'none', md: 'none', lg: 'block'}}>
+      <Container flex='2' p={5} display={{base:'none', lg: 'block'}}>
         <Flex direction={'column'} w={'80%'}>
           <Users />
         </Flex>

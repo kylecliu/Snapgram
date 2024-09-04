@@ -29,12 +29,12 @@ const Search = () => {
 
   return (
     <>
-    <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} onClick={onOpen} cursor={'pointer'}>
+    <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} onClick={onOpen} cursor={'pointer'} justify={{base: 'center', sm: 'flex-start'}}>
         <Flex  p={2} borderRadius={4} justify={'center'}>
             <Box >
                 <SearchLogo />
             </Box>
-            <Text display={{base:'none', md:'inline'}} pl={5}>Search</Text>
+            <Text display={{base:'none', lg:'inline'}} pl={5}>Search</Text>
         </Flex>
     </Flex>
      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>

@@ -1,33 +1,28 @@
-import React from 'react'
+import { SmallCloseIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
+  AvatarBadge,
   Button,
+  Center,
   Flex,
   FormControl,
   FormLabel,
   Heading,
-  Input,
-  Stack,
-  useColorModeValue,
-  HStack,
-  Avatar,
-  AvatarBadge,
   IconButton,
-  Center,
+  Input,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
   ModalCloseButton,
-  Textarea
-} from '@chakra-ui/react'
-import { SmallCloseIcon } from '@chakra-ui/icons'
-import { useState, useRef } from 'react'
-import usePreviewImage from '../../hooks/usePreviewImage';
-import useEditProfile from '../../hooks/useEditProfile';
-import useAuthStore from '../../store/AuthStore';
+  ModalContent,
+  ModalOverlay,
+  Stack,
+  Textarea,
+  useColorModeValue
+} from '@chakra-ui/react';
+import React, { useRef, useState } from 'react';
 import useDisplayToast from '../../hooks/useDisplayToast';
+import useEditProfile from '../../hooks/useEditProfile';
+import usePreviewImage from '../../hooks/usePreviewImage';
+import useAuthStore from '../../store/AuthStore';
 
 
   const EditPage = ({isOpen, onClose}) => {

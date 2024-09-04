@@ -17,7 +17,7 @@ const ProfileStatistics = ({userProfile}) => {
     const authUser = useAuthStore(state => state.user)
     
     return (
-        <Flex direction={'flex-start'} gap={8} mt={4} mb={4} display={{base: 'none', md: 'none', lg:'flex'}} fontWeight={'bold'} fontSize={15}>
+        <Flex direction={'flex-start'} gap={8} my={{base:2, sm:4}} display={'flex'} fontWeight={'bold'} fontSize={{base:12, md:15}}>
             <Box>{userProfile.posts.length} posts</Box>
 
             <Box onClick={authUser ? onFollowersOpen : () => toast("Info", "Please log in to proceed", "info")} cursor={'pointer'}>{userProfile.followers.length} followers</Box>

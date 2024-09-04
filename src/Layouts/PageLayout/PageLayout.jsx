@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import SignupPrompt from '../../components/SignupPrompt/SignupPrompt';
 import { auth } from '../../firebase/firebase';
-
+import Bottombar from '../../components/Sidebar/Bottombar';
 
 
 const PageLayout = ({children}) => {
@@ -33,9 +33,15 @@ const PageLayout = ({children}) => {
         {canShowSignupPrompt ? <SignupPrompt /> : null }
 
         {/* {sidebar on the left} */}
-        {canShowSidebar ?  (<Box w={{base: "none", md: "240px"}}>
-            <Sidebar />
-        </Box>) : null}
+        {canShowSidebar ?  (
+          <>
+            <Box w={{ base:"auto", lg: "240px"}} display={{base: 'none', sm:'block'}}>
+              <Sidebar />
+            </Box>
+            <Box display={{base:'block', sm: 'none'}} bgColor={'black'}>
+              <Bottombar />
+            </Box>
+        </>) : null}
 
         {/* page content on the right */}
         <Box flex={1}>

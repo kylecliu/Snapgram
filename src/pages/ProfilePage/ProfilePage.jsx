@@ -22,7 +22,7 @@ const ProfilePage = () => {
   return (
     
     <>
-      <Flex align={'center'} direction={'column'} position={'relative'} mt={10}>
+      <Flex align={'center'} direction={'column'} position={'relative'} mt={{base: 5, sm:10}}>
 
         { isLoading && <LoadingEffect /> }
 

@@ -31,7 +31,7 @@ const ProfilePagePhotos = () => {
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
     <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
 
-    </Grid>) : ( <Grid w={'70%'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
+    </Grid>) : ( <Grid w={{sm: '70%'}} maxW={'800px'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
         
         {posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
 

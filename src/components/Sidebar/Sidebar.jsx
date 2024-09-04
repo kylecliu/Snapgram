@@ -1,10 +1,9 @@
-import React from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack, Link, Avatar, FormHelperText } from '@chakra-ui/react'
+import { Box, Flex, HStack, Link, Text } from '@chakra-ui/react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, MessagesLogo, NotificationsLogo, ReelsLogo, SearchLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
-import SidebarItems from './SidebarItems';
+import { InstagramMobileLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
 import useLogout from '../../hooks/useLogout';
-import useAuthStore from '../../store/AuthStore';
+import SidebarItems from './SidebarItems';
 
 
 
@@ -12,35 +11,35 @@ const Sidebar = () => {
 
     const { logOutHandler } = useLogout();
 
-
   return (
-    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} position={'sticky'} top={0} borderRight={'1px solid black'} justify={'left'} flexDirection='column' display={{base: 'none', sm: 'flex'}}>
-        <Flex h={100} align={'center'} justify={{base: 'center', md:'flex-start'}}>
-            <Link to={'/'} as={RouterLink} display={ {base: 'none', md: 'block'}} my={5} cursor={'pointer'}>
+    <>
+    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} w={{base:"auto", lg: "240px"}} position={'fixed'} borderRight={'1px solid black'} flexDirection='column' display={{base: 'none', sm: 'flex'}}>
+        <Flex align={'center'} justify={{base: 'center', lg:'flex-start'}}>
+            <Link to={'/'} as={RouterLink} display={ {base: 'none', lg: 'block'}} my={5} cursor={'pointer'}>
                 <SnapgramLogo />
             </Link>
-            <Link to={'/'} as={RouterLink} display={ {base: 'block', md: 'none'}}  cursor={'pointer'}>
+            <Link to={'/'} as={RouterLink} display={ {md: 'block', lg: 'none'}} p={2} pt={4} cursor={'pointer'}>
                 <InstagramMobileLogo />
             </Link>
         </Flex>
         <Flex h={'100vh'} justify={'flex-start'} align={{base:'center', md: 'flex-start'}} flexDirection='column' w={"100%"}>
-
             <SidebarItems/>
-
         </Flex>
-        {/* <SidebarItems logo={<LogoutLogo />} title='Log Out' onClick={() => logOutHandler()} /> */}
-
         <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} cursor={'pointer'} onClick={() => logOutHandler()}>
-            <HStack p={2} borderRadius={4} >
+            <HStack p={2} borderRadius={4}>
                 <Box>
                     <LogoutLogo />  
                 </Box>
-                <Text display={{base:'none', md:'inline'}}>Log Out</Text>
+                <Text display={{base:'none', lg:'inline'}}>Log Out</Text>
             </HStack>
-            
-        </Flex>
-        
+        </Flex> 
     </Flex>
+
+    {/* Placeholder for "fixed" so the Post elements can respond accordingly, as the above Flex has been taken out of flow */}
+    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} w={ {base:"50px", lg: "240px"}} flexDirection='column' display={{base: 'none', sm: 'flex'}}></Flex>
+
+    </>
+    
 
     
 

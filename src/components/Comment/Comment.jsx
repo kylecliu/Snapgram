@@ -1,6 +1,6 @@
 import { Flex, Avatar, Text, Link, Box } from '@chakra-ui/react'
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
-import React, { useState } from 'react'
+import React from 'react'
 import { timeAgo } from '../../utils/timeAgo';
 import useGetUserProfilebyId from '../../hooks/useGetUserProfilebyId';
 import useAuthStore from '../../store/AuthStore';
@@ -24,8 +24,6 @@ const Comment = ({comment}) => {
 
         !isDeletingComment  && console.log()
 
-
-
     }
 
   return (
@@ -34,8 +32,8 @@ const Comment = ({comment}) => {
             <Avatar src={userProfile?.profileURL} name={userProfile?.username} size={'sm'} m={4}></Avatar>
         </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
-            <Flex direction={'column'} justify={'center'}>
-                <Text>
+            <Flex direction={'column'} justify={'center'} >
+                <Text maxW={{base: '350px'}}>
                     <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2}>{userProfile?.username}</Link></span>
                     <span>{comment.comment}</span>
                 </Text>
@@ -54,7 +52,7 @@ const Comment = ({comment}) => {
                 </Flex>
                 
             </Flex>
-            <Flex align={'start'} mt={4} cursor={'pointer'}>
+            <Flex align={'start'} mt={4} mx={2} cursor={'pointer'} >
                 <Box onClick={() => likeComment(comment)}>
                     {isLiked ? <IoHeartSharp color='#f70776'/> : <IoHeartOutline />}
                 </Box>
