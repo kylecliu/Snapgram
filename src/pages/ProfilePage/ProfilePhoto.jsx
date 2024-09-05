@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Image, GridItem, Box, Flex, Link, HStack, Text, useDisclosure, Avatar, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, Tooltip, Divider } from '@chakra-ui/react'
+import { Image, GridItem, Box, Flex, Link, HStack, Text, useDisclosure, Avatar, Input, InputGroup, InputLeftAddon, InputRightAddon, VStack, Tooltip } from '@chakra-ui/react'
 import { Link as RouterLink, useParams} from 'react-router-dom'
 import { FaComment, FaRegComment } from "react-icons/fa6";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
@@ -7,7 +7,7 @@ import { LuSend } from "react-icons/lu";
 import { MdOutlineBookmarkBorder } from "react-icons/md";
 import { GoSmiley } from "react-icons/go";
 import Comment from '../../components/Comment/Comment';
-import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, ModalHeader, ModalFooter } from '@chakra-ui/react'
 import { RiDeleteBin6Line } from "react-icons/ri";
 import useAuthStore from '../../store/AuthStore';
 import useDeletePost from '../../hooks/useDeletePost';
@@ -19,7 +19,7 @@ import useGetUserProfile from '../../hooks/useGetUserProfile';
 import useGetComments from '../../hooks/useGetComments';
 import useDisplayToast from '../../hooks/useDisplayToast';
 import { CommentLogo } from '../../assets/constants';
-import ProfilePhotoCommentModal from './ProfilePhotoCommentModal';
+
 
 
 
@@ -27,7 +27,7 @@ import ProfilePhotoCommentModal from './ProfilePhotoCommentModal';
 const ProfilePhoto = ({post}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { isCommentOpen, onCommentOpen, onCommentClose} = useDisclosure()
+    const { isOpen: isCommentOpen, onOpen: onCommentOpen, onClose: onCommentClose} = useDisclosure()
     const { username } = useParams();
     const { userProfile, isLoading: isLoadingUser } = useGetUserProfile(username);
     const authUser = useAuthStore(state => state.user)
@@ -88,7 +88,7 @@ const ProfilePhoto = ({post}) => {
             overflow={'hidden'}
             transition={'all 0.2s ease'}
             zIndex={1}
-            onClick={onOpen}
+            onClick={authUser ? onOpen : () => toast("Info", "Please log in to proceed", "info")}
             >
                 <HStack gap={1}>
                 <Link as={RouterLink} ><FaHeart color='white' fontSize={22} opacity={1}/></Link>
@@ -177,12 +177,12 @@ const ProfilePhoto = ({post}) => {
                                 </Flex>
                                 
                             </Flex>
-                            <VStack maxH={350} overflowY={'auto'} className='comment_scroll' display={{base: 'none', sm: 'block'}}>
+                            <VStack maxH={500} overflowY={'auto'} className='comment_scroll' display={{base: 'none', sm: 'block'}}>
                                {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
                             </VStack>
                             <Flex direction={'column'} mt={'auto'} >
                             <Flex justify={'space-between'}>    
-                                    <Flex gap={3} ml={4} mb={3}>
+                                    <Flex gap={3} ml={4} my={3}>
     
                                         
                                         <Tooltip label='Like' fontSize='md'>
@@ -200,8 +200,6 @@ const ProfilePhoto = ({post}) => {
                                             <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><CommentLogo/></Box>
                                         </Tooltip>}
 
-                                        <ProfilePhotoCommentModal isCommentOpen={isCommentOpen} onCommentClose={onCommentClose} />
-
                                         {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
                                         
                                         {/* <Link as={RouterLink} fontSize={24} fontWeight={'bolder'}><LuSend/></Link> */}
@@ -210,7 +208,7 @@ const ProfilePhoto = ({post}) => {
                                     </Flex>
                                     {authUser?.uid === userProfile?.uid ?                                    
                                          <Tooltip label='Delete' fontSize='md'>
-                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} mr={2}><RiDeleteBin6Line /></Box>
+                                            <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} mr={2} my={3}><RiDeleteBin6Line /></Box>
                                         </Tooltip> : null}
                                     {/* <Box>
                                         <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
@@ -233,6 +231,29 @@ const ProfilePhoto = ({post}) => {
                                     <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
                                     <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
                                 </InputGroup> }
+
+                            {/* Modal for comments on a small screen */}
+
+                            <Modal isOpen={isCommentOpen} onClose={onCommentClose}>
+                                <ModalOverlay />
+                                <ModalContent>
+                                <ModalHeader>Comments</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                    <VStack maxH={450} overflowY={'auto'} className='comment_scroll'>
+                                    {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
+                                    {comments.length === 0 ? <Text>No comments yet!</Text> : null}
+                                    </VStack>
+                                </ModalBody>
+                                <ModalFooter>
+                                {authUser &&  <InputGroup mb={4}>
+                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'}/></InputLeftAddon>
+                                        <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
+                                        <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
+                                    </InputGroup> }
+                                </ModalFooter>
+                                </ModalContent>
+                            </Modal>
 
 
     

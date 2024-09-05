@@ -27,7 +27,7 @@ const Comment = ({comment}) => {
     }
 
   return (
-    !isFetchingProfile && userProfile ? <Flex w={'100%'}>
+    !isFetchingProfile && userProfile ? <Flex w={'100%'} >
         <Link href={`/${userProfile?.username}`}>
             <Avatar src={userProfile?.profileURL} name={userProfile?.username} size={'sm'} m={4}></Avatar>
         </Link>
