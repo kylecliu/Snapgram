@@ -20,6 +20,7 @@ const ProfileStatistics = ({userProfile}) => {
         <Flex direction={'flex-start'} gap={8} my={{base:2, sm:4}} display={'flex'} fontWeight={'bold'} fontSize={{base:12, md:15}}>
             <Box>{userProfile.posts.length} posts</Box>
 
+            {/* FOllowers */}
             <Box onClick={authUser ? onFollowersOpen : () => toast("Info", "Please log in to proceed", "info")} cursor={'pointer'}>{userProfile.followers.length} followers</Box>
             <Modal isOpen={isFollowersOpen} onClose={onFollowersClose} closeOnOverlayClick={false}>
                 <ModalOverlay />
@@ -28,12 +29,13 @@ const ProfileStatistics = ({userProfile}) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex direction={'column'}>
-                        {isFetching || followers?.length === 0 ? null : followers.map((user) => <User key={user.uid} user={user} setUser={setUser}/>)}
+                        {isFetching || followers?.length === 0 ? null : followers.map((user) => <User key={user.uid} user={user} setUser={setUser} onClose={onFollowersClose}/>)}
                     </Flex>
                 </ModalBody>
                 </ModalContent>
             </Modal>
 
+            {/* Following */}
             <Box onClick={authUser ? onFollowingOpen : () => toast("Info", "Please log in to proceed", "info")} cursor={'pointer'}>{userProfile.following.length} following</Box>
             <Modal isOpen={isFollowingOpen} onClose={onFollowingClose} closeOnOverlayClick={false}>
                 <ModalOverlay />
@@ -42,7 +44,7 @@ const ProfileStatistics = ({userProfile}) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex direction={'column'}>
-                        {isFetching || followedUsers?.length === 0 ? null : followedUsers.map((user) => <User key={user.uid} user={user} setUser={setUser}/>)}
+                        {isFetching || followedUsers?.length === 0 ? null : followedUsers.map((user) => <User key={user.uid} user={user} setUser={setUser} onClose={onFollowingClose}/>)}
                     </Flex>
                 </ModalBody>
                 </ModalContent>

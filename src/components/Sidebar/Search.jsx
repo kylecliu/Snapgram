@@ -57,7 +57,7 @@ const Search = () => {
               </ButtonGroup>
             </form>
             
-            {user && <User user={user} setUser={setUser}/>}
+            {user && <User user={user} setUser={setUser} onClose={onClose}/>}
 
           </ModalBody>
           <ModalFooter></ModalFooter>

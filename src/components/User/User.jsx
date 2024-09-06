@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import useFollowUser from '../../hooks/useFollowUser';
 import useAuthStore from '../../store/AuthStore';
 
-const User = ({user, setUser}) => {
+const User = ({user, setUser, onClose}) => {
 
   const { isFollowing, isUpdating, followOrUnfollowUser } = useFollowUser(user.uid)
   const authUser = useAuthStore(state => state.user)
@@ -22,7 +22,8 @@ const User = ({user, setUser}) => {
     <Flex py={3}  w={'100%'}>
       <Link 
       as={RouterLink}      
-      to={`/${user.username}`}>
+      to={`/${user.username}`}
+      onClick={onClose}>
         <Avatar name='user' size='md' src={user.profileURL} mr={3} ></Avatar>
       </Link>
       <Flex w={"100%"} justify={'space-between'} >
@@ -32,6 +33,7 @@ const User = ({user, setUser}) => {
             to={`/${user.username}`} 
             fontWeight={'bold'}
             style={{textDecoration: 'none'}}
+            onClick={onClose}
             >
               {user.username}</Link>
             <Text color={'gray'} fontSize={'11px'}> {user.followers.length} followers</Text>

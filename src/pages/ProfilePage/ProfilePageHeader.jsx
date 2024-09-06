@@ -49,7 +49,7 @@ const ProfilePageHeader = () => {
 
                 {isOpen && <EditPage isOpen={isOpen} onClose={onClose}/> }
 
-                {authUser.uid === userProfile.uid ? <Button backgroundColor={'lightgray'} fontSize={12} h={{ base: '20px' , md:'28px'}} onClick={logOutHandler} display={{base:'block', sm: 'none'}}>Log out</Button> : null}
+                {authUser?.uid === userProfile.uid ? <Button backgroundColor={'lightgray'} fontSize={12} h={{ base: '20px' , md:'28px'}} onClick={logOutHandler} display={{base:'block', sm: 'none'}}>Log out</Button> : null}
 
                 {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h={{ base: '20px' , md:'28px'}} _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? "Unfollow": "Follow" }</Button>}
                 
