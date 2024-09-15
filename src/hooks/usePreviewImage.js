@@ -5,7 +5,7 @@ const usePreviewImage = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const toast = useDisplayToast();
-    const maxSize = 1024 * 1024 * 5 //5MB
+    const maxSize = 1024 * 1024 * 3 //3MiB
 
     const handleImageChange = (e) => {
 
@@ -15,7 +15,7 @@ const usePreviewImage = () => {
 
             if(file.size > maxSize) {
 
-                toast("Error", "File size must be less than 2MB", "error");
+                toast("Error", "File size must be less than 3MB", "error");
                 setSelectedFile(null);
                 return;
 
@@ -23,14 +23,13 @@ const usePreviewImage = () => {
 
             const reader = new FileReader();
 
-            reader.onloadend = () => {
-                
-                setSelectedFile(reader.result)
-
-            }
-
             reader.readAsDataURL(file);
 
+            reader.onloadend = () => {
+                
+                setSelectedFile(reader.result) 
+
+            }
 
         } else {
 
@@ -42,7 +41,6 @@ const usePreviewImage = () => {
     }
 
     return { selectedFile, handleImageChange, setSelectedFile }
-
 
 }
 

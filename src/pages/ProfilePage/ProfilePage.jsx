@@ -47,11 +47,11 @@ const UserNotFound =() => {
   return (
     <>
       <Flex h={'100vh'} w={'100%'} justify={'center'} align={'center'} direction={'column'}>
-        <Text fontSize={'6xl'} mb={20}>
+        <Text fontSize={'5xl'} mb={'4rem'}>
           User Not Found!
         </Text>
         <Link href='/'>
-            <Button>Go Back</Button>
+            <Button fontSize={'2xl'}>Go Back</Button>
           </Link>
       </Flex>
     </>

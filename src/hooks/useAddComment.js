@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import useDisplayToast from './useDisplayToast'
-import useAuthStore from '../store/AuthStore'
-import { arrayUnion, doc, updateDoc, collection, addDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
+import { useState } from 'react';
 import { firestore } from '../firebase/firebase';
-import usePostStore from '../store/postStore';
+import useAuthStore from '../store/AuthStore';
 import useCommentStore from '../store/CommentStore';
+import usePostStore from '../store/postStore';
+import useDisplayToast from './useDisplayToast';
 
 const useAddComment = () => {
     
@@ -31,23 +31,27 @@ const useAddComment = () => {
                 createdAt: Date.now(),
                 likedBy: [],
                 postId: postId
+
             }
 
-          
+            //Create a new document in the comments collection and retrieve its ID
             const docRef = await addDoc(collection(firestore, "comments"), newComment);
 
             const commentRef = doc(firestore, "comments", docRef.id)
 
+            //Adding its ID to the document
             await updateDoc(commentRef, {
                 commentId: docRef.id
             })
 
+            //Adding the comment ID to the post
             const postRef = doc(firestore, "posts", postId);
 
             await updateDoc(postRef, {
                 comments: arrayUnion(docRef.id)
               });
-
+            
+            //Updating post and comment store
             addCommentToPost(postId, docRef.id)
             addCommentStore({...newComment, postId: postId})
 

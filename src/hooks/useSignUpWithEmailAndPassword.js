@@ -1,23 +1,14 @@
-import { auth } from '../firebase/firebase'
-import { doc, setDoc } from "firebase/firestore"; 
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { firestore } from '../firebase/firebase';
-import useDisplayToast from './useDisplayToast';
+import { auth, firestore } from '../firebase/firebase';
 import useAuthStore from '../store/AuthStore';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import useDisplayToast from './useDisplayToast';
 
 
 const useSignUpWithEmailAndPassword = () => {
 
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
   const loginUser = useAuthStore((state) => state.login);
-
-  const [
-    createUserWithEmailAndPassword,
-    user,
-    loading,
-    error,
-  ] = useCreateUserWithEmailAndPassword(auth);
-
   const toast = useDisplayToast();
 
   const signup = async (inputs) => {
@@ -28,40 +19,35 @@ const useSignUpWithEmailAndPassword = () => {
       
        }
 
-      // Checking if username is already taken
-
+        // Checking if username is already taken
         const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
 
-        try {const result = await getDocs(q);
+        try {
+          
+          const querySnapshot = await getDocs(q);
 
-          // if(!(result.length === 0)) {
+          if(!querySnapshot.empty) {
 
-          //   toast("length > 0", typeofresult , "success")
-            
-          // }
-
-          if(!result.empty) {
-
+            //username is taken in this instance
             toast("Error", "Username is not available", 'error')
 
             return
           } 
 
         } catch(error) {
+
           toast("Error", error.message, 'error')
+
         }
 
       try {
 
         const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password)
 
-        if(!newUser && error) {
+        if(!loading && error) return toast("Error", error.message, 'error')
+        if(!loading && !newUser) return toast("Error", "Something went wrong!", "error")
 
-          toast("Error", error.message, 'error')
-
-          return
-          
-        } if(newUser) {
+        if(newUser) {
 
           const userDoc = {
             uid: newUser.user.uid,
@@ -77,10 +63,7 @@ const useSignUpWithEmailAndPassword = () => {
           }
 
           await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
-
-
-          localStorage.setItem("user-info", JSON.stringify(userDoc))
-
+          //update auth store user information
           loginUser(userDoc);
 
         }
@@ -92,7 +75,7 @@ const useSignUpWithEmailAndPassword = () => {
     
   }
 
-  return {user, loading, signup}
+  return {error, loading, signup}
 }
 
 export default useSignUpWithEmailAndPassword

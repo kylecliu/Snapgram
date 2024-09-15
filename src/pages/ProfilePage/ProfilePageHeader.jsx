@@ -24,6 +24,8 @@ const ProfilePageHeader = () => {
 
       return (
     <Flex direction={'column'} justify={'center'} w={{base: '100%', sm:'70%'}} maxW={'800px'} p={{base: 5, md: 10}} >
+        {/* Adding extra padding due to SignupPrompt being fixed in position so there is enouch spacing between SignupPrompt and the profile */}
+        {authUser? null : <Flex h={{base: 5, md: 0}}></Flex>} 
         <Flex align={'center'} justify={'center'} mr={{base: 5}} display={{base: 'flex', sm:'none'}}>
             <Avatar src={userProfile.profileURL} size={'xl'} name={userProfile.fullName} mb={2}></Avatar>
         </Flex>

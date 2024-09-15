@@ -1,32 +1,21 @@
-import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth';
-import useDisplayToast from './useDisplayToast';
-import useAuthStore from '../store/AuthStore';
-import { auth, firestore } from '../firebase/firebase';
 import { doc, getDoc } from "firebase/firestore";
-
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth, firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useDisplayToast from './useDisplayToast';
 
 
 const useLogin = () => {
 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-      ] = useSignInWithEmailAndPassword(auth);
-
+    const [signInWithEmailAndPassword, , loading, error] = useSignInWithEmailAndPassword(auth);
     const toast = useDisplayToast();
-
     const userLogIn = useAuthStore(state => state.login);
-
     const logIn = async(inputs) => {
-
 
         if(!(inputs.email && inputs.password)) {
 
             return toast("Error", 'Please fill all fields', 'error')
         }
-
 
         try {
 
@@ -38,8 +27,6 @@ const useLogin = () => {
                 const docSnap = await getDoc(docRef);
 
                 if(docSnap.exists) {
-
-                    // localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
                 
                     userLogIn(docSnap.data());
 
@@ -49,20 +36,15 @@ const useLogin = () => {
 
                 }
 
-
             }
-
     
         } catch(error) {
     
-            toast("Error", error.message, 'error')
-
-            return
+            return toast("Error", error.message, 'error')
 
         } 
 
 }
-
 
 return {logIn, loading, error}
 

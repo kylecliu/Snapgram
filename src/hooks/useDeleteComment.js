@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import useDisplayToast from './useDisplayToast'
-import { arrayRemove, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { useState } from 'react'
 import { firestore } from '../firebase/firebase'
-import usePostStore from '../store/postStore'
 import useCommentStore from '../store/CommentStore'
+import usePostStore from '../store/postStore'
+import useDisplayToast from './useDisplayToast'
 
 const useDeleteComment = () => {
 
@@ -19,10 +19,12 @@ const useDeleteComment = () => {
 
         try {
 
+            //deletes the comment from the comments collection
             const commentRef = doc(firestore, "comments", comment.commentId)
 
             await deleteDoc(commentRef);
 
+            //deletes the reference in the post
             const postRef = doc(firestore, "posts", comment.postId)
 
             await updateDoc(postRef, {
@@ -31,6 +33,7 @@ const useDeleteComment = () => {
 
             })
 
+            //Updates the post and comment store
             deleteCommentInPost(comment)
 
             deleteCommentStore(comment)

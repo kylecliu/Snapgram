@@ -10,7 +10,7 @@ const SidebarItems = () => {
     <>
       <Home />
       <Search />
-      <Messages />
+      {/* <Messages /> */}
       <Create />    
       <ToProfile />
     </>

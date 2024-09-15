@@ -1,35 +1,40 @@
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase/firebase';
-import useDisplayToast from './useDisplayToast';
-import useAuthStore from '../store/AuthStore';
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { firestore } from '../firebase/firebase';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { auth, firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useDisplayToast from './useDisplayToast';
 
 const useGoogleSignIn = () => {
 
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    
+    const [signInWithGoogle, loading, ,error] = useSignInWithGoogle(auth);
     const toast = useDisplayToast();
-
     const userLogIn = useAuthStore(state => state.login);
 
     const googleSignIn = async() => {
 
         try {
 
-            await signInWithGoogle();
+            const user = await signInWithGoogle();
 
-            if(user) {
+            if(error && !loading) {
+
+                return toast("Error", error.message, "error")
+
+            } 
+
+            if(!user && !loading) {
+
+                return toast("Error", "Something went wrong! Please try again later", "error")
+            }
+
+            if(user && !loading) {
 
                 const docRef = doc(firestore, "users", user.user.uid);
                 const docSnap = await getDoc(docRef);
 
-                console.log(docSnap)
-
-                //If user doesn't exist in database, create a user info entry
-
                 if (!docSnap.exists()) {
 
+                    //If user doesn't exist in database, create a user info entry
                     const userDoc = {
                         uid: user.user.uid,
                         email: user.user.email,
@@ -44,14 +49,16 @@ const useGoogleSignIn = () => {
                     }
 
                     await setDoc(doc(firebase, "users", user.user.uid), userDoc);
+                    //update userStore to userDoc
+                    userLogIn(userDoc)
+                    
+                } else {
 
-                } 
+                    //if user exixsts, update userStore to data from database
+                    userLogIn(docSnap.data());
 
-                //Store user info in local storage and upadate user status in store
+                }
 
-                localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
-                userLogIn(docSnap.data());
-                
             }
 
         } catch(error) {
@@ -62,7 +69,7 @@ const useGoogleSignIn = () => {
 
     }
 
-    return { googleSignIn, loading, error};
+    return { googleSignIn, error };
 
 }
 

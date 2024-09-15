@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import React from 'react'
-import { Input, Button, Alert, AlertIcon } from '@chakra-ui/react'
+import { Alert, AlertIcon, Button, Input } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import useLogin from '../../hooks/useLogin'
 
 const Login = () => {
@@ -29,7 +28,6 @@ const Login = () => {
         
         {error &&  <Alert maxW='300px' status='error'>
         <AlertIcon />
-        {/* There was an error logging in.  */}
         {error.message}
         </Alert>}
 

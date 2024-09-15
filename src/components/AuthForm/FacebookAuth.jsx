@@ -1,8 +1,8 @@
-import React from 'react'
-import { HStack, Image, Text } from '@chakra-ui/react'
-import useDisplayToast from '../../hooks/useDisplayToast'
-import useFacebookSignIn from '../../hooks/useFacebookAuth'
+import { HStack, Text } from '@chakra-ui/react';
+import React from 'react';
 import { FaFacebook } from "react-icons/fa";
+import useDisplayToast from '../../hooks/useDisplayToast';
+import useFacebookSignIn from '../../hooks/useFacebookAuth';
 
 const FacebookAuth = () => {
 

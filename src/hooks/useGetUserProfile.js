@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react'
-import useUserProfileStore from '../store/ProfileStore'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 import { firestore } from '../firebase/firebase';
+import useUserProfileStore from '../store/ProfileStore';
 import useDisplayToast from './useDisplayToast';
 
 
     const useGetUserProfile = (username) => {
 
     const [isLoading, setIsLoading] = useState(true);
-
-    const toast = useDisplayToast();
-
     const { userProfile, setUserProfile } = useUserProfileStore();
+    const toast = useDisplayToast();
 
     useEffect(() => {
 
@@ -36,7 +34,6 @@ import useDisplayToast from './useDisplayToast';
 
                 }
 
-
             } catch(error) {
 
                 toast('Error', error.message, 'error');
@@ -49,9 +46,6 @@ import useDisplayToast from './useDisplayToast';
         }
         
         getUserProfile();
-
-        console.log("useGetUserProfile")
-        
 
     }, [username])
 

@@ -1,9 +1,9 @@
-import useAuthStore from '../store/AuthStore'
-import { firestore } from '../firebase/firebase';
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
-import useDisplayToast from './useDisplayToast';
-import useUserProfileStore from '../store/ProfileStore';
 import { useEffect, useState } from 'react';
+import { firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useUserProfileStore from '../store/ProfileStore';
+import useDisplayToast from './useDisplayToast';
 
 
 
@@ -41,11 +41,11 @@ const useFollowUser = (userId) => {
             const userToFollowOrUnfollowRef = doc(firestore, "users", userId)
 
             try {
-
+                //Adding or removing user from the following list
                 await updateDoc(currentUserRef, {
                     following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
                 })
-
+                //Adding or removing user from the followers list
                 await updateDoc(userToFollowOrUnfollowRef, {
                     followers: isFollowing? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
                 })
@@ -59,37 +59,33 @@ const useFollowUser = (userId) => {
 
 
             if(isFollowing) {
-                //Unfollow target user
-                //Remove target user and update user store, userProfile store and local storage
+                //Unfollow target user: remove target user and update user store, userProfile store and local storage
                 const updatedAuthUser = {
                     ...authUser,
                     following: authUser.following.filter((item) => item !== userId)
                 }
 
                 setAuthUser(updatedAuthUser)
-                localStorage.setItem('user-info', JSON.stringify(updatedAuthUser));
 
+                //Only updating userProfile if there is one, which means on a ProfilePage and not on homepage to avoid errors
                 if (userProfile) {
 
                     setUserProfile({...userProfile, followers: userProfile.followers.filter((item) => item !== authUser.uid)})
 
                 }
-               
-                
 
                 setIsFollowing(false)
 
             } else {
-                //Follow target user
-                //Add target user and update user store, userProfile store and local storage
+                //Follow target user: add target user and update user store, userProfile store and local storage
                 const updatedAuthUser = {
                     ...authUser,
                     following: [...authUser.following, userId]
                 }
 
                 setAuthUser(updatedAuthUser)
-                localStorage.setItem('user-info', JSON.stringify(updatedAuthUser));
 
+                //Only updating userProfile if there is one, which means on a ProfilePage and not on homepage to avoid errors
                 if (userProfile) {
                     
                     setUserProfile({...userProfile, followers: [...userProfile.followers, authUser.uid]})

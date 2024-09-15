@@ -1,26 +1,18 @@
-import { useState, useEffect } from 'react'
-import useDisplayToast from './useDisplayToast'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { firestore } from '../firebase/firebase'
-import useCommentStore from '../store/CommentStore'
+import useDisplayToast from './useDisplayToast'
 
 const useGetComments = (post) => {
 
     const [isFetchingComments, setIsFetchingComments] = useState(false)
     const toast = useDisplayToast()
-    // const {comments, setComments} = useCommentStore()
     const [comments, setComments] = useState([])
     const GetComments = async() => {
 
-        // if (postIds.length === 0) return
-        console.log(post)
-            
-
-        setIsFetchingComments(true) 
+      setIsFetchingComments(true) 
 
         try {
-
-            console.log("Getcomments start")
 
             const q = query(collection(firestore, "comments"), where("postId", "==", post.id));
             const querySnapshot = await getDocs(q);
@@ -33,6 +25,7 @@ const useGetComments = (post) => {
 
             });
 
+            //Sort by timestamp
             docs.sort((a, b) => a.createdAt - b.createdAt)
 
             setComments(docs)
@@ -44,8 +37,6 @@ const useGetComments = (post) => {
         } finally {
 
             setIsFetchingComments(false)
-
-            console.log("getComments")
             
         }
 
@@ -55,8 +46,6 @@ const useGetComments = (post) => {
     useEffect(() => {
 
         GetComments()
-
-        console.log('getCimments useEffect fired')
 
     }, [post.comments.length])
 

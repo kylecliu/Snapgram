@@ -25,7 +25,6 @@ const useGetUserPosts = () => {
             setIsFetching(true)
             setPosts([])
 
-    
             try{
     
                 const q = query(collection(firestore, "posts"), where("createdBy", "==", userProfile.uid));
@@ -34,11 +33,13 @@ const useGetUserPosts = () => {
                 const docs = []
     
                 querySnapshot.forEach((doc) => {
+
                     docs.push({...doc.data(), id: doc.id})
                     
                 })
                 
-                docs.sort((a, b) => b.createdAt - a.createdAt )
+                //Sort by timestamp
+                docs.sort((a, b) => b.createdAt - a.createdAt)
                 console.log(docs)
                 setPosts(docs)
 

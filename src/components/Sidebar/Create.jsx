@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { CreatePostLogo } from '../../assets/constants'
-import { Flex, Box, Text, useDisclosure, Button, Input, FormControl, Image, Textarea, CloseButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import { Flex, Box, Text, useDisclosure, Button, Input, FormControl, Image, Textarea, CloseButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Heading } from '@chakra-ui/react'
 import usePreviewImage from '../../hooks/usePreviewImage'
 import useDisplayToast from '../../hooks/useDisplayToast'
 import useUserProfileStore from '../../store/ProfileStore'
@@ -49,9 +49,11 @@ const Create = () => {
 
     <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create new post</ModalHeader>
-          <ModalCloseButton />
+        <ModalContent rounded={'xl'}>
+          <ModalHeader><Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
+          Create Post
+          </Heading></ModalHeader>
+          <ModalCloseButton onClick={() => setSelectedFile(null)}/>
           <ModalBody>
 
             <form >
@@ -78,7 +80,7 @@ const Create = () => {
             <Button colorScheme='blue' mr={3} isLoading={isLoading} onClick={() => addPostHandler(inputs, selectedFile)} >
               Share
             </Button>
-            <Button variant='ghost' onClick={onClose}>Cancel</Button>
+            <Button variant='ghost' onClick={() => {onClose(); setSelectedFile(null)}}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

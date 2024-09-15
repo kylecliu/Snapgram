@@ -24,7 +24,7 @@ const ProfileStatistics = ({userProfile}) => {
             <Box onClick={authUser ? onFollowersOpen : () => toast("Info", "Please log in to proceed", "info")} cursor={'pointer'}>{userProfile.followers.length} followers</Box>
             <Modal isOpen={isFollowersOpen} onClose={onFollowersClose} closeOnOverlayClick={false}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent rounded={'xl'}>
                 <ModalHeader>Followers</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
@@ -39,7 +39,7 @@ const ProfileStatistics = ({userProfile}) => {
             <Box onClick={authUser ? onFollowingOpen : () => toast("Info", "Please log in to proceed", "info")} cursor={'pointer'}>{userProfile.following.length} following</Box>
             <Modal isOpen={isFollowingOpen} onClose={onFollowingClose} closeOnOverlayClick={false}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent rounded={'xl'}>
                 <ModalHeader>Following</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

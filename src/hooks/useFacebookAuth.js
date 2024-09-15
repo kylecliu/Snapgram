@@ -1,9 +1,8 @@
-import { useSignInWithFacebook } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase/firebase';
-import useDisplayToast from './useDisplayToast';
-import useAuthStore from '../store/AuthStore';
 import { doc, getDoc } from "firebase/firestore";
-import { firestore } from '../firebase/firebase';
+import { useSignInWithFacebook } from 'react-firebase-hooks/auth';
+import { auth, firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useDisplayToast from './useDisplayToast';
 
 const useFacebookSignIn = () => {
 
@@ -24,11 +23,8 @@ const useFacebookSignIn = () => {
                 const docRef = doc(firestore, "users", user.user.uid);
                 const docSnap = await getDoc(docRef);
 
-                console.log(docSnap)
-
                 if (docSnap.exists()) {
                 
-                    localStorage.setItem('user-info', JSON.stringify(docSnap.data()))
                     userLogIn(docSnap.data());
 
                 } else {
@@ -37,6 +33,8 @@ const useFacebookSignIn = () => {
                 }
 
             } else {
+
+                toast('Error', 'Something went wrong. Please try again later', 'error')
                 
             }
 

@@ -1,23 +1,5 @@
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import {
-  Avatar,
-  AvatarBadge,
-  Button,
-  Center,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  IconButton,
-  Input,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
-  Stack,
-  Textarea,
-  useColorModeValue
-} from '@chakra-ui/react';
+import { Avatar, AvatarBadge, Button, Center, Flex, FormControl, FormLabel, Heading, IconButton, Input, Modal, ModalCloseButton, ModalContent, ModalOverlay, Stack, Textarea, useColorModeValue } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 import useDisplayToast from '../../hooks/useDisplayToast';
 import useEditProfile from '../../hooks/useEditProfile';
@@ -37,6 +19,7 @@ import useAuthStore from '../../store/AuthStore';
     const { selectedFile, handleImageChange, setSelectedFile } = usePreviewImage()
     const { isLoading, editProfile } = useEditProfile()
     const toast = useDisplayToast();
+    const ref = useRef(null)
     const editProfileHandler = async() => {
 
       try {
@@ -50,18 +33,14 @@ import useAuthStore from '../../store/AuthStore';
         toast("Error", error.message, "error")
       }
 
-      
-      
     }
 
-    const ref = useRef(null)
-
-
+  
     return (
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent bg={useColorModeValue('gray.50', 'gray.800')} rounded={'xl'}>
+      <ModalContent rounded={'xl'}>
       <ModalCloseButton></ModalCloseButton>
         <Flex>
         <Stack

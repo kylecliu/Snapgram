@@ -18,13 +18,13 @@ const useSuggestedUsers = () => {
         try {
 
             const userRef = collection(firestore, "users");
+            //excluding users that are already on the following list and the users themselves
             const q = query(userRef, where("uid", "not-in", [...authUser.following, authUser.uid]), orderBy('uid'), limit(10))
 
             const querySnapshot = await getDocs(q);
             let users = []
             querySnapshot.forEach((user) => users.push({...user.data(), id: user.id}))
             setSuggestedUser(users)
-
 
         } catch(error) {
 

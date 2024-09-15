@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Divider  } from '@chakra-ui/react'
+import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom';
 import { ThreeDots, UnlikeLogo, CommentLogo, SendLogo, SaveLogo, NotificationsLogo } from '../../assets/constants';
 import { Skeleton, SkeletonCircle } from '@chakra-ui/react'
@@ -128,9 +128,6 @@ const Post = ({post}) => {
             </Tooltip> : null}
 
 
-
-
-
            {/* <Flex direction={'row'}>
                <Box pr={2} onClick={likePostHandler} cursor={'pointer'}> 
                    {isLiked ? <UnlikeLogo /> : <NotificationsLogo />}
@@ -151,7 +148,6 @@ const Post = ({post}) => {
                    <SaveLogo />
            </Link> */}
        </Flex>
-       {/* <Heading as='h6' size='sm' mb={1}> {post.likes.length} likes</Heading> */}
         
         {/* Post caption */}
        <Flex direction={'flex-start'} wrap={'wrap'} px={{base: 2, sm: 0}}>
@@ -185,7 +181,7 @@ const Post = ({post}) => {
                 <ModalContent >
                   <ModalCloseButton />
                   <ModalBody backgroundColor='white' py={0} pl={0} minH={{base: '100vh', sm: 'auto'}}>
-                    {/* Small screen user info display, but won't show on the smallest screen as it would be a different layout */}
+                    {/* Medium screen user info display, but won't show on the smallest screen as it would be a different layout */}
                     <Flex borderBottom={'1px solid lightgray'} justify={'flex-start'} align={'center'} display={{base: 'none', sm: 'flex', md:'none'}}>
                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -198,7 +194,7 @@ const Post = ({post}) => {
                         </Flex>
                     </Flex>
                     
-                    <Flex justify={'center'} align={'center'} flexDirection={'column'}>
+                    <Flex justify={'center'} align={{base:'start', sm: 'center'}} flexDirection={'column'} pl={{base: 2, sm: 0}}>
                         <Flex>
                             {/* Image display */}
                             <Flex flex={1.5} display={{base: 'none', sm: 'flex'}} >
@@ -208,12 +204,11 @@ const Post = ({post}) => {
                                 objectFit={'cover'}
                                 aspectRatio={4/5}
                                 w={"100%"}
-                                h={'auto'}
-                                
-                                ></Image>
+                                h={'auto'}               
+                                />
                             </Flex>
-                            {/* For medium screen and up user info display */}
-                            <Flex direction={'column'} backgroundColor={'white'} flex={1} >
+                            {/* For medium-large screen user info display */}
+                            <Flex direction={'column'} backgroundColor={'white'} flex={1}>
                                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>
                                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -225,7 +220,7 @@ const Post = ({post}) => {
                                         <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                                     </Flex>
                                 </Flex>
-                                <Flex mt={2} display={'flex'}>
+                                <Flex mt={2}>
                                     <Box>
                                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -240,7 +235,6 @@ const Post = ({post}) => {
                                         {timeAgo(post.createdAt)}
                                         </Box>
                                     </Flex>
-                                    
                                 </Flex>
 
                                 {/* comments */}
@@ -280,9 +274,7 @@ const Post = ({post}) => {
                                             <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
                                         </Box> */}
                                     </Flex>
-                                    {/* <Box pt={2} fontWeight={'bold'} ml={4}>
-                                        {post.likes.length} likes
-                                    </Box> */}
+
                                     <Box color={'gray'} fontSize={12} ml={4}>
                                         {new Date(post.createdAt).toLocaleDateString("en-US", {
                                             day: "numeric",
@@ -293,10 +285,10 @@ const Post = ({post}) => {
         
         
                                     {authUser &&  <InputGroup mb={4}>
-                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base: 'none', sm: 'flex'}}><GoSmiley/></InputLeftAddon>
-                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} display={{base:'flex', sm:'none'}}></Avatar></InputLeftAddon>
+                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base: 'none', sm:'flex'}}><GoSmiley/></InputLeftAddon>
+                                        <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base:'flex', sm:'none'}}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} ></Avatar></InputLeftAddon>
                                         <Input variant={'flushed'} placeholder='Add a comment...' value={commentInput} onChange={(e) => setCommentInput(e.target.value)} ref={commentInputRef}></Input>
-                                        <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
+                                        <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler} pr={{base: 0}}>Post</InputRightAddon>
                                     </InputGroup> }
         
                                 </Flex> 
@@ -310,7 +302,8 @@ const Post = ({post}) => {
               </Modal>
               </>
     
-    :
+    : 
+    //Loading effect 
             <Flex p={4} my={4}>
                 <VStack>
                     <HStack >

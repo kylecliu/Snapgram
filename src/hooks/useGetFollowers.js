@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-import useDisplayToast from './useDisplayToast'
-import useUserProfileStore from '../store/ProfileStore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { firestore } from '../firebase/firebase'
 import useAuthStore from '../store/AuthStore'
+import useUserProfileStore from '../store/ProfileStore'
+import useDisplayToast from './useDisplayToast'
 
 const useGetFollowers = () => {
 
@@ -32,7 +32,6 @@ const useGetFollowers = () => {
                 
                 docs.push(doc.data())
             )
-
 
             setFollowers(docs)
 

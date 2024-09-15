@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
-import useDisplayToast from './useDisplayToast'
 import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { firestore } from '../firebase/firebase'
 import useAuthStore from '../store/AuthStore'
-import useCommentStore from '../store/CommentStore'
+import useDisplayToast from './useDisplayToast'
 
 const useLikeComment = (comment) => {
 
@@ -11,9 +10,9 @@ const useLikeComment = (comment) => {
     const toast = useDisplayToast()
     const authUser = useAuthStore(state => state.user)
     const [isLiked, setIsLiked] = useState(false)
-    const {likeComment: likeCommentStore, unlikeComment} = useCommentStore()
     const checkIsLikedComment = async(comment) => {
 
+        //prevent checking when user is not logged in
         if(!authUser) return 
 
         try {
@@ -43,7 +42,7 @@ const useLikeComment = (comment) => {
 
         if (!authUser) return toast ("Info", "You need to log in to like a comment!", "info")
 
-        if(isUpdating) return 
+        if (isUpdating) return 
 
         setIsUpdating(true)
 
@@ -53,11 +52,11 @@ const useLikeComment = (comment) => {
 
             const docSnap = await getDoc(commentRef);
 
-            
             if (docSnap.exists()) {
                 
                 const commentDoc = docSnap.data()
 
+                //if the comment is already liked by the user, set it equal to unliked
                 if(commentDoc.likedBy.includes(authUser.uid)) {
 
                     await updateDoc(commentRef, {
@@ -67,10 +66,10 @@ const useLikeComment = (comment) => {
                     })
 
                     setIsLiked(false)
-                    // unlikeComment(commentInput, authUser.uid)
 
                 } else {
 
+                    //if the comment is unliked, set it equal to liked
                     await updateDoc(commentRef, {
 
                         likedBy: arrayUnion(authUser.uid) 
@@ -78,8 +77,7 @@ const useLikeComment = (comment) => {
                     })
 
                     setIsLiked(true)
-                    // likeCommentStore(commentInput, authUser.uid)
-
+                    
                 }
 
             } else {
@@ -105,7 +103,8 @@ const useLikeComment = (comment) => {
     }
 
     useEffect(() => {
-
+        
+        //keep track of whether a comment is liked 
         checkIsLikedComment(comment)
 
     }, [comment])

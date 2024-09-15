@@ -1,19 +1,12 @@
-import React, { useState } from 'react'
-import { Flex, Container, Box, Image, VStack, Input, Button, Text, HStack } from '@chakra-ui/react'
+import { Box, Flex, Image, VStack } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import GoogleAuth from './GoogleAuth';
 import Login from './Login';
 import Signup from './Signup';
-import GoogleAuth from './GoogleAuth';
-import FacebookAuth from './FacebookAuth';
 
 const AuthForm = () => {
 
-   const [isSignedUp, setIsSignedUp] = useState(false);
-   const [inputs, setInputs] = useState({
-    email: '',
-    password:'',
-    confirmPassword:''
-   });
-
+   const [isSignedUp, setIsSignedUp] = useState(true);
 
   return (
     // Login section

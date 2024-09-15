@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import useDisplayToast from './useDisplayToast'
-import { doc, deleteDoc, updateDoc, arrayRemove, writeBatch, query, collection, where, getDocs } from "firebase/firestore";
+import { arrayRemove, collection, deleteDoc, doc, getDocs, query, updateDoc, where, writeBatch } from "firebase/firestore";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import { useState } from 'react';
 import { firestore } from '../firebase/firebase';
-import usePostStore from '../store/postStore';
-import { getStorage, ref, deleteObject } from "firebase/storage";
 import useAuthStore from '../store/AuthStore';
-import useUserProfileStore from '../store/ProfileStore';
 import useCommentStore from '../store/CommentStore';
+import usePostStore from '../store/postStore';
+import useUserProfileStore from '../store/ProfileStore';
+import useDisplayToast from './useDisplayToast';
 
 const useDeletePost = () => {
 
@@ -32,8 +32,7 @@ const useDeletePost = () => {
             await deleteObject(desertRef)
 
 
-
-            //Delete post ID in userProfile
+            //Delete post ID in the user document 
 
             const userRef = doc(firestore, "users", authUser.uid);
 
@@ -71,7 +70,7 @@ const useDeletePost = () => {
 
             await batch.commit()
 
-            //updating stores
+            //updating post, comment and userProfile stores
 
             deletePost(postId);
 

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import useDisplayToast from './useDisplayToast'
 import { doc, getDoc } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { firestore } from '../firebase/firebase'
+import useDisplayToast from './useDisplayToast'
 
 const useGetUserProfilebyId = (uid) => {
 
@@ -42,7 +42,7 @@ const useGetUserProfilebyId = (uid) => {
 
         getUserProfileById(uid)
 
-    },[])
+    },[uid])
 
 
     return { isFetchingProfile, userProfile }

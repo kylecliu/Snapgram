@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import { arrayRemove, arrayUnion, doc, updateDoc, getDoc } from "firebase/firestore";
-import useAuthStore from '../store/AuthStore';
-import useDisplayToast from './useDisplayToast';
+import { arrayRemove, arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 import { firestore } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
 import usePostStore from '../store/postStore';
+import useDisplayToast from './useDisplayToast';
 
 const useLikePost = (post) => {
 
@@ -11,16 +11,23 @@ const useLikePost = (post) => {
     const [isLoading, setIsLoading] = useState(false)
     const authUser = useAuthStore(state => state.user)
     const toast = useDisplayToast()
-    const {posts, likePostStore, unlikePostStore} = usePostStore()
+    const {likePostStore, unlikePostStore} = usePostStore()
 
     const checkIsLiked = async(post) => {
 
+        //prevent checking when user is not logged in
         if (!authUser) return
 
         try {
 
             const postRef = doc(firestore, "posts", post.id)
             const docSnap = await getDoc(postRef)
+
+            if (!docSnap.exists) {
+
+                return toast("Error", "Something went wrong!", "error")
+
+            }
 
             const postToUpdate = docSnap.data()
 
@@ -32,6 +39,7 @@ const useLikePost = (post) => {
 
                 setIsLiked(false)
             }
+
         } catch(error) {
 
             toast("Error", error.message, "error")
@@ -50,33 +58,29 @@ const useLikePost = (post) => {
             const postRef = doc(firestore, "posts", post.id)
             const docSnap = await getDoc(postRef)
 
+            if (!docSnap.exists) {
+
+                return toast("Error", "Something went wrong!", "error")
+
+            }
+
             const postToUpdate = docSnap.data()
 
-            if(postToUpdate.likes.includes(authUser.uid)) {//remove like
+            if(postToUpdate.likes.includes(authUser.uid)) {
 
-                console.log("authUser.uid exists")
-                console.log(authUser.uid)
-
+                //unlike the post if it has already been liked
                 await updateDoc(postRef, {
                     likes: arrayRemove(authUser.uid)
                 })
 
                 setIsLiked(false)
 
-                console.log("Before")
-                console.log(posts)
-
+                //Update post store
                 unlikePostStore(post.id, authUser.uid)
 
-                console.log("After")
-                console.log(posts)
-
-
-            } else {//Add like
+            } else {
                 
-                console.log("authUser.uid doesn't exist")
-                console.log(authUser.uid)
-
+                //like this post if it has not been liked
                 await updateDoc(postRef, {
 
                     likes: arrayUnion(authUser.uid)
@@ -84,13 +88,8 @@ const useLikePost = (post) => {
 
                 setIsLiked(true)
 
-                console.log("Before")
-                console.log(posts)
-
+                //Update post store
                 likePostStore(post.id, authUser.uid)
-
-                console.log("After")
-                console.log(posts)
 
             } 
 
@@ -113,7 +112,7 @@ const useLikePost = (post) => {
 
     return { isLiked, likePost, isLoading }
 
- 
+
 }
 
 export default useLikePost

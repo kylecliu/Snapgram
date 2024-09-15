@@ -21,9 +21,6 @@ const Comment = ({comment}) => {
         if(window.confirm("Are you sure you want to delete this comment?")) {
             deleteComment(comment)
         }
-
-        !isDeletingComment  && console.log()
-
     }
 
   return (
@@ -52,7 +49,7 @@ const Comment = ({comment}) => {
                 </Flex>
                 
             </Flex>
-            <Flex align={'start'} mt={4} mx={2} cursor={'pointer'} >
+            <Flex mt={4} mx={2} cursor={'pointer'} >
                 <Box onClick={() => likeComment(comment)}>
                     {isLiked ? <IoHeartSharp color='#f70776'/> : <IoHeartOutline />}
                 </Box>

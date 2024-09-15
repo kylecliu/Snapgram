@@ -1,18 +1,14 @@
-import React from 'react'
 import { HStack, Image, Text } from '@chakra-ui/react'
+import React from 'react'
 import useGoogleSignIn from '../../hooks/useGoogleAuth'
-import useDisplayToast from '../../hooks/useDisplayToast'
 
 const GoogleAuth = () => {
 
-  const { googleSignIn, error } = useGoogleSignIn();
-
-  const toast = useDisplayToast();
+  const { googleSignIn } = useGoogleSignIn();
 
   return (
     <HStack>
         <Image src='public/google.png' h='20px' alt='google icon'></Image>
-        {error && toast("Error", error.message, 'error')}
         <Text 
         fontSize='sm' 
         color='gray' 

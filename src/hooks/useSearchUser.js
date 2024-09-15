@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import useDisplayToast from './useDisplayToast'
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState } from 'react';
 import { firestore } from '../firebase/firebase';
-import { collection, query, where, getDocs } from "firebase/firestore";
-
+import useDisplayToast from './useDisplayToast';
 
 
 const useSearchUser = () => {
@@ -23,6 +22,7 @@ const searchUser = async(username) => {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
+        
         toast("Info", "No such user found, try another one 🔎", "info")
         return
 

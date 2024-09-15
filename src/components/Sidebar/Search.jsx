@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { SearchLogo } from '../../assets/constants'
-import { Flex, Box, Text, useDisclosure, Button, ButtonGroup, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import { Flex, Box, Text, useDisclosure, Button, ButtonGroup, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Heading } from '@chakra-ui/react'
 import useSearchUser from '../../hooks/useSearchUser';
 import { FormControl } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore';
@@ -39,9 +39,11 @@ const Search = () => {
     </Flex>
      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Search Users</ModalHeader>
-          <ModalCloseButton onClick={closeHandler}/>
+        <ModalContent rounded={'xl'}>
+          <ModalHeader> <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl' }}>
+            Search User
+          </Heading></ModalHeader>
+          <ModalCloseButton onClick={(closeHandler)}/>
           <ModalBody>
             <form onSubmit={submitHandler}>
               <FormControl>
@@ -49,11 +51,8 @@ const Search = () => {
               </FormControl>
 
               <ButtonGroup mb={2}>
-
-              <Button colorScheme='blue' mr={3} isLoading={isFetching} type={'submit'} >
-              Search
-              </Button>
-              <Button variant='ghost' onClick={closeHandler}>Close</Button>
+                <Button colorScheme='blue' mr={3} isLoading={isFetching} type={'submit'} >Search</Button>
+                <Button variant='ghost' onClick={closeHandler}>Close</Button>
               </ButtonGroup>
             </form>
             

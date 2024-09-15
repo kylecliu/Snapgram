@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} justify={{base: 'center', sm: 'flex-start'}}>
         <Link to={"/"} as={RouterLink} style={{textDecoration: 'none'}}>
-            <Flex  p={2} borderRadius={4} justify={'center'}>
+            <Flex p={2} borderRadius={4} justify={'center'}>
                 <Box >
                     <GrHomeRounded fontSize={24}/>
                 </Box>

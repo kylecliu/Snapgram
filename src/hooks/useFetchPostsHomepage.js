@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import useAuthStore from '../store/AuthStore'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 import { firestore } from '../firebase/firebase';
-import useDisplayToast from './useDisplayToast';
+import useAuthStore from '../store/AuthStore';
 import usePostStore from '../store/postStore';
+import useDisplayToast from './useDisplayToast';
 
 
 const useFetchPostsHomepage = () => {
@@ -22,12 +22,12 @@ const useFetchPostsHomepage = () => {
         try {
 
             const following = authUser.following
-            const q = query(collection(firestore, "posts"), where("createdBy", "in", [...following, authUser.uid]));//Display posts from users followed by Authuser as well as their own posts
+            //Display posts from users followed by Authuser as well as their own posts
+            const q = query(collection(firestore, "posts"), where("createdBy", "in", [...following, authUser.uid]));
 
             const querySnapshot = await getDocs(q);
 
             let posts = []
-            
             
             querySnapshot.forEach((doc) => {
 
@@ -35,6 +35,7 @@ const useFetchPostsHomepage = () => {
             
             });
 
+            //Sort by timestamp
             posts.sort((a, b) => b.createdAt - a.createdAt)
 
             setPostsToDisplay(posts)
@@ -56,7 +57,7 @@ const useFetchPostsHomepage = () => {
 
         fetchPosts()
 
-    }, [authUser, postsToDisplay.length])
+    }, [authUser, postsToDisplay.length])//postsToDisplay.length is for when a post is added or deleted
 
 
     return { isFetching, postsToDisplay }

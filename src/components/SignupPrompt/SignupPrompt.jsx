@@ -6,7 +6,8 @@ import { SnapgramLogo } from '../../assets/constants'
 const SignupPrompt = () => {
 
   return (
-    <Flex h={'65px'} w={'100%'} borderBottom={"1px solid #e7eaf6"} position={'fixed'} backgroundColor={'white'} zIndex={1} justify={'center'}>
+    <>
+    <Flex h={{base: '50px',sm: '65px'}} w={'100%'} borderBottom={"1px solid #e7eaf6"} position={'fixed'} backgroundColor={'white'} zIndex={1} justify={{base: 'space-evenly', sm: 'center'}}>
         <Flex w={'35%'} justify={'flex-start'} align={'center'} >
             <Link 
             as={RouterLink}
@@ -38,9 +39,9 @@ const SignupPrompt = () => {
             style={{textDecoration:'none'}}
             >Sign Up</Link></Button>
         </Flex>
-
-
     </Flex>
+    </>
+
   )
 }
 

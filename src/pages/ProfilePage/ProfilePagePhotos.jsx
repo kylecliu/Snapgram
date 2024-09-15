@@ -47,7 +47,7 @@ const NoPostsFound = () => {
 
   return (
       <Flex  w={'100%'} justify={'center'} align={'center'}>
-        <Text fontSize={'3xl'} my={20}>
+        <Text fontSize={'2xl'} m={20}>
           This account does not yet have posts!
         </Text>
       </Flex>

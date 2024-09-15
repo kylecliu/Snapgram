@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import useDisplayToast from './useDisplayToast'
-import useAuthStore from '../store/AuthStore'
-import { ref, uploadString, getDownloadURL } from "firebase/storage";
-import { storage, firestore } from '../firebase/firebase';
-import { doc, updateDoc, collection, query, where, getDocs } from "firebase/firestore";
-import useUserProfileStore from '../store/ProfileStore';
+import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
-
+import { firestore, storage } from '../firebase/firebase';
+import useAuthStore from '../store/AuthStore';
+import useUserProfileStore from '../store/ProfileStore';
+import useDisplayToast from './useDisplayToast';
 
 
 const useEditProfile = () => {
@@ -22,7 +20,9 @@ const useEditProfile = () => {
 
     const editProfile = async(inputs, selectedFile) => {
 
-        if(isUpdating || !authUser) {
+        if(!authUser) return toast("Info", "Please log in to proceed", "info")
+
+        if(isUpdating) {
             //prevent repeated quick clicks
             return
         }
@@ -52,7 +52,7 @@ const useEditProfile = () => {
 
         const userDocRef = doc(firestore, "users", authUser.uid);
 
-        //Prevent repeated usernames
+        //Performs a check to ensure unique usernames
 
         const q = query(collection(firestore, "users"), where("username", "==", inputs.username));
 
@@ -60,7 +60,7 @@ const useEditProfile = () => {
 
         if(!querySnapshot.empty) {
 
-            toast("Error", "This username is taken", "error")
+            toast("Error", "This username is taken. Please choose another one.", "error")
             return
         }
 
@@ -79,9 +79,7 @@ const useEditProfile = () => {
             profileURL: URL || authUser.profileURL
         });
 
-        console.log(`new UserDoc: ${newUserDoc}`)
-
-
+       //Updates the authUser and userProfile stores
         setAuthUser(newUserDoc)
         setUserProfile(newUserDoc)
 

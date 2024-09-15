@@ -10,7 +10,7 @@ import User from './User'
 const Users = () => {
 
   const { isLoading, suggestedUser } = useSuggestedUsers()
-  const {isFetching, user, searchUser, setUser} = useSearchUser()
+  const { setUser } = useSearchUser()
 
 
   return (
@@ -19,18 +19,18 @@ const Users = () => {
     <Profile  />
     {suggestedUser.length === 0 ? null : <Text fontWeight={'bold'} color={'gray'}>Suggested for you</Text>}
     
-    <Flex direction={'column'} py={2}>
+    <Flex direction={'column'} py={2} w={'100%'}>
 
       {suggestedUser.map((user) => <User user={user} key={user.id} setUser={setUser}/>)}
 
     </Flex>
-    <Box textAlign={'center'} w={280}>
+    <Box textAlign={'center'} w={'100%'}>
           <Text color='gray' fontSize='12px'>{new Date().getFullYear()} © Built by Kyle </Text>
     </Box>
     </> :
 
     <Flex gap={5} mt={2} flexDirection={'column'}>
-      {[...Array(10)].map(() => <LoadingEffect/>)}
+      {[...Array(10)].map((item, idx) => <LoadingEffect key={idx}/>)}
     </Flex>
 
   )

@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import React from 'react'
-import { Input, Button, InputGroup, InputRightElement, Alert, AlertIcon } from '@chakra-ui/react'
-import { GrFormViewHide } from "react-icons/gr";
+import { Alert, AlertIcon, Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { BiShowAlt } from "react-icons/bi";
+import { GrFormViewHide } from "react-icons/gr";
 import useSignUpWithEmailAndPassword from '../../hooks/useSignUpWithEmailAndPassword';
 
 
 const Signup = () => {
-
 
     const [inputs, setInputs] = useState({
         email: '',
@@ -15,9 +13,8 @@ const Signup = () => {
         fullName: '',
         username: ''
        });
-    
-    const [hidePassword, setHidePassword] = useState(true);
 
+    const [hidePassword, setHidePassword] = useState(true);
     const {loading, error, signup} = useSignUpWithEmailAndPassword()
 
   return (
@@ -29,7 +26,7 @@ const Signup = () => {
         onChange={(e) => setInputs({...inputs, email: e.target.value})}
         />
         <Input 
-        type="text" 
+        type="text"  
         placeholder='Full Name'
         value={inputs.fullName}
         onChange={(e) => setInputs({...inputs, fullName: e.target.value})}
