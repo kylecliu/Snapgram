@@ -12,7 +12,7 @@ const ToProfile = () => {
         <Link to={`/${authUser?.username}`} as={RouterLink} style={{textDecoration: 'none'}}>
             <Flex  p={2} borderRadius={4} justify={'center'}>
                 <Box >
-                    <Avatar size='xs' name='photo' src={authUser?.profileURL || ""} />
+                    <Avatar size='xs' name={authUser?.username} src={authUser?.profileURL || ""} />
                 </Box>
                 <Text display={{base:'none', lg:'inline'}} pl={5}>Profile</Text>
             </Flex>

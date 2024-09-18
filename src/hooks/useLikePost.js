@@ -50,6 +50,8 @@ const useLikePost = (post) => {
     const likePost = async(post) => {
 
         if(!authUser) return toast("Info", "Please log in to proceed", "info")
+        
+        if(isLoading) return
 
         setIsLoading(true)
 

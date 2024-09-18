@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware'
 
 const useAuthStore = create(
     persist((set) => ({
-        // user: JSON.parse(localStorage.getItem('user_info')),
         user: null,
         login: (user) => set({user}),
         logout: () => set({ user: null}),
@@ -14,9 +13,6 @@ const useAuthStore = create(
         name: 'user-data',
         partialize: (state) => ({ user: state.user })   
     })
-
-
 )
-
 
 export default useAuthStore

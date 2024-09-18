@@ -2,7 +2,6 @@ import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firesto
 import { useState } from 'react';
 import { firestore } from '../firebase/firebase';
 import useAuthStore from '../store/AuthStore';
-import useCommentStore from '../store/CommentStore';
 import usePostStore from '../store/postStore';
 import useDisplayToast from './useDisplayToast';
 
@@ -12,7 +11,7 @@ const useAddComment = () => {
     const toast = useDisplayToast()
     const authUser = useAuthStore(state => state.user)
     const {addCommentToPost} = usePostStore()
-    const {addComment: addCommentStore} = useCommentStore()
+
 
     const addComment = async(postId, comment) => {
 
@@ -51,9 +50,8 @@ const useAddComment = () => {
                 comments: arrayUnion(docRef.id)
               });
             
-            //Updating post and comment store
+            //Updating post store
             addCommentToPost(postId, docRef.id)
-            addCommentStore({...newComment, postId: postId})
 
             toast("Success", "Comment added!", "success")
 

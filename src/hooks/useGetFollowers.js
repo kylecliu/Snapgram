@@ -16,7 +16,8 @@ const useGetFollowers = () => {
 
     const getFollowers = async() => {
 
-        if(!authUser || isFetching || userProfile?.followers.length === 0) return setFollowers([])
+        if(isFetching) return
+        if(!authUser || userProfile?.followers.length === 0) return setFollowers([])
 
         setIsFetching(true)
 
@@ -53,7 +54,9 @@ const useGetFollowers = () => {
 
     const getFollowedUsers = async() => {
 
-        if(!authUser || isFetching || userProfile?.following.length === 0) return setFollowedUsers([])
+        if(isFetching) return
+
+        if(!authUser || userProfile?.following.length === 0) return setFollowedUsers([])
 
 
         setIsFetching(true)

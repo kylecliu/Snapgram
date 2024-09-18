@@ -9,14 +9,9 @@ import ProfileTabs from './ProfileTabs'
 const ProfilePage = () => {
 
   const { username } = useParams();
-
   const { userProfile, isLoading } = useGetUserProfile(username);
-
   const  userNotFound = !isLoading && !userProfile;
-
-  console.log(userProfile)
   
-
   if(userNotFound) return < UserNotFound/>
 
   return (
@@ -63,13 +58,11 @@ const LoadingEffect = () => {
   return (
     <Flex w={'70%'} mb={5} >  
       <Box mr={10}>
-        <SkeletonCircle size={{base: '100px', md: '150px'}} m={{base: '5px', md: '10px'}}/>
+        <SkeletonCircle size={{base: '80px', md: '150px'}} m={{base: '5px', md: '10px'}}/>
       </Box>
 
-      <Flex direction={'column'} w={'100%'} gap={5} justify={'center'}>
-        <Skeleton h={15} w={'70%'}/>
-        <Skeleton h={15} w={'70%'} />
-        <Skeleton h={15} w={'70%'} />
+      <Flex direction={'column'} w={'100%'} gap={4} justify={'center'}>
+        {[...Array(3)].map((element, idx) => <Skeleton key={idx} h={3} w={{base: '100%', md: '70%'}}/>)}
       </Flex>
     </Flex>
   )

@@ -7,7 +7,7 @@ import useSearchUser from '../../hooks/useSearchUser'
 import useDisplayToast from '../../hooks/useDisplayToast'
 import useAuthStore from '../../store/AuthStore'
 
-const ProfileStatistics = ({userProfile}) => {
+const ProfileStats = ({userProfile}) => {
 
     const { isFetching, followers, followedUsers } = useGetFollowers()
     const { isOpen: isFollowersOpen, onOpen: onFollowersOpen, onClose: onFollowersClose } = useDisclosure()
@@ -17,7 +17,8 @@ const ProfileStatistics = ({userProfile}) => {
     const authUser = useAuthStore(state => state.user)
     
     return (
-        <Flex direction={'flex-start'} gap={8} my={{base:2, sm:4}} display={'flex'} fontWeight={'bold'} fontSize={{base:12, md:15}}>
+
+        <Flex direction={'flex-start'} gap={8} my={{base:2, sm:4}} fontWeight={'bold'} fontSize={{base:12, md:15}}>
             <Box>{userProfile.posts.length} posts</Box>
 
             {/* FOllowers */}
@@ -53,5 +54,5 @@ const ProfileStatistics = ({userProfile}) => {
     )
 }
 
-export default ProfileStatistics
+export default ProfileStats
 

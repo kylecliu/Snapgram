@@ -1,8 +1,7 @@
-import React, { useRef } from 'react'
-import { SearchLogo } from '../../assets/constants'
-import { Flex, Box, Text, useDisclosure, Button, ButtonGroup, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Heading } from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, Flex, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react';
+import React, { useRef } from 'react';
+import { FiSearch } from "react-icons/fi";
 import useSearchUser from '../../hooks/useSearchUser';
-import { FormControl } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore';
 import User from '../User/User';
 
@@ -32,7 +31,7 @@ const Search = () => {
     <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} onClick={onOpen} cursor={'pointer'} justify={{base: 'center', sm: 'flex-start'}}>
         <Flex  p={2} borderRadius={4} justify={'center'}>
             <Box >
-                <SearchLogo />
+                <FiSearch fontSize={24}/>
             </Box>
             <Text display={{base:'none', lg:'inline'}} pl={5}>Search</Text>
         </Flex>

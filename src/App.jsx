@@ -1,12 +1,10 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import AuthPage from './pages/AuthPage/AuthPage';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import PageLayout from './Layouts/PageLayout/PageLayout';
+import AuthPage from './pages/AuthPage/AuthPage';
+import HomePage from './pages/HomePage/HomePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import useAuthStore from './store/AuthStore';
-import EditPage from './pages/EditPage/EditPage'; 
-
 
 
 const App = () => {
@@ -20,7 +18,6 @@ const App = () => {
             <Route path='/' element= {authUser ? <HomePage /> : <Navigate to={'/auth'}/>} />
             <Route path='/auth' element= {authUser ? <Navigate to={'/'}/> : <AuthPage /> } />
             <Route path='/:username' element={<ProfilePage />} />
-            <Route path='/edit' element={<EditPage/>} />
           </Routes>
         </PageLayout>
     </div>

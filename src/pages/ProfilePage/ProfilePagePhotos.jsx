@@ -1,39 +1,26 @@
-import { Grid, GridItem, Skeleton, Flex, Text } from '@chakra-ui/react'
-import { useParams } from 'react-router-dom'
+import { Flex, Grid, GridItem, Skeleton, Text } from '@chakra-ui/react'
 import React from 'react'
-import ProfilePhoto from './ProfilePhoto'
-import useGetUserProfile from '../../hooks/useGetUserProfile'
 import useGetUserPosts from '../../hooks/useGetUserPosts'
+import ProfilePhoto from './ProfilePhoto'
 
 
 const ProfilePagePhotos = () => {
 
-  const { username } = useParams();
-  const { isLoading } = useGetUserProfile(username);
   const { isFetching, posts } = useGetUserPosts()
 
-
-  const noPostsFound = !isFetching && posts.length === 0
+  const noPostsFound = !isFetching && posts && posts.length === 0
   if(noPostsFound) return <NoPostsFound />
 
   return (
     <>
 
-    {isLoading || isFetching ? (<Grid w={'70%'} gap={2} templateColumns={'repeat(3, 1fr)'} >
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
-    <GridItem><Skeleton h={300}>text</Skeleton></GridItem>
+    {isFetching ? (<Grid w={{base: '100%', sm: '70%'}} gap={{base: 1, sm:2}} templateColumns={'repeat(3, 1fr)'} >
 
-    </Grid>) : ( <Grid w={{sm: '70%'}} maxW={'800px'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
+    {[...Array(12)].map((element, idx) => <GridItem key={idx}><Skeleton h={'full'} w={'full'} aspectRatio={1/1}>text</Skeleton></GridItem>)}
+
+    </Grid>) : ( <Grid w={{base: '100%', sm: '70%'}} maxW={'800px'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={1} my={2}>
         
-        {posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
+        {posts && posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
 
     </Grid>)}
 

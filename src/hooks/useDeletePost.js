@@ -3,7 +3,6 @@ import { deleteObject, getStorage, ref } from "firebase/storage";
 import { useState } from 'react';
 import { firestore } from '../firebase/firebase';
 import useAuthStore from '../store/AuthStore';
-import useCommentStore from '../store/CommentStore';
 import usePostStore from '../store/postStore';
 import useUserProfileStore from '../store/ProfileStore';
 import useDisplayToast from './useDisplayToast';
@@ -13,9 +12,8 @@ const useDeletePost = () => {
     const [isDeleting, SetIsDeleting] = useState(false)
     const toast = useDisplayToast()
     const authUser = useAuthStore(state => state.user)
-    const {userProfile, deletePostInUserProfile} = useUserProfileStore()
-    const {posts, deletePost} = usePostStore() 
-    const {deletePost: deletePostCommentStore} = useCommentStore()
+    const {deletePostInUserProfile} = useUserProfileStore()
+    const {deletePost} = usePostStore() 
 
     const deletePostHandler = async(postId) => {
 
@@ -74,10 +72,7 @@ const useDeletePost = () => {
 
             deletePost(postId);
 
-            deletePostCommentStore(postId)
-
             deletePostInUserProfile(postId)
-
 
             toast("Success", "Post deleted!", "success")
 

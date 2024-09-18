@@ -23,7 +23,7 @@ const useGetUserPosts = () => {
             if(!userProfile) return 
     
             setIsFetching(true)
-            setPosts([])
+            setPosts(null)
 
             try{
     
@@ -40,7 +40,6 @@ const useGetUserPosts = () => {
                 
                 //Sort by timestamp
                 docs.sort((a, b) => b.createdAt - a.createdAt)
-                console.log(docs)
                 setPosts(docs)
 
 

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { SnapgramMobileLogo, LogoutLogo, SnapgramLogo } from '../../assets/constants';
 import useLogout from '../../hooks/useLogout';
 import SidebarItems from './SidebarItems';
-
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 
 const Sidebar = () => {
@@ -13,7 +13,7 @@ const Sidebar = () => {
 
   return (
     <>
-    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} w={{base:"auto", lg: "240px"}} position={'fixed'} borderRight={'1px solid black'} flexDirection='column' display={{base: 'none', sm: 'flex'}}>
+    <Flex padding={'10px 12px 20px 20px'} h={'100vh'} w={{base:"auto", lg: "240px"}} position={'fixed'} borderRight={'1px solid'} flexDirection='column' display={{base: 'none', sm: 'flex'}}>
         <Flex align={'center'} justify={{base: 'center', lg:'flex-start'}}>
             {/* Icon a bigger screen */}
             <Link to={'/'} as={RouterLink} display={ {base: 'none', lg: 'block'}} my={5} cursor={'pointer'}>
@@ -30,7 +30,7 @@ const Sidebar = () => {
         <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} cursor={'pointer'} onClick={() => logOutHandler()}>
             <HStack p={2} borderRadius={4}>
                 <Box>
-                    <LogoutLogo />  
+                    <RiLogoutBoxRLine fontSize={24} />
                 </Box>
                 <Text display={{base:'none', lg:'inline'}}>Log Out</Text>
             </HStack>

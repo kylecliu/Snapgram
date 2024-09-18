@@ -9,15 +9,13 @@ import useAuthStore from '../../store/AuthStore';
 const Profile = () => {
 
   const { logOutHandler, loading, error } = useLogout();
-
   const user = useAuthStore(state => state.user);
-
   const toast = useDisplayToast();
 
   return (
     <Flex py={3} justify={'space-between'}>
         <Flex>
-          <Link as={RouterLink} to={`${user.username}`}><Avatar name={user.fullName} size='md' src={user.profileURL} mr={3}></Avatar></Link>
+          <Link as={RouterLink} to={`${user.username}`}><Avatar name={user.username} size='md' src={user.profileURL} mr={3}></Avatar></Link>
           <Flex direction={'column'} >
               <Link 
               as={RouterLink} 

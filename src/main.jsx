@@ -1,11 +1,9 @@
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App'; 
-import { ChakraProvider } from '@chakra-ui/react';
-import { extendTheme } from '@chakra-ui/react';
-import { ColorModeScript } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
 import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 import "./index.css";
 
 //Passing background settings into config for color mode
@@ -26,8 +24,6 @@ const config = {
 const theme = extendTheme({ config, styles });
 
 export default theme;
-
-
 
 const domNode = document.getElementById('root');
 const root = createRoot(domNode);

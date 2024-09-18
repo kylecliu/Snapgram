@@ -1,14 +1,15 @@
+import { Box, Button, CloseButton, Flex, FormControl, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Textarea, useDisclosure } from '@chakra-ui/react'
+import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
+import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage"
 import React, { useRef, useState } from 'react'
 import { CreatePostLogo } from '../../assets/constants'
-import { Flex, Box, Text, useDisclosure, Button, Input, FormControl, Image, Textarea, CloseButton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Heading } from '@chakra-ui/react'
-import usePreviewImage from '../../hooks/usePreviewImage'
+import { firestore } from '../../firebase/firebase'
 import useDisplayToast from '../../hooks/useDisplayToast'
+import usePreviewImage from '../../hooks/usePreviewImage'
+import useAuthStore from '../../store/AuthStore'
 import useUserProfileStore from '../../store/ProfileStore'
 import usePostStore from '../../store/postStore'
-import { firestore } from '../../firebase/firebase'
-import useAuthStore from '../../store/AuthStore'
-import { doc, updateDoc, arrayUnion, collection, addDoc } from "firebase/firestore";
-import { getStorage, ref, uploadString,  getDownloadURL  } from "firebase/storage";
+import { MdOutlineAddBox } from "react-icons/md";
 
 
 
@@ -38,10 +39,11 @@ const Create = () => {
 
   return (
     <>
+
     <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} cursor={'pointer'} justify={{base: 'center', sm: 'flex-start'}}>
         <Flex  p={2} borderRadius={4} justify={'center'} onClick={onOpen}>
             <Box>
-                <CreatePostLogo />
+              <MdOutlineAddBox fontSize={25}/>
             </Box>
             <Text display={{base:'none', lg:'inline'}} pl={5}>Create</Text>
         </Flex>
@@ -155,16 +157,16 @@ const useCreatePost = () => {
 
     await updateDoc(userDocRef,{posts: arrayUnion(postDocRef.id)})
 
-    //If authUser is on their own profile page, update the store
+    //If authUser is on their own profile page, update the userprofile and post store
 
-    { authUser.uid === userProfile.uid ?  addPost({...newPost, id: postDocRef.id}) : null }
+    { authUser.uid === userProfile?.uid ?  addPost({...newPost, id: postDocRef.id}) : null }
 
-    { authUser.uid === userProfile.uid ?  createPost({...newPost, id: postDocRef.id}) : null }
+    { authUser.uid === userProfile?.uid ?  createPost({...newPost, id: postDocRef.id}) : null }
 
-    //Update authUser
+    //Update authUser 
 
     setAuthUser({...authUser, posts: [...authUser.posts, postDocRef.id]})
-    
+
     toast("Success", "Post added successfully", "success")
     
     } catch(error) {
@@ -179,6 +181,5 @@ const useCreatePost = () => {
   }
 
   return {isLoading, createPostHandler }
-
 
 }

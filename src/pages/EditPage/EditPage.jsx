@@ -35,9 +35,10 @@ import useAuthStore from '../../store/AuthStore';
 
     }
 
-  
-    return (
+    
 
+    return (
+      user && 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent rounded={'xl'}>

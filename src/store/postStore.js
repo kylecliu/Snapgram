@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 
 const usePostStore = create((set) => ({
+
     posts: [],
     createPost: (post) => set(state => ({posts: [post, ...state.posts]})),
     setPosts: (posts) => set({posts}),
@@ -40,15 +41,9 @@ const usePostStore = create((set) => ({
 
          state.posts.map((post) => {
 
-            console.log('deleteCommentInPost fired')
-
             if (post.id === commentInput.postId) {
 
-                console.log("Found comment to delete")
-
-                console.log(`post: ${JSON.stringify(post)} comments: ${post.comments}` )
-
-               return { ...post, comments: post.comments.filter((comment) => comment !== commentInput.commentId)}
+               return { ...post, comments: post.comments.filter((commentId) => commentId !== commentInput.commentId)}
             }
 
             return post      

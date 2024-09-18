@@ -17,6 +17,7 @@ import { LuSend } from 'react-icons/lu';
 import { useDisclosure } from '@chakra-ui/react';
 import { GoSmiley } from "react-icons/go";
 import useFollowUser from '../../hooks/useFollowUser';
+import { TbMessageCircle } from "react-icons/tb";
 
 
 
@@ -113,7 +114,7 @@ const Post = ({post}) => {
                 {post?.likes?.length > 0 ? <Text fontWeight={'bold'}>{post?.likes?.length}</Text> : null}
 
                <Tooltip label='Comment' fontSize='md'>
-                    <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={onOpen}><CommentLogo /></Box>
+                    <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={onOpen}><TbMessageCircle fontSize={25}/></Box>
                 </Tooltip> 
 
                 {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
@@ -180,7 +181,7 @@ const Post = ({post}) => {
                 <ModalOverlay/>
                 <ModalContent >
                   <ModalCloseButton />
-                  <ModalBody backgroundColor='white' py={0} pl={0} minH={{base: '100vh', sm: 'auto'}}>
+                  <ModalBody py={0} pl={0} minH={{base: '100vh', sm: 'auto'}}>
                     {/* Medium screen user info display, but won't show on the smallest screen as it would be a different layout */}
                     <Flex borderBottom={'1px solid lightgray'} justify={'flex-start'} align={'center'} display={{base: 'none', sm: 'flex', md:'none'}}>
                         <Link as={RouterLink} to={`/${userProfile.username}`}>
@@ -195,7 +196,7 @@ const Post = ({post}) => {
                     </Flex>
                     
                     <Flex justify={'center'} align={{base:'start', sm: 'center'}} flexDirection={'column'} pl={{base: 2, sm: 0}}>
-                        <Flex>
+                        <Flex w={'100%'}>
                             {/* Image display */}
                             <Flex flex={1.5} display={{base: 'none', sm: 'flex'}} >
                                 <Image 
@@ -208,7 +209,7 @@ const Post = ({post}) => {
                                 />
                             </Flex>
                             {/* For medium-large screen user info display */}
-                            <Flex direction={'column'} backgroundColor={'white'} flex={1}>
+                            <Flex direction={'column'} flex={1}>
                                 <Flex borderBottom={'1px solid lightgray'} direction={'flex-start'} align={'center'} display={{base: 'none', md: 'flex'}}>
                                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -226,7 +227,7 @@ const Post = ({post}) => {
                                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
                                         </Link>
                                     </Box>
-                                    <Flex direction={'column'} mt={2} flex={1}>
+                                    <Flex direction={'column'} mt={2} flex={1} w={'100%'}>
                                         <Text>
                                         <span><Link as={RouterLink} to={`/${userProfile.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}} mr={2}>{userProfile.username}</Link></span>
                                         <span fontSize={14}> {post.caption} </span>
@@ -238,9 +239,8 @@ const Post = ({post}) => {
                                 </Flex>
 
                                 {/* comments */}
-                                <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-                                   {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
-
+                                <VStack maxH={500} overflowY={'auto'} className='comment_scroll'>
+                                    {!isFetchingComments && comments.length > 0 ? comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>): null}
                                 </VStack>
 
                                 {/* bottom interactivity tool bar */}
@@ -254,11 +254,9 @@ const Post = ({post}) => {
     
                                             {post?.likes?.length > 0 ? <Text fontWeight={'bold'}>{post?.likes?.length}</Text> : null}
         
-                                            { authUser ? <Tooltip label='Comment' fontSize='md'>
-                                                <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => commentInputRef.current.focus()}><CommentLogo/></Box>
-                                            </Tooltip> : <Tooltip label='Comment' fontSize='md'>
-                                                <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={() => toast("Info", "You need to log in to comment", "info")}><CommentLogo/></Box>
-                                            </Tooltip>}
+                                            <Tooltip label='Comment' fontSize='md'>
+                                                <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={authUser ? () => commentInputRef.current.focus() : () => toast("Info", "You need to log in to comment", "info")}><TbMessageCircle fontSize={25}/></Box>
+                                            </Tooltip> 
     
                                             {comments?.length > 0 ? <Text fontWeight={'bold'}>{comments?.length}</Text> : null}
                                             

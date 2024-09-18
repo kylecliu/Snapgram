@@ -1,7 +1,6 @@
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { useState } from 'react'
 import { firestore } from '../firebase/firebase'
-import useCommentStore from '../store/CommentStore'
 import usePostStore from '../store/postStore'
 import useDisplayToast from './useDisplayToast'
 
@@ -10,7 +9,6 @@ const useDeleteComment = () => {
     const [isDeletingComment, setIseDeletingComment ] = useState(false)
     const toast = useDisplayToast()
     const {deleteCommentInPost} = usePostStore()
-    const {deleteComment: deleteCommentStore} = useCommentStore()
     const deleteComment = async(comment) => {
 
         if (isDeletingComment) return 
@@ -33,10 +31,8 @@ const useDeleteComment = () => {
 
             })
 
-            //Updates the post and comment store
+            //Updates the post store
             deleteCommentInPost(comment)
-
-            deleteCommentStore(comment)
 
             toast("Success", "Comment deleted!", "success")
 

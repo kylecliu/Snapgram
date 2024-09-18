@@ -6,7 +6,6 @@ import useUserProfileStore from '../store/ProfileStore';
 import useDisplayToast from './useDisplayToast';
 
 
-
 const useFollowUser = (userId) => {
 
     const [isUpdating, setIsUpdating] = useState(false)

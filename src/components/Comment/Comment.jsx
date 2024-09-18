@@ -18,6 +18,8 @@ const Comment = ({comment}) => {
 
     const deleteCommentHandler = () => {
 
+        if(isDeletingComment) return
+
         if(window.confirm("Are you sure you want to delete this comment?")) {
             deleteComment(comment)
         }

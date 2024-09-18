@@ -10,7 +10,6 @@ const useFetchPostsHomepage = () => {
 
     const [isFetching, setIsFetching] = useState(false)
     const authUser = useAuthStore(state => state.user)
-    // const [postsToDisplay, setPostsToDisplay] = useState([])
     const {posts: postsToDisplay, setPosts: setPostsToDisplay}= usePostStore()
     const toast = useDisplayToast()
 
@@ -22,6 +21,7 @@ const useFetchPostsHomepage = () => {
         try {
 
             const following = authUser.following
+            
             //Display posts from users followed by Authuser as well as their own posts
             const q = query(collection(firestore, "posts"), where("createdBy", "in", [...following, authUser.uid]));
 

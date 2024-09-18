@@ -24,7 +24,7 @@ const User = ({user, setUser, onClose}) => {
       as={RouterLink}      
       to={`/${user.username}`}
       onClick={onClose}>
-        <Avatar name='user' size='md' src={user.profileURL} mr={3} ></Avatar>
+        <Avatar name={user.username} size='md' src={user.profileURL} mr={3} ></Avatar>
       </Link>
       <Flex w={"100%"} justify={'space-between'} >
         <Flex direction={'column'} flex={1} >
