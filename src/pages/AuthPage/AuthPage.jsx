@@ -8,7 +8,7 @@ const AuthPage = () => {
       <Flex justify='center' align='center' gap={10}>
         {/* Left-hand side components */}
         <Box display={{base: "none", lg: "block"}} margin={5}>
-          <Image src='auth2.png' h={650} alt='phone image'></Image>
+          <Image src='auth.png' h={650} alt='phone image'></Image>
         </Box>
       {/* Right-hand side components */}
         <Box>

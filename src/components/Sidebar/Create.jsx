@@ -2,14 +2,13 @@ import { Box, Button, CloseButton, Flex, FormControl, Heading, Image, Input, Mod
 import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
 import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage"
 import React, { useRef, useState } from 'react'
-import { CreatePostLogo } from '../../assets/constants'
 import { firestore } from '../../firebase/firebase'
 import useDisplayToast from '../../hooks/useDisplayToast'
 import usePreviewImage from '../../hooks/usePreviewImage'
 import useAuthStore from '../../store/AuthStore'
 import useUserProfileStore from '../../store/ProfileStore'
 import usePostStore from '../../store/postStore'
-import { MdOutlineAddBox } from "react-icons/md";
+import { CgAddR } from "react-icons/cg";
 
 
 
@@ -43,7 +42,7 @@ const Create = () => {
     <Flex _hover={{backgroundColor: "#e7eaf6"}} w={'100%'} borderRadius={5} my={2} cursor={'pointer'} justify={{base: 'center', sm: 'flex-start'}}>
         <Flex  p={2} borderRadius={4} justify={'center'} onClick={onOpen}>
             <Box>
-              <MdOutlineAddBox fontSize={25}/>
+              <CgAddR fontSize={24}/>
             </Box>
             <Text display={{base:'none', lg:'inline'}} pl={5}>Create</Text>
         </Flex>

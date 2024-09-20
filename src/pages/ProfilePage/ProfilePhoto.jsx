@@ -4,7 +4,7 @@ import { FaComment, FaHeart, FaRegHeart  } from "react-icons/fa6";
 import { GoSmiley } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link as RouterLink, useParams } from 'react-router-dom';
-import { CommentLogo, UnlikeLogo } from '../../assets/constants';
+import { UnlikeLogo } from '../../assets/constants';
 import Comment from '../../components/Comment/Comment';
 import useAddComment from '../../hooks/useAddComment';
 import useDeletePost from '../../hooks/useDeletePost';

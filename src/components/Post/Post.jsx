@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom';
-import { ThreeDots, UnlikeLogo, CommentLogo, SendLogo, SaveLogo, NotificationsLogo } from '../../assets/constants';
+import { UnlikeLogo } from '../../assets/constants';
 import { Skeleton, SkeletonCircle } from '@chakra-ui/react'
 import useAuthStore from '../../store/AuthStore';
 import { timeAgo } from '../../utils/timeAgo';
@@ -13,7 +13,6 @@ import useGetComments from '../../hooks/useGetComments';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import useDeletePost from '../../hooks/useDeletePost';
 import { FaRegHeart } from 'react-icons/fa6';
-import { LuSend } from 'react-icons/lu';
 import { useDisclosure } from '@chakra-ui/react';
 import { GoSmiley } from "react-icons/go";
 import useFollowUser from '../../hooks/useFollowUser';

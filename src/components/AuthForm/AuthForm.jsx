@@ -3,17 +3,19 @@ import React, { useState } from 'react';
 import GoogleAuth from './GoogleAuth';
 import Login from './Login';
 import Signup from './Signup';
+import { useColorModeValue } from '@chakra-ui/react';
 
 const AuthForm = () => {
 
    const [isSignedUp, setIsSignedUp] = useState(true);
+   const img = useColorModeValue('snapgram.png', 'snapgram-dark-mode.png')
 
   return (
     // Login section
     <Box>
     <Box border='2px solid gray' borderRadius={5} padding={5}>
         <VStack>
-            <Image src="snapgram2.png" alt="logo" w={300} h={100} my={5}/>
+            <Image src={img} alt="logo" w={300} h={100} my={5}/>
 
             { isSignedUp ? <Login /> : <Signup />}
 

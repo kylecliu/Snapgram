@@ -6,6 +6,7 @@ import useAuthStore from '../../store/AuthStore'
 import useUserProfileStore from '../../store/ProfileStore'
 import EditPage from '../EditPage/EditPage'
 import ProfileStats from './ProfileStats'
+import { useColorModeValue } from '@chakra-ui/react'
 
  
 const ProfilePageHeader = () => {
@@ -15,6 +16,7 @@ const ProfilePageHeader = () => {
     const { isUpdating, isFollowing, followOrUnfollowUser } = useFollowUser(userProfile.uid);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { logOutHandler } = useLogout()
+    const buttonColor = useColorModeValue('lightgray', 'gray')
 
     const isOwnProfile = authUser && authUser.username === userProfile.username;
     const isAnotherProfile = authUser && authUser.username !== userProfile.username;
@@ -42,11 +44,11 @@ const ProfilePageHeader = () => {
                         {userProfile.username}
                     </Text>
 
-                    {isOwnProfile && <Button backgroundColor={'lightgray'} fontSize={12} h={{ base: '22px' , md:'28px'}} onClick={onOpen}>Edit</Button>}
+                    {isOwnProfile && <Button backgroundColor={buttonColor} fontSize={12} h={{ base: '22px' , md:'28px'}} onClick={onOpen}>Edit</Button>}
 
                      <EditPage isOpen={isOpen} onClose={onClose}/> 
 
-                    {authUser?.uid === userProfile.uid ? <Button backgroundColor={'lightgray'} fontSize={12} h={{ base: '22px' , md:'28px'}} onClick={logOutHandler} display={{base:'block', sm: 'none'}}>Log out</Button> : null}
+                    {authUser?.uid === userProfile.uid ? <Button backgroundColor={buttonColor} fontSize={12} h={{ base: '22px' , md:'28px'}} onClick={logOutHandler} display={{base:'block', sm: 'none'}}>Log out</Button> : null}
 
                     {isAnotherProfile && <Button backgroundColor={'#0095F6'}  color={'white'}  fontSize={12} h={{ base: '22px' , md:'28px'}} _hover={'blue.600'} isLoading={isUpdating} onClick={followOrUnfollowUser}>{ isFollowing ? "Unfollow": "Follow" }</Button>}
                     

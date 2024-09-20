@@ -2,6 +2,7 @@ import { useSignOut } from 'react-firebase-hooks/auth'
 import { auth } from '../firebase/firebase'
 import useAuthStore from '../store/AuthStore'
 import useDisplayToast from './useDisplayToast'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -10,6 +11,7 @@ const useLogout = () => {
     const [signOut, loading, error] = useSignOut(auth);
     const userLogout = useAuthStore((state) => state.logout);
     const toast = useDisplayToast();
+    const navigate = useNavigate()
 
     const logOutHandler = async() => {
 
@@ -17,6 +19,7 @@ const useLogout = () => {
 
             await signOut();
             userLogout();
+            navigate('/')
 
         } catch(error) {
 
