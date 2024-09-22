@@ -22,11 +22,11 @@ const Create = () => {
     caption: ""
   })
   const { isLoading, createPostHandler }= useCreatePost()
-  const addPostHandler = (inputs, selectedFile) => {
+  const addPostHandler = async(inputs, selectedFile) => {
 
     if(isLoading) return
 
-    createPostHandler(inputs.caption, inputs.location, selectedFile)
+    await createPostHandler(inputs.caption, inputs.location, selectedFile)
 
     onClose()
     setInputs({ 
