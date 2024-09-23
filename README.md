@@ -2,7 +2,7 @@
 
 This is a social application inspired by Instagram, which allows users to connect with friends. They can share photos and interact with other users by liking or commenting on a post. Light and dark modes supported. Fully responsive to screen size.
 
-snapgram-tau-seven.vercel.app
+<a href="https://snapgram-tau-seven.vercel.app/" >Click here to visit the website<a/>
 <br>
 <br>
 **User profile interface**
