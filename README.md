@@ -1,6 +1,6 @@
 # Snapgram
 
-This is a social application inspired by Instagran, which allows users to connect with friends. They can share photos and interact with other users by liking or commenting on a post. Light and dark modes supported. Fully responsive to screen size.
+This is a social application inspired by Instagram, which allows users to connect with friends. They can share photos and interact with other users by liking or commenting on a post. Light and dark modes supported. Fully responsive to screen size.
 <br>
 <br>
 **User profile interface**
