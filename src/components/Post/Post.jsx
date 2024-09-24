@@ -66,7 +66,7 @@ const Post = ({post}) => {
 
     <>
     {/* Author info */}
-    <Flex pt={10} direction={'column'} mx={10} mb={5} w={{base: '100%', sm: 'auto'}}>
+    <Flex pt={2} direction={'column'} mx={10} mb={5} w={{base: '100%', sm: 'auto'}}>
        <Flex py={2} justify={"space-between"} px={{base: 2, sm: 0}}>
            <Flex >
             <Link as={RouterLink} to={`/${userProfile?.username}`}>
@@ -197,7 +197,7 @@ const Post = ({post}) => {
                     <Flex justify={'center'} align={{base:'start', sm: 'center'}} flexDirection={'column'} pl={{base: 2, sm: 0}}>
                         <Flex w={'100%'}>
                             {/* Image display */}
-                            <Flex flex={1.5} display={{base: 'none', sm: 'flex'}} >
+                            <Flex flex={{md:1, lg:1.5}} display={{base: 'none', sm: 'flex'}} >
                                 <Image 
                                 src={post.photoURL} 
                                 name={userProfile.username}

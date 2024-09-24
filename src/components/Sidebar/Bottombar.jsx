@@ -8,7 +8,7 @@ const Bottombar = () => {
     const bg = useColorModeValue('white', 'black')
 
     return (
-        <Flex w={'100%'} position={'fixed'} bottom={0} bgColor={bg} justify={'center'} align={'center'} zIndex={1} h={'50px'}>
+        <Flex w={'100%'} position={'fixed'} bottom={0} bgColor={bg} justify={'center'} align={'center'} zIndex={2} h={'50px'}>
             <SidebarItems/>
         </Flex>
     )

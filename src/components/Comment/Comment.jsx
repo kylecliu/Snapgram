@@ -10,7 +10,6 @@ import useLikeComment from '../../hooks/useLikeComment';
 const Comment = ({comment}) => {
 
     const authUser = useAuthStore(state => state.user)
-    // const [isLiked, setIsLiked] = useState(comment?.likedBy?.includes(authUser));
     const {userProfile, isFetchingProfile} = useGetUserProfilebyId(comment.createdBy)
     const { isDeletingComment ,deleteComment} = useDeleteComment()
     const {isLiked, likeComment} = useLikeComment(comment)
@@ -32,13 +31,13 @@ const Comment = ({comment}) => {
         </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
             <Flex direction={'column'} justify={'center'} >
-                <Text maxW={{base: '350px'}}>
-                    <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2}>{userProfile?.username}</Link></span>
+                <Text maxW={{base: '350px'}} fontSize={{base: 12, sm: 16}}>
+                    <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2} >{userProfile?.username}</Link></span>
                     <span>{comment.comment}</span>
                 </Text>
 
                 <Flex>
-                    <Text as={'span'} fontSize='12px' color='gray' mr={2}>{timeAgo(comment.createdAt)}</Text>
+                    <Text as={'span'} fontSize={{base: 10, sm: 12}} color='gray' mr={2}>{timeAgo(comment.createdAt)}</Text>
                     {sameUser ?  <Box 
                     backgroundColor={'transparent'} 
                     border='none' 
@@ -51,7 +50,7 @@ const Comment = ({comment}) => {
                 </Flex>
                 
             </Flex>
-            <Flex mt={4} mx={2} cursor={'pointer'} >
+            <Flex mt={4} mr={3} cursor={'pointer'} >
                 <Box onClick={() => likeComment(comment)}>
                     {isLiked ? <IoHeartSharp color='#f70776'/> : <IoHeartOutline />}
                 </Box>

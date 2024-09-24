@@ -18,7 +18,7 @@ const ProfileTabs = () => {
                     <BsGrid3X3 fontSize={10}></BsGrid3X3>
                     <Box 
                     py={3}
-                    fontSize={15}
+                    fontSize={{base: 12, sm: 15}}
                     >
                     POSTS
                     </Box>

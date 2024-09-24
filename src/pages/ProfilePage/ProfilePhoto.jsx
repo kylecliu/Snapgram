@@ -72,11 +72,11 @@ const ProfilePhoto = ({post}) => {
             zIndex={1}
             onClick={authUser ? onOpen : () => toast("Info", "Please log in to proceed", "info")}
             >
-                <HStack gap={1}>
+                <HStack gap={1} display={{base: 'none', sm: 'flex'}}>
                     <Link as={RouterLink} ><FaHeart color='white' fontSize={22} opacity={1}/></Link>
                     <Text color={'white'} fontWeight={'bold'}>{post.likes.length}</Text>  
                 </HStack>
-                <HStack gap={1}>
+                <HStack gap={1} display={{base: 'none', sm: 'flex'}}>
                     <Link as={RouterLink} ><FaComment color='white' fontSize={22} opacity={1}/></Link>
                     <Text color={'white'} fontWeight={'bold'}>{post.comments.length}</Text>  
                 </HStack>
@@ -214,13 +214,13 @@ const ProfilePhoto = ({post}) => {
                                 <ModalContent>
                                 <ModalHeader>Comments</ModalHeader>
                                 <ModalCloseButton />
-                                <ModalBody>
+                                <ModalBody p={0}>
                                     <VStack h={'100vh'} maxH={450} overflowY={'auto'} className='comment_scroll'>
                                         {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
                                         {comments.length === 0 ? <Text>No comments yet!</Text> : null}
                                     </VStack>
                                 </ModalBody>
-                                <ModalFooter>
+                                <ModalFooter px={0}>
                                 {authUser &&  <InputGroup mb={4}>
                                         <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'}/></InputLeftAddon>
                                         <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
