@@ -192,13 +192,13 @@ const Post = ({post}) => {
                                         <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                                     </Flex>
                                 </Flex>
-                                <Flex mt={2} display={{base: 'none', sm: 'flex'}}>
+                                <Flex mt={2} display={{base: 'none', sm: 'flex'}} borderBottom={{base: 0, sm: '1px solid lightgray', md: 0}}>
                                     <Box>
                                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
                                         </Link>
                                     </Box>
-                                    <Flex direction={'column'} mt={2} flex={1} w={'100%'}>
+                                    <Flex direction={'column'} mt={2} flex={1} w={'100%'} >
                                         <Text>
                                         <span><Link as={RouterLink} to={`/${userProfile.username}`} fontWeight={'bold'} style={{textDecoration: 'none'}} mr={2}>{userProfile.username}</Link></span>
                                         <span fontSize={14}> {post.caption} </span>

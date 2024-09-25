@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, GridItem, HStack, Image, Input, InputGroup, InputLeftAddon, InputRightAddon, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Flex, GridItem, HStack, Image, Input, InputGroup, InputLeftAddon, InputRightAddon, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure, VStack, Divider } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 import { FaComment, FaHeart, FaRegHeart  } from "react-icons/fa6";
 import { GoSmiley } from "react-icons/go";
@@ -141,7 +141,7 @@ const ProfilePhoto = ({post}) => {
                                     <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                                 </Flex>
                             </Flex>
-                            <Flex mt={2}>
+                            <Flex mt={2} borderBottom={{base: 0, sm: '1px solid lightgray', md: 0}}>
                                 <Box>
                                     <Link as={RouterLink} to={`/${userProfile.username}`}>
                                         <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -202,7 +202,7 @@ const ProfilePhoto = ({post}) => {
                                 </Box>
     
     
-                                {authUser &&  <InputGroup mb={4} display={{base: 'none', sm: 'block'}}>
+                                {authUser &&  <InputGroup mb={4} display={{base: 'none', sm: 'flex'}}>
                                     <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><GoSmiley/></InputLeftAddon>
                                     <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
                                     <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>

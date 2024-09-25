@@ -18,7 +18,7 @@ const ProfilePagePhotos = () => {
 
     {[...Array(12)].map((element, idx) => <GridItem key={idx}><Skeleton h={'full'} w={'full'} aspectRatio={1/1}>text</Skeleton></GridItem>)}
 
-    </Grid>) : ( <Grid w={{base: '100%', sm: '70%'}} maxW={'800px'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={{base: 0.5, sm: 2}} my={2} mb={{base: '50px'}}>
+    </Grid>) : ( <Grid w={{base: '100%', sm: '70%'}} maxW={'800px'} style={{ gridTemplateColumns:'repeat(3, 1fr)'}} gap={{base: 0.5, sm: 1}} my={2} mb={{base: '50px'}}>
         
         {posts && posts.map((post) => <ProfilePhoto key={post.id} post={post}></ProfilePhoto> )} 
 
