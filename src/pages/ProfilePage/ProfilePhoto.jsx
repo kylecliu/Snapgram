@@ -164,7 +164,7 @@ const ProfilePhoto = ({post}) => {
                             </VStack>
 
                             {/* interactive tool bar */}
-                            <Flex direction={'column'} mt={'auto'} >
+                            <Flex direction={'column'} mt={'auto'}>
                                 <Flex justify={'space-between'}>    
                                     <Flex gap={3} ml={4} my={3}>
                                         <Tooltip label='Like' fontSize='md'>
@@ -202,7 +202,7 @@ const ProfilePhoto = ({post}) => {
                                 </Box>
     
     
-                                {authUser &&  <InputGroup mb={4}>
+                                {authUser &&  <InputGroup mb={4} display={{base: 'none', sm: 'block'}}>
                                     <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20}><GoSmiley/></InputLeftAddon>
                                     <Input variant={'flushed'} placeholder='Add a comment...' value={comment} onChange={(e) => setComment(e.target.value)} ref={commentRef}></Input>
                                     <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
@@ -215,7 +215,7 @@ const ProfilePhoto = ({post}) => {
                                 <ModalHeader>Comments</ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody p={0}>
-                                    <VStack h={'100vh'} maxH={450} overflowY={'auto'} className='comment_scroll'>
+                                    <VStack h={'80vh'} maxH={400} overflowY={'auto'} className='comment_scroll'>
                                         {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
                                         {comments.length === 0 ? <Text>No comments yet!</Text> : null}
                                     </VStack>

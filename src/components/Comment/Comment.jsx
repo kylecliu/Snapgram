@@ -27,10 +27,10 @@ const Comment = ({comment}) => {
   return (
     !isFetchingProfile && userProfile ? <Flex w={'100%'} >
         <Link href={`/${userProfile?.username}`}>
-            <Avatar src={userProfile?.profileURL} name={userProfile?.username} size={'sm'} m={4}></Avatar>
+            <Avatar src={userProfile?.profileURL} name={userProfile?.username} size={'sm'} mx={4} my={{base: 0, sm: 4}}></Avatar>
         </Link>
         <Flex direction={'row'} justify={'space-between'} flex={1}>
-            <Flex direction={'column'} justify={'center'} >
+            <Flex direction={'column'} justify={'center'} mt={{base: 0, sm: 4}}>
                 <Text maxW={{base: '350px'}} fontSize={{base: 12, sm: 16}}>
                     <span><Link href={`/${userProfile?.username}`} fontWeight={'bold'} mr={2} >{userProfile?.username}</Link></span>
                     <span>{comment.comment}</span>
@@ -50,7 +50,7 @@ const Comment = ({comment}) => {
                 </Flex>
                 
             </Flex>
-            <Flex mt={4} mr={3} cursor={'pointer'} >
+            <Flex mt={{base: 0, sm: 5}} mr={3} cursor={'pointer'} >
                 <Box onClick={() => likeComment(comment)}>
                     {isLiked ? <IoHeartSharp color='#f70776'/> : <IoHeartOutline />}
                 </Box>

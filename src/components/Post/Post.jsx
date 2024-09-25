@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import { Flex, Box, Image, VStack, Input, InputGroup, InputLeftAddon, InputRightAddon, Button, Text, HStack, Avatar, Link, Tooltip, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, ModalHeader } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom';
 import { UnlikeLogo } from '../../assets/constants';
 import { Skeleton, SkeletonCircle } from '@chakra-ui/react'
@@ -127,26 +127,6 @@ const Post = ({post}) => {
                 <Box fontSize={24} mb={1} mt={1} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} px={{base: 2, sm: 0}}><RiDeleteBin6Line /></Box>
             </Tooltip> : null}
 
-
-           {/* <Flex direction={'row'}>
-               <Box pr={2} onClick={likePostHandler} cursor={'pointer'}> 
-                   {isLiked ? <UnlikeLogo /> : <NotificationsLogo />}
-               </Box>
-               <Text fontWeight={'bold'}>{post?.likes?.length > 0 ? post?.likes?.length : null}</Text>
-               <Box pr={2} cursor={'pointer'} onClick={() => commentInputRef.current.focus()}> 
-                   <CommentLogo />
-               </Box>
-               <Link as={RouterLink } to={'/index'}> 
-                   <SendLogo />
-               </Link>
-               {authUser?.uid === userProfile?.uid ?                                    
-                <Tooltip label='Delete' fontSize='md'>
-                    <Box pl={2} fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
-                </Tooltip> : null}
-           </Flex>
-           <Link as={RouterLink } to={'/index'}> 
-                   <SaveLogo />
-           </Link> */}
        </Flex>
         
         {/* Post caption */}
@@ -158,15 +138,6 @@ const Post = ({post}) => {
            
        </Flex>
        <Text fontSize='xs' color={"gray"} px={{base: 2, sm: 0}}> {timeAgo(post.createdAt)}</Text>
-       {/* <VStack maxH={350} overflowY={'auto'} className='comment_scroll'>
-            {!isFetchingComments && comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>)}
-        </VStack> */}
-
-
-       {/* <InputGroup>
-           <Input placeholder='Add a comment' size={'sm'} variant={'flushed'} value={commentInput} onChange={(e) => setCommentInput(e.target.value)} ref={commentInputRef}></Input>
-           <InputRightAddon backgroundColor={'transparent'} border={'none'} _hover={{color:'gray'}} cursor={'pointer'} onClick={addCommentHandler}>Post</InputRightAddon>
-       </InputGroup> */}
         
     </Flex> 
 
@@ -179,9 +150,10 @@ const Post = ({post}) => {
             >
                 <ModalOverlay/>
                 <ModalContent >
+                <ModalHeader display={{base: 'block', sm: 'none'}}>Comments</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody py={0} pl={0} minH={{base: '100vh', sm: 'auto'}}>
-                    {/* Medium screen user info display, but won't show on the smallest screen as it would be a different layout */}
+                  <ModalBody py={0} px={0} minH={{base: '100vh', sm: 'auto'}}>
+                    {/* Small screen user info display, but won't show on the smallest screen as it would be a different layout */}
                     <Flex borderBottom={'1px solid lightgray'} justify={'flex-start'} align={'center'} display={{base: 'none', sm: 'flex', md:'none'}}>
                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -195,7 +167,7 @@ const Post = ({post}) => {
                     </Flex>
                     
                     <Flex justify={'center'} align={{base:'start', sm: 'center'}} flexDirection={'column'} pl={{base: 2, sm: 0}}>
-                        <Flex w={'100%'}>
+                        <Flex w={'100%'} direction={{sm: 'column', md: 'row'}}>
                             {/* Image display */}
                             <Flex flex={{md:1, lg:1.5}} display={{base: 'none', sm: 'flex'}} >
                                 <Image 
@@ -220,7 +192,7 @@ const Post = ({post}) => {
                                         <Link as={RouterLink} fontSize={14}>{post.location}</Link>
                                     </Flex>
                                 </Flex>
-                                <Flex mt={2}>
+                                <Flex mt={2} display={{base: 'none', sm: 'flex'}}>
                                     <Box>
                                         <Link as={RouterLink} to={`/${userProfile.username}`}>
                                             <Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} m={4}></Avatar>
@@ -238,12 +210,12 @@ const Post = ({post}) => {
                                 </Flex>
 
                                 {/* comments */}
-                                <VStack maxH={500} overflowY={'auto'} className='comment_scroll'>
+                                <VStack maxH={500} overflowY={'auto'} className='comment_scroll' gap={0}>
                                     {!isFetchingComments && comments.length > 0 ? comments.map((comment) => <Comment key={comment.commentId} comment={comment}/>): null}
                                 </VStack>
 
                                 {/* bottom interactivity tool bar */}
-                                <Flex direction={'column'} mt={{base: 0, sm:'auto'}} position={{base: 'fixed', sm:'relative'}} bottom={0} w={{base: '90%', sm: 'auto'}}>
+                                <Flex direction={'column'} mt={{base: 0, sm:'auto'}} position={{base: 'fixed', sm:'relative'}} bottom={0} w={'100%'}>
                                     <Flex justify={'space-between'}>    
                                         <Flex gap={3} ml={4} mb={3}>
                                             
@@ -265,7 +237,7 @@ const Post = ({post}) => {
                                         </Flex>
                                         {authUser?.uid === userProfile?.uid ?                                    
                                              <Tooltip label='Delete' fontSize='md'>
-                                                <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler}><RiDeleteBin6Line /></Box>
+                                                <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} mr={3}><RiDeleteBin6Line /></Box>
                                             </Tooltip> : null}
                                         {/* <Box>
                                             <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
@@ -281,11 +253,11 @@ const Post = ({post}) => {
                                     </Box>
         
         
-                                    {authUser &&  <InputGroup mb={4}>
+                                    {authUser &&  <InputGroup mb={4} pr={3}>
                                         <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base: 'none', sm:'flex'}}><GoSmiley/></InputLeftAddon>
                                         <InputLeftAddon backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} fontSize={20} display={{base:'flex', sm:'none'}}><Avatar src={userProfile.profileURL} name={userProfile.username} size={'sm'} ></Avatar></InputLeftAddon>
                                         <Input variant={'flushed'} placeholder='Add a comment...' value={commentInput} onChange={(e) => setCommentInput(e.target.value)} ref={commentInputRef}></Input>
-                                        <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler} pr={{base: 0}}>Post</InputRightAddon>
+                                        <InputRightAddon fontSize={14} backgroundColor={'transparent'} border={'none'} fontWeight={'bold'} cursor={'pointer'} onClick={addCommentHandler} pr={0}>Post</InputRightAddon>
                                     </InputGroup> }
         
                                 </Flex> 
@@ -306,11 +278,11 @@ const Post = ({post}) => {
                     <HStack >
                         <SkeletonCircle size={10}/>
                         <VStack>
-                            <Skeleton w={400} h={3}/>
-                            <Skeleton w={400} h={3}/>
+                            <Skeleton w={{base: 200, sm: 400}} h={3}/>
+                            <Skeleton w={{base: 200, sm: 400}} h={3}/>
                         </VStack>
                     </HStack>
-                    <Skeleton w={'100%'} h={500}>
+                    <Skeleton w={{base: 250, sm: '100%'}} h={{base: 300, sm: 500}}>
                         <div>no text</div>
                     </Skeleton>
                 </VStack>

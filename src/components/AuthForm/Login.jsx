@@ -1,6 +1,8 @@
-import { Alert, AlertIcon, Button, Input } from '@chakra-ui/react'
+import { Alert, AlertIcon, Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import useLogin from '../../hooks/useLogin'
+import { BiShowAlt } from "react-icons/bi";
+import { GrFormViewHide } from "react-icons/gr";
 
 const Login = () => {
 
@@ -10,6 +12,7 @@ const Login = () => {
        });
 
     const { logIn, loading, error } = useLogin();
+    const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <>
@@ -19,12 +22,17 @@ const Login = () => {
             value={inputs.email}
             onChange={(e) => setInputs({...inputs, email: e.target.value})}
             />
-        <Input 
-            type="password" 
-            placeholder='Password'
-            value={inputs.password}
-            onChange={(e) => setInputs({...inputs, password: e.target.value})}
-            />
+        <InputGroup>
+          <Input 
+              type={ hidePassword ? 'password' : 'text' }
+              placeholder='Password'
+              value={inputs.password}
+              onChange={(e) => setInputs({...inputs, password: e.target.value})}
+              />
+          <InputRightElement onClick={() => {setHidePassword(!hidePassword)}}>
+            { hidePassword ? <GrFormViewHide fontSize={25}/> : <BiShowAlt fontSize={25}/>}
+          </InputRightElement>
+        </InputGroup>
         
         {error &&  <Alert maxW='300px' status='error'>
         <AlertIcon />
