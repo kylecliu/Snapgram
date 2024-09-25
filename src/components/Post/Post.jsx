@@ -216,7 +216,7 @@ const Post = ({post}) => {
 
                                 {/* bottom interactivity tool bar */}
                                 <Flex direction={'column'} mt={{base: 0, sm:'auto'}} position={{base: 'fixed', sm:'relative'}} bottom={0} w={'100%'}>
-                                    <Flex justify={'space-between'}>    
+                                    <Flex justify={'space-between'} display={{base:'none', sm:'flex'}}>    
                                         <Flex gap={3} ml={4} mb={3}>
                                             
                                             <Tooltip label='Like' fontSize='md'>
@@ -239,12 +239,10 @@ const Post = ({post}) => {
                                              <Tooltip label='Delete' fontSize='md'>
                                                 <Box fontSize={24} fontWeight={'bolder'} cursor={'pointer'} onClick={deleteUserPostHandler} mr={3}><RiDeleteBin6Line /></Box>
                                             </Tooltip> : null}
-                                        {/* <Box>
-                                            <Link as={RouterLink} fontSize={26} fontWeight={'bolder'}><MdOutlineBookmarkBorder /></Link>
-                                        </Box> */}
+
                                     </Flex>
 
-                                    <Box color={'gray'} fontSize={12} ml={4}>
+                                    <Box color={'gray'} fontSize={12} ml={4} display={{base:'none', sm:'block'}}>
                                         {new Date(post.createdAt).toLocaleDateString("en-US", {
                                             day: "numeric",
                                             month: "short",
